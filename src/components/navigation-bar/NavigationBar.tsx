@@ -1,7 +1,7 @@
-import React from "react";
-import { StyledAppBar, StyledNavLink } from "./NavigationBar.styles";
-import { IconButton, Toolbar } from "@material-ui/core";
-import { withRouter } from "react-router-dom";
+import React from 'react'
+import { StyledAppBar, StyledNavLink } from './NavigationBar.styles'
+import { IconButton, Toolbar } from '@material-ui/core'
+import { withRouter } from 'react-router-dom'
 
 const NavigationBar = (): JSX.Element => {
   return (
@@ -11,10 +11,10 @@ const NavigationBar = (): JSX.Element => {
         <StyledNavLink to="/">Davy de Haas</StyledNavLink>
         <StyledNavLink to="/about">About</StyledNavLink>
         <StyledNavLink to="/projects">Projects</StyledNavLink>
-        <StyledNavLink to="contact">Contact</StyledNavLink>
+        <StyledNavLink to="/contact">Contact</StyledNavLink>
       </Toolbar>
     </StyledAppBar>
-  );
-};
+  )
+}
 
-export default withRouter(NavigationBar);
+export default withRouter(NavigationBar)

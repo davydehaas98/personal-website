@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { AppBar } from '@material-ui/core';
+import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
+import { AppBar } from '@material-ui/core'
 
 export const StyledAppBar = styled(AppBar)`
     position: static;
-    background-color: #0000aa;
+    background-color: #000044;
     flex-grow: 1;
-`;
+`
 
 export const StyledNavLink = styled(NavLink)`
     margin-left: 10px;
@@ -17,4 +17,4 @@ export const StyledNavLink = styled(NavLink)`
         color: #cccccc;
     }
     flex-grow: 1;
-`;
+`
