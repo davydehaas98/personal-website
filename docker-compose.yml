@@ -5,4 +5,4 @@ services:
     image: ${DOCKER_IMAGE}
     restart: unless-stopped # Set restart policy
     ports:
-      - "3000:80"
+      - "80:3000"
