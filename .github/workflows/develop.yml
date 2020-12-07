@@ -1,0 +1,68 @@
+name: Personal Website
+on:
+  push:
+    branches:
+    - develop
+
+env:
+  DOCKER_IMAGE: davydehaas98/davydehaas.nl
+  DOCKER_TAG: ${{ github.sha }}
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    container:
+      image: node:14
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Install dependencies
+      run: npm ci
+    - name: Build
+      run: npm run build --if-present
+      env:
+        CI: false
+    - name: Test
+      run: npm test
+      env:
+        CI: false
+    - name: Upload release artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: release-artifact
+        path: ./build
+    - name: Upload Dockerfile artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: dockerfile-artifact
+        path: ./Dockerfile
+    - name: Upload NGINX artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: nginx-artifact
+        path: ./nginx.conf 
+  deliver:
+    needs: integrate
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download release artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: release-artifact
+        path: ./build
+    - name: Download Dockerfile artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: dockerfile-artifact
+        path: .
+    - name: Download NGINX artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: nginx-artifact
+        path: .
+    - name: Publish Docker image
+      run: |
+        docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
+        docker build -t ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
+        docker push ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG}}
