@@ -1,0 +1,3 @@
+Contact: mailto:me@davydehaas.nl
+Preferred-Languages: nl, en
+Canonical: https://davydehaas.nl/.well-known/security.txt
