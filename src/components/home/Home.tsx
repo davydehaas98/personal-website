@@ -14,7 +14,7 @@ const Home = (): JSX.Element => {
       </StyledBackground>
       <StyledContainer>
         <h1>Welcome to my website.</h1>
-        <p>Here you will find information about me and the projects I made</p>
+        <p>This site is still under construction.</p>
       </StyledContainer>
     </div>
   )
