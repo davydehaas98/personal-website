@@ -49,17 +49,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Download release artifact
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v2
       with:
         name: release-artifact
         path: ./build
     - name: Download Dockerfile artifact
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v2
       with:
         name: dockerfile-artifact
         path: .
     - name: Download NGINX artifact
-      uses: actions/download-artifact@v1
+      uses: actions/download-artifact@v2
       with:
         name: nginx-artifact
         path: .
