@@ -7,6 +7,7 @@ import Home from '../home/Home'
 import About from '../about/About'
 import Projects from '../projects/Projects'
 import Contact from '../contact/Contact'
+import Footer from '../footer/Footer'
 
 const App = (): JSX.Element => {
   return (
@@ -23,6 +24,8 @@ const App = (): JSX.Element => {
               <Route exact path="/contact" component={Contact} />
             </Switch>
           </main>
+
+          <Footer />
         </StyledAppContainer>
       </BrowserRouter>
     </StylesProvider>
