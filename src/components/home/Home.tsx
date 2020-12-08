@@ -13,8 +13,8 @@ const Home = (): JSX.Element => {
         <StyledPhoto />
       </StyledBackground>
       <StyledContainer>
-        <h1>Welcome to my website.</h1>
-        <p>This site is still under construction.</p>
+        <h1>Welcome!</h1>
+        <p>This website is still under construction.</p>
       </StyledContainer>
     </div>
   )
