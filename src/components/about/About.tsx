@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledContainer } from './About.styles'
+import { StyledContainer } from '../app/App.styles'
 import { withRouter } from 'react-router-dom'
 
 const About = (): JSX.Element => {

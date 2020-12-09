@@ -1,32 +1,25 @@
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
-export const StyledAppBar = styled.div`
+export const StyledHeader = styled.div`
 display: flex;
 flex-direction: row;
-align-content: center;
+justify-content: center;
 position: sticky;
 top: 0;
-left: 0;
 z-index: 99;
 background-color: #000044;
 `
 
-export const StyledImage = styled.img.attrs({
-  src: './assets/images/me.jpg'
-})`
-margin: auto auto;
-width: 50px;
-height: 50px;
-border-radius: 25px;
-`
-
 export const StyledNavLink = styled(NavLink)`
-margin-left: 10px;
-margin-right: 10px;
+margin: 0px;
+padding: 20px 50px;
 text-decoration: none;
-color: #ffffff;
+color: #FFFFFF;
+font-weight: 500;
 :hover {
-    color: #cccccc;
+  background-color: #FFFFFF;
+  color: #000044;
+  text-decoration: overline;
 }
 `
