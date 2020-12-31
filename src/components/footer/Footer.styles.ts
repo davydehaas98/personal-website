@@ -7,7 +7,7 @@ align-content: center;
 justify-content: center;
 text-align: center;
 height: auto;
-width: 100vw;
+width: 100%;
 background-color: #000044;
 color: #FFFFFF;
 `

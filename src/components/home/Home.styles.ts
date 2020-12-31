@@ -5,7 +5,7 @@ display: flex;
 flex-direction: row;
 align-content: center;
 height:100vh;
-width: 100vw;
+width: 100%;
 background-image: url(./assets/images/eindhoven.jpg);
 background-color: #ffffff;
 background-position: center;
@@ -27,7 +27,7 @@ color: #000044;
 `
 
 export const StyledPhoto = styled.img.attrs({
-  src: './assets/images/me2.jpg'
+  src: './assets/images/me.jpg'
 })`
 margin: auto auto;
 width: 500px;
@@ -41,7 +41,7 @@ flex-direction: column;
 justify-content: center;
 text-align: center;
 height: 100vh;
-width: 100vw;
+width: 100%;
 background-color: #FFFFFF;
 color: #000000
 `
