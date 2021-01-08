@@ -1,8 +1,8 @@
 version: "3.7"
 services:
   davydehaas.nl:
-    container_name: davydehaas.nl
     image: ${DOCKER_IMAGE}
-    restart: unless-stopped # Set restart policy
+    container_name: davydehaas.nl
+    restart: unless-stopped
     ports:
-      - "3000:80"
+      - 3000:80
