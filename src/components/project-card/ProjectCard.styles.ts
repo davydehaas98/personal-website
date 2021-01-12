@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+export const StyledLink = styled.a`
+text-decoration: none;
+`
+
 export const StyledProjectCard = styled.div`
 display: flex;
 flex-direction: column;
@@ -11,11 +15,7 @@ min-width: 350px;
 min-height: 300px;
 border-radius: 20px;
 background-color: #000044;
-color: #FFFFFF;
-`
-
-export const StyledText = styled.h1`
-text-decoration: none;
+color: #ffffff;
 `
 
 export const StyledImage = styled.img.attrs(props => ({

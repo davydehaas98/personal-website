@@ -9,5 +9,5 @@ text-align: center;
 height: auto;
 width: 100%;
 background-color: #000044;
-color: #FFFFFF;
+color: #ffffff;
 `

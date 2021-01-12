@@ -8,7 +8,7 @@ justify-content: center;
 margin: auto;
 height: 100vh;
 width: 100%;
-background-color: #FFFFFF;
+background-color: #ffffff;
 color: #000044;
 `
 
