@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const StyledBanner = styled.div`
 display: flex;
 flex-direction: row;
+flex-wrap: wrap;
 align-content: center;
 height:100vh;
 width: 100%;
@@ -22,7 +23,7 @@ margin: auto auto;
 width: 300px;
 height: 300px;
 border-radius: 150px;
-background-color: #FFFFFF;
+background-color: #ffffff;
 color: #000044;
 `
 
@@ -42,6 +43,6 @@ justify-content: center;
 text-align: center;
 height: 100vh;
 width: 100%;
-background-color: #FFFFFF;
+background-color: #ffffff;
 color: #000000
 `
