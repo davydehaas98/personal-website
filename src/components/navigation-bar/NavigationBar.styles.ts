@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
-export const StyledHeader = styled.div`
+export const StyledNav = styled.nav`
 display: flex;
 flex-direction: row;
 justify-content: center;
@@ -15,10 +15,10 @@ export const StyledNavLink = styled(NavLink)`
 margin: 0px;
 padding: 20px 50px;
 text-decoration: none;
-color: #FFFFFF;
+color: #ffffff;
 font-weight: 500;
 :hover {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: #000044;
   text-decoration: overline;
 }

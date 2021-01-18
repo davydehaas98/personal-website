@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Project Euler",
+        "link": "https://github.com/davydehaas98/project-euler",
+        "src": "./assets/images/project-euler.png"
+    },
+    {
+        "name": "NGINX Reverse Proxy",
+        "link": "https://github.com/davydehaas98/reverse-proxy",
+        "src": "./assets/images/nginx.png"
+    },
+    {
+        "name": "Media Server",
+        "link": "https://github.com/davydehaas98/media-server",
+        "src": "./assets/images/plex.png"
+    },
+    {
+        "name": "Screeps",
+        "link": "https://github.com/davydehaas98/screeps-script",
+        "src": "./assets/images/screeps.svg"
+    },
+    {
+        "name": "The Valley",
+        "link": "https://www.thevalley.nl"
+    },
+    {
+        "name": "Info Support",
+        "link": "https://www.infosupport.com"
+    }
+]

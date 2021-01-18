@@ -1,0 +1,32 @@
+[
+    {
+        "title": "Look at my LinkedIn profile",
+        "href": "https://www.linkedin.com/in/davy-de-haas-aa8429176",
+        "src": "./assets/images/contact/linkedin.svg"
+    },
+    {
+        "title": "Look at my GitHub profile",
+        "href": "https://github.com/davydehaas98",
+        "src": "./assets/images/contact/github.svg"
+    },
+    {
+        "title": "Send me an email",
+        "href": "mailto:davy.dehaas98@gmail.com",
+        "src": "./assets/images/contact/mail.svg"
+    },
+    {
+        "title": "Look at my Twitter profile",
+        "href": "https://twitter.com/davydehaas98",
+        "src": "./assets/images/contact/twitter.svg"
+    },
+    {
+        "title": "Look at my Facebook profile",
+        "href": "https://www.facebook.com/davy.dehaas98",
+        "src": "./assets/images/contact/facebook.svg"
+    },
+    {
+        "title": "Look at my Instagram profile",
+        "href": "https://www.instagram.com/davy.dehaas",
+        "src": "./assets/images/contact/instagram.svg"
+    }
+]

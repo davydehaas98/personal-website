@@ -27,7 +27,7 @@ background-color: #ffffff;
 color: #000044;
 `
 
-export const StyledPhoto = styled.img.attrs({
+export const StyledImage = styled.img.attrs({
   src: './assets/images/me.jpg'
 })`
 margin: auto auto;

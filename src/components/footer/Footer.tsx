@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 const Footer = (): JSX.Element => {
   return (
     <StyledFooterContainer>
-      <p>© 2020 Davy de Haas</p>
+      <p>© 2021 Davy de Haas</p>
     </StyledFooterContainer>
   )
 }

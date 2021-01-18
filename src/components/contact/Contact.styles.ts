@@ -1,65 +1,18 @@
 import styled from 'styled-components'
 
-export const StyledContainer = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-margin: auto;
-height: 100vh;
-width: 100%;
-background-color: #ffffff;
-color: #000044;
-`
-
-export const StyledIconsContainer = styled.div`
+export const StyledImagesContainer = styled.div`
 flex-direction: row;
 margin-top: 50px;
 `
 
-export const StyledLinkedInIcon = styled.img.attrs({
-  src: './assets/images/icons/linkedin.svg'
-})`
-width: 50px;
-height: 50px;
-margin: auto 10px;
+export const StyledAnchor = styled.a`
+border-radius: 25px;
 `
 
-export const StyledGitHubIcon = styled.img.attrs({
-  src: './assets/images/icons/github.svg'
-})`
-width: 50px;
-height: 50px;
-margin: auto 10px;
-`
-
-export const StyledMailIcon = styled.img.attrs({
-  src: './assets/images/icons/mail.svg'
-})`
-width: 50px;
-height: 50px;
-margin: auto 10px;
-`
-
-export const StyledTwitterIcon = styled.img.attrs({
-  src: './assets/images/icons/twitter.svg'
-})`
-width: 50px;
-height: 50px;
-margin: auto 10px;
-`
-
-export const StyledFacebookIcon = styled.img.attrs({
-  src: './assets/images/icons/facebook.svg'
-})`
-width: 50px;
-height: 50px;
-margin: auto 10px;
-`
-
-export const StyledInstagramIcon = styled.img.attrs({
-  src: './assets/images/icons/instagram.svg'
-})`
+export const StyledImage = styled.img.attrs(props => ({
+  src: props.src ?? './assets/images/placeholder.svg'
+}))`
+border-radius: 25px;
 width: 50px;
 height: 50px;
 margin: auto 10px;
