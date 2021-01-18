@@ -18,15 +18,5 @@
         "title": "Look at my Twitter profile",
         "href": "https://twitter.com/davydehaas98",
         "src": "./assets/images/contact/twitter.svg"
-    },
-    {
-        "title": "Look at my Facebook profile",
-        "href": "https://www.facebook.com/davy.dehaas98",
-        "src": "./assets/images/contact/facebook.svg"
-    },
-    {
-        "title": "Look at my Instagram profile",
-        "href": "https://www.instagram.com/davy.dehaas",
-        "src": "./assets/images/contact/instagram.svg"
     }
 ]
