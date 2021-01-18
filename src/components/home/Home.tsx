@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledBanner, StyledText, StyledPhoto, StyledContainer } from './Home.styles'
+import { StyledBanner, StyledText, StyledImage, StyledContainer } from './Home.styles'
 import { withRouter } from 'react-router-dom'
 
 const Home = (): JSX.Element => {
@@ -10,7 +10,7 @@ const Home = (): JSX.Element => {
           <h1>Davy de Haas</h1>
           <h2>Student Software Developer</h2>
         </StyledText>
-        <StyledPhoto />
+        <StyledImage />
       </StyledBanner>
       <StyledContainer>
         <h1>Welcome!</h1>
