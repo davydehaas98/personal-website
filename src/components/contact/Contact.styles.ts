@@ -1,19 +1,23 @@
 import styled from 'styled-components'
 
 export const StyledImagesContainer = styled.div`
+display: flex;
 flex-direction: row;
-margin-top: 50px;
+margin-top: 20px;
 `
 
 export const StyledAnchor = styled.a`
-border-radius: 25px;
+margin: 10px;
+height: 50px;
+border-radius: 50%;
 `
 
 export const StyledImage = styled.img.attrs(props => ({
   src: props.src ?? './assets/images/placeholder.svg'
 }))`
-border-radius: 25px;
 width: 50px;
-height: 50px;
-margin: auto 10px;
+border-radius: 50%;
+&:hover {
+  filter: opacity(0.5);
+}
 `

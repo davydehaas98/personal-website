@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledContainer } from '../app/App.styles'
+import { StyledContainer, StyledText } from '../app/App.styles'
 import { StyledImagesContainer, StyledImage, StyledAnchor } from './Contact.styles'
 import { withRouter } from 'react-router-dom'
 import contact from './contact.json'
@@ -12,11 +12,14 @@ const Contact = (): JSX.Element => {
       </StyledAnchor>
     ))
   )
+
   return (
     <div>
       <StyledContainer>
-        <h1>Contact</h1>
-        <h2>You can contact me via one of the buttons below!</h2>
+        <StyledText>
+          <h1>Contact</h1>
+          <p>You can contact me via one of the buttons below!</p>
+        </StyledText>
         <StyledImagesContainer>
           {content}
         </StyledImagesContainer>
