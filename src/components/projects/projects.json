@@ -2,22 +2,22 @@
     {
         "name": "Project Euler",
         "link": "https://github.com/davydehaas98/project-euler",
-        "src": "./assets/images/project-euler.png"
+        "src": "./assets/images/projects/project-euler.png"
     },
     {
         "name": "NGINX Reverse Proxy",
         "link": "https://github.com/davydehaas98/reverse-proxy",
-        "src": "./assets/images/nginx.png"
+        "src": "./assets/images/projects/nginx.png"
     },
     {
         "name": "Media Server",
         "link": "https://github.com/davydehaas98/media-server",
-        "src": "./assets/images/plex.png"
+        "src": "./assets/images/projects/plex.svg"
     },
     {
         "name": "Screeps",
         "link": "https://github.com/davydehaas98/screeps-script",
-        "src": "./assets/images/screeps.svg"
+        "src": "./assets/images/projects/screeps.svg"
     },
     {
         "name": "The Valley",
@@ -26,5 +26,10 @@
     {
         "name": "Info Support",
         "link": "https://www.infosupport.com"
+    },
+    {
+        "name": "Unity",
+        "link": "https://github.com/davydehaas98/unity-scripts",
+        "src": "./assets/images/projects/unity.svg"
     }
 ]
