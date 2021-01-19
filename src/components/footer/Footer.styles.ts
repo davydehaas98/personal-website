@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledFooterContainer = styled.div`
+export const StyledFooter = styled.div`
 display: flex;
 flex-direction: row;
 align-content: center;

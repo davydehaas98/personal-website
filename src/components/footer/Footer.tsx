@@ -1,12 +1,12 @@
 import React from 'react'
-import { StyledFooterContainer } from './Footer.styles'
+import { StyledFooter } from './Footer.styles'
 import { withRouter } from 'react-router-dom'
 
 const Footer = (): JSX.Element => {
   return (
-    <StyledFooterContainer>
+    <StyledFooter>
       <p>© 2021 Davy de Haas</p>
-    </StyledFooterContainer>
+    </StyledFooter>
   )
 }
 

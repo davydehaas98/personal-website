@@ -20,6 +20,5 @@ font-weight: 500;
 :hover {
   background-color: #ffffff;
   color: #000044;
-  text-decoration: overline;
 }
 `
