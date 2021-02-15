@@ -5,7 +5,6 @@ on:
     - main
 
 env:
-  DOCKER_CONTAINER: davydehaas.nl
   DOCKER_IMAGE: davydehaas98/davydehaas.nl
   DOCKER_TAG: ${{ github.sha }}
   TARGET_DIRECTORY: ./docker-compose/davydehaas.nl
