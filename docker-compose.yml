@@ -5,4 +5,10 @@ services:
     container_name: davydehaas.nl
     restart: unless-stopped
     ports:
-      - 3000:80
+    - 80:80
+    networks:
+    - davydehaasnl
+networks:
+  davydehaasnl:
+    driver: bridge
+    name: davydehaasnl
