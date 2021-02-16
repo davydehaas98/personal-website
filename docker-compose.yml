@@ -2,10 +2,10 @@ version: "3.7"
 services:
   davydehaas.nl:
     image: ${DOCKER_IMAGE}
-    container_name: davydehaas.nl
+    container_name: davydehaasnl
     restart: unless-stopped
     ports:
-    - 3000:80
+    - 40000:80
     networks:
     - davydehaasnl
 networks:
