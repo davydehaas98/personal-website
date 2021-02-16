@@ -4,11 +4,5 @@ services:
     image: ${DOCKER_IMAGE}
     container_name: davydehaasnl
     restart: unless-stopped
-    ports:
-    - 40000:80
-    networks:
-    - davydehaasnl
-networks:
-  davydehaasnl:
-    driver: bridge
-    name: davydehaasnl
+    expose:
+    - 80
