@@ -5,9 +5,10 @@ on:
     - develop
 
 env:
+  DOCKER_USERNAME: davydehaas98
   DOCKER_REPOSITORY: docker.pkg.github.com/davydehaas98/davydehaas.nl
-  DOCKER_IMAGE: davydehaas.nl
-  DOCKER_TAG: ${{ github.sha }}
+  DOCKER_IMAGE: davydehaasnl
+  DOCKER_TAG: develop-${{ github.sha }}
 
 jobs:
   integrate:
@@ -64,6 +65,6 @@ jobs:
         path: .
     - name: Publish Docker image
       run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u davydehaas98 --password-stdin
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ env.DOCKER_USERNAME }} --password-stdin
         docker build -t ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
         docker push ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
