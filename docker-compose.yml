@@ -1,7 +1,7 @@
-version: "3.7"
+version: "3.8"
 services:
-  davydehaas.nl:
-    image: ${DOCKER_IMAGE}
+  davydehaasnl:
+    image: ${DOCKER_IMAGE}:${DOCKER_TAG}
     container_name: davydehaasnl
     restart: unless-stopped
     expose:

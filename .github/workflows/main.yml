@@ -5,7 +5,8 @@ on:
     - main
 
 env:
-  DOCKER_IMAGE: davydehaas98/davydehaas.nl
+  DOCKER_REPOSITORY: docker.pkg.github.com/davydehaas98/davydehaas.nl
+  DOCKER_IMAGE: davydehaas.nl
   DOCKER_TAG: ${{ github.sha }}
   TARGET_DIRECTORY: ./docker-compose/davydehaas.nl
 
@@ -64,9 +65,9 @@ jobs:
         path: .
     - name: Publish Docker image
       run: |
-        docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_ACCESS_TOKEN }}
-        docker build -t ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
-        docker push ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG}}
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u davydehaas98 --password-stdin
+        docker build -t ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
+        docker push ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
   deploy:
     needs: deliver
     runs-on: ubuntu-latest
@@ -76,9 +77,10 @@ jobs:
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        passphrase: ${{ secrets.SSH_PASSPHRASE }}
         source: docker-compose.yml
         target: ${{ env.TARGET_DIRECTORY }}
         rm: true
@@ -86,10 +88,12 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.SSH_PORT }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
           cd ${{ env.TARGET_DIRECTORY }}
-          echo 'DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}' >> .env
+          echo 'DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}' >> .env
+          echo 'DOCKER_TAG=${{ env.DOCKER_TAG }}' >> .env
           docker-compose -f docker-compose.yml up -d
