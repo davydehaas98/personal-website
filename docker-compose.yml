@@ -4,5 +4,7 @@ services:
     image: ${DOCKER_IMAGE}:${DOCKER_TAG}
     container_name: davydehaasnl
     restart: unless-stopped
+    cpus: 1
+    mem_limit: 1G
     expose:
     - 80
