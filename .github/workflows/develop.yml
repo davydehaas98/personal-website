@@ -6,8 +6,8 @@ on:
 
 env:
   DOCKER_USERNAME: davydehaas98
-  DOCKER_REPOSITORY: docker.pkg.github.com/davydehaas98/davydehaas.nl
-  DOCKER_IMAGE: davydehaasnl
+  DOCKER_REGISTRY: ghcr.io
+  DOCKER_IMAGE: davydehaas98/davydehaasnl
   DOCKER_TAG: develop-${{ github.sha }}
 
 jobs:
@@ -65,6 +65,6 @@ jobs:
         path: .
     - name: Publish Docker image
       run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ env.DOCKER_USERNAME }} --password-stdin
-        docker build -t ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
-        docker push ${{ env.DOCKER_REPOSITORY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ env.DOCKER_USERNAME }} --password-stdin
+        docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
+        docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
