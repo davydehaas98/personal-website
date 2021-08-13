@@ -14,7 +14,6 @@ const Contact = (): JSX.Element => {
   )
 
   return (
-    <div>
       <StyledContainer>
         <StyledText>
           <h1>Contact</h1>
@@ -24,7 +23,6 @@ const Contact = (): JSX.Element => {
           {content}
         </StyledImagesContainer>
       </StyledContainer>
-    </div>
   )
 }
 
