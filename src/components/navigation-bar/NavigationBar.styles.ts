@@ -9,6 +9,10 @@ position: sticky;
 top: 0;
 z-index: 99;
 background-color: #000044;
+
+// @media only screen and (max-width: 1000px) {
+//   background-color: #000077;
+// }
 `
 
 export const StyledNavLink = styled(NavLink)`

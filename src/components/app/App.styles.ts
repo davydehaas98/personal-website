@@ -2,11 +2,6 @@ import styled from 'styled-components'
 
 export const StyledWrapper = styled.div`
 max-width: 100%;
-
-/* Small Devices, Tablets */
-@media only screen and (max-width: 1000px) {
-  background-color: #990000;
-}
 `
 
 export const StyledContainer = styled.div`
