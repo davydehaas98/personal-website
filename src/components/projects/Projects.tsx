@@ -17,7 +17,7 @@ const Projects = (): JSX.Element => {
       <StyledContainer>
         <StyledText>
           <h1>Projects</h1>
-          <p>Some of the projects I did as a software developer</p>
+          <p>Some of the projects I worked on</p>
         </StyledText>
         <StyledProjectCardContainer>
           {content}
