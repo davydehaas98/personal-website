@@ -95,7 +95,7 @@ jobs:
         # passphrase: ${{ secrets.SSH_PASSPHRASE }}
         source: docker-compose.yml
         target: ${{ env.TARGET_DIRECTORY }}
-        rm: true
+        rm: true # remove target folder before uploading data
     - name: SSH | Start container
       uses: appleboy/ssh-action@master
       with:
