@@ -14,7 +14,7 @@ env:
   PGID: 1000
   PUID: 1000
   TZ: Europe/Amsterdam
-  USER_DIR: /opt/appdata/reverse-proxy
+  USER_DIR: /opt/appdata/davydehaasnl
   DOMAIN_NAME: davydehaas.nl
   DOCKER_USERNAME: davydehaas98
   DOCKER_REGISTRY: ghcr.io
