@@ -10,8 +10,7 @@ services:
     - 80
     labels:
     - traefik.enable=true
-    - traefik.http.routers.davydehaasnl.entrypoints=https
-    - traefik.http.routers.davydehaasnl.tls=true
+    - traefik.http.routers.davydehaasnl.entrypoints=websecure
     - traefik.http.routers.davydehaasnl.rule=Host(`$DOMAIN_NAME`)
     - traefik.http.routers.davydehaasnl.middlewares=chain-no-auth@file
     - traefik.http.services.davydehaasnl.loadbalancer.server.port=80
