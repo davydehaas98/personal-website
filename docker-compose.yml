@@ -11,7 +11,7 @@ services:
     labels:
     - traefik.enable=true
     - traefik.http.routers.davydehaasnl.entrypoints=websecure
-    - traefik.http.routers.davydehaasnl.rule=Host(`$DOMAIN_NAME,www.$DOMAIN_NAME`)
+    - traefik.http.routers.davydehaasnl.rule=Host(`$DOMAIN_NAME`,`www.$DOMAIN_NAME`)
     - traefik.http.routers.davydehaasnl.middlewares=chain-no-auth@file
     - traefik.http.services.davydehaasnl.loadbalancer.server.port=80
     networks:
