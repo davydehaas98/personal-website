@@ -8,7 +8,7 @@ const Home = (): JSX.Element => {
     <StyledContainer>
       <StyledText>
         <h1>Davy de Haas</h1>
-        <p>MSc Computer Sciences and Engineering student at Eindhoven University of Technology</p>
+        <p>Java Software Developer at ISAAC (becoming iO)</p>
       </StyledText>
       <StyledImage src="./assets/images/me.jpg"/>
       <StyledDivision>
