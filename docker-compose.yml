@@ -4,11 +4,10 @@ services:
     image: ${DOCKER_IMAGE}:${DOCKER_TAG}
     container_name: davydehaasnl
     restart: unless-stopped
-    cpus: 1
-    mem_limit: 1G
     expose:
     - 80
     labels:
+    - diun.watch=true
     - traefik.enable=true
     - traefik.http.routers.davydehaasnl.entrypoints=websecure
     - traefik.http.routers.davydehaasnl.rule=Host(`$DOMAIN_NAME`,`www.$DOMAIN_NAME`)

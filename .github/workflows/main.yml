@@ -2,7 +2,7 @@ name: Personal Website
 on:
   push:
     branches:
-    - main
+      - main
 
 # Ensures that only one deploy task per branch/environment will run at a time.
 concurrency:
@@ -22,96 +22,97 @@ env:
   DOCKER_TAG: main-${{ github.sha }}
 
 jobs:
-  integrate:
+  build:
     runs-on: ubuntu-latest
     container:
-      image: node:14
+      image: node:16
     steps:
-    - uses: actions/checkout@v2
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build --if-present
-      env:
-        CI: false
-    - name: Test
-      run: npm test
-      env:
-        CI: false
-    - name: Upload release artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: release-artifact
-        path: ./build
-    - name: Upload Dockerfile artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: dockerfile-artifact
-        path: ./Dockerfile
-    - name: Upload NGINX artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: nginx-artifact
-        path: ./nginx.conf 
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build --if-present
+        env:
+          CI: false
+      - name: Test
+        run: npm test
+        env:
+          CI: false
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-artifact
+          path: ./build
+      - name: Upload Dockerfile artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dockerfile-artifact
+          path: ./Dockerfile
+      - name: Upload NGINX artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: nginx-artifact
+          path: ./nginx.conf 
   deliver:
-    needs: integrate
+    needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Download release artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: release-artifact
-        path: ./build
-    - name: Download Dockerfile artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: dockerfile-artifact
-        path: .
-    - name: Download NGINX artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: nginx-artifact
-        path: .
-    - name: Publish Docker image
-      run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ env.DOCKER_USERNAME }} --password-stdin
-        docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
-        docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
+      - name: Download release artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: release-artifact
+          path: ./build
+      - name: Download Dockerfile artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dockerfile-artifact
+          path: .
+      - name: Download NGINX artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: nginx-artifact
+          path: .
+      - name: Publish Docker image
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ env.DOCKER_USERNAME }} --password-stdin
+          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
+          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
   deploy:
     needs: deliver
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: SSH SCP | Copy docker-compose.yml
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        port: ${{ secrets.SSH_PORT }}
-        username: ${{ secrets.SSH_USERNAME }}
-        #password: ${{ secrets.SSH_PASSWORD }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        source: docker-compose.yml
-        target: ${{ env.TARGET_DIRECTORY }}
-        rm: true # remove target folder before uploading data
-    - name: SSH | Start container
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        port: ${{ secrets.SSH_PORT }}
-        username: ${{ secrets.SSH_USERNAME }}
-        #password: ${{ secrets.SSH_PASSWORD }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        script: |
-          cd ${{ env.TARGET_DIRECTORY }}
-          
-          echo 'PGID=${{ env.PGID }}' >> .env
-          echo 'PUID=${{ env.PUID }}' >> .env
-          echo 'TZ=${{ env.TZ }}' >> .env
-          echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
-          echo 'DOMAIN_NAME=${{ env.DOMAIN_NAME }}' >> .env
-          
-          echo 'DOCKER_IMAGE=${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}' >> .env
-          echo 'DOCKER_TAG=${{ env.DOCKER_TAG }}' >> .env
-          docker-compose -f docker-compose.yml up -d
+      - uses: actions/checkout@v2
+      - name: SSH SCP | Copy docker-compose.yml
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          #password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          source: docker-compose.yml
+          target: ${{ env.TARGET_DIRECTORY }}
+          rm: true # remove target folder before uploading data
+      - name: SSH | Start container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          #password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script: |
+            cd ${{ env.TARGET_DIRECTORY }}
+            
+            echo 'PGID=${{ env.PGID }}' >> .env
+            echo 'PUID=${{ env.PUID }}' >> .env
+            echo 'TZ=${{ env.TZ }}' >> .env
+            echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
+            echo 'DOMAIN_NAME=${{ env.DOMAIN_NAME }}' >> .env
+            
+            echo 'DOCKER_IMAGE=${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}' >> .env
+            echo 'DOCKER_TAG=${{ env.DOCKER_TAG }}' >> .env
+
+            docker-compose -f docker-compose.yml up -d
