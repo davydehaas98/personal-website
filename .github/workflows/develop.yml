@@ -2,7 +2,7 @@ name: Personal Website
 on:
   push:
     branches:
-    - develop
+      - develop
 
 env:
   DOCKER_USERNAME: davydehaas98
@@ -11,60 +11,60 @@ env:
   DOCKER_TAG: develop-${{ github.sha }}
 
 jobs:
-  integrate:
+  build:
     runs-on: ubuntu-latest
     container:
-      image: node:14
+      image: node:16
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Install dependencies
-      run: npm ci
-    - name: Build
-      run: npm run build --if-present
-      env:
-        CI: false
-    - name: Test
-      run: npm test
-      env:
-        CI: false
-    - name: Upload release artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: release-artifact
-        path: ./build
-    - name: Upload Dockerfile artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: dockerfile-artifact
-        path: ./Dockerfile
-    - name: Upload NGINX artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: nginx-artifact
-        path: ./nginx.conf 
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build --if-present
+        env:
+          CI: false
+      - name: Test
+        run: npm test
+        env:
+          CI: false
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-artifact
+          path: ./build
+      - name: Upload Dockerfile artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dockerfile-artifact
+          path: ./Dockerfile
+      - name: Upload NGINX artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: nginx-artifact
+          path: ./nginx.conf 
   deliver:
-    needs: integrate
+    needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Download release artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: release-artifact
-        path: ./build
-    - name: Download Dockerfile artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: dockerfile-artifact
-        path: .
-    - name: Download NGINX artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: nginx-artifact
-        path: .
-    - name: Publish Docker image
-      run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ env.DOCKER_USERNAME }} --password-stdin
-        docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
-        docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
+      - name: Download release artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: release-artifact
+          path: ./build
+      - name: Download Dockerfile artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: dockerfile-artifact
+          path: .
+      - name: Download NGINX artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: nginx-artifact
+          path: .
+      - name: Publish Docker image
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ env.DOCKER_USERNAME }} --password-stdin
+          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
+          docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
