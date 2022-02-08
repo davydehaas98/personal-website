@@ -1,10 +1,14 @@
 import React from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { StyledNav, StyledNavLink } from './NavigationBar.styles'
-import { withRouter } from 'react-router-dom'
 
-const NavigationBar = (): JSX.Element => {
+const NavigationBar = (props: any): JSX.Element => {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const params = useParams()
+
   return (
-    <StyledNav>
+    <StyledNav {...props} router={{ location, navigate, params }}>
       <StyledNavLink to="/">Davy de Haas</StyledNavLink>
       <StyledNavLink to="/about">About</StyledNavLink>
       <StyledNavLink to="/projects">Projects</StyledNavLink>
@@ -13,4 +17,4 @@ const NavigationBar = (): JSX.Element => {
   )
 }
 
-export default withRouter(NavigationBar)
+export default NavigationBar

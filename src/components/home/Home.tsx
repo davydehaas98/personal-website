@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyledImage, StyledDivision } from './Home.styles'
-import { withRouter } from 'react-router-dom'
 import { StyledContainer, StyledText } from '../app/App.styles'
 
 const Home = (): JSX.Element => {
@@ -20,4 +19,4 @@ const Home = (): JSX.Element => {
   )
 }
 
-export default withRouter(Home)
+export default Home

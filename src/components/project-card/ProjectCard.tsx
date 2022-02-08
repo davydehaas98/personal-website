@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import { StyledImage, StyledAnchor, StyledProjectCard } from './ProjectCard.styles'
 
 const ProjectCard = (props: any): JSX.Element => {
@@ -13,4 +12,4 @@ const ProjectCard = (props: any): JSX.Element => {
   )
 }
 
-export default withRouter(ProjectCard)
+export default ProjectCard
