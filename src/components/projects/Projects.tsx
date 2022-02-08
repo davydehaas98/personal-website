@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyledContainer, StyledText } from '../app/App.styles'
-import { withRouter } from 'react-router-dom'
 import ProjectCard from '../project-card/ProjectCard'
 import { StyledProjectCardContainer } from './Projects.styles'
 import projects from './projects.json'
@@ -27,4 +26,4 @@ const Projects = (): JSX.Element => {
   )
 }
 
-export default withRouter(Projects)
+export default Projects

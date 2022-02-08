@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyledContainer, StyledText } from '../app/App.styles'
-import { withRouter } from 'react-router-dom'
 import { StyledImage } from './About.styles'
 
 const About = (): JSX.Element => {
@@ -18,4 +17,4 @@ const About = (): JSX.Element => {
   )
 }
 
-export default withRouter(About)
+export default About

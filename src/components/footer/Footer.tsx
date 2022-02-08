@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyledFooter } from './Footer.styles'
-import { withRouter } from 'react-router-dom'
 
 const Footer = (): JSX.Element => {
   return (
@@ -10,4 +9,4 @@ const Footer = (): JSX.Element => {
   )
 }
 
-export default withRouter(Footer)
+export default Footer
