@@ -4,12 +4,22 @@ on:
     branches:
     - main
 
+# Ensures that only one deploy task per branch/environment will run at a time.
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: false
+
 env:
+  TARGET_DIRECTORY: /opt/compose/davydehaasnl/
+  PGID: 1000
+  PUID: 1000
+  TZ: Europe/Amsterdam
+  USER_DIR: /opt/appdata/davydehaasnl/
+  DOMAIN_NAME: davydehaas.nl
   DOCKER_USERNAME: davydehaas98
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IMAGE: davydehaas98/davydehaasnl
   DOCKER_TAG: main-${{ github.sha }}
-  TARGET_DIRECTORY: ./docker-compose/davydehaasnl
 
 jobs:
   integrate:
@@ -18,8 +28,6 @@ jobs:
       image: node:14
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
     - name: Install dependencies
       run: npm ci
     - name: Build
@@ -80,21 +88,30 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         port: ${{ secrets.SSH_PORT }}
         username: ${{ secrets.SSH_USERNAME }}
+        #password: ${{ secrets.SSH_PASSWORD }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         source: docker-compose.yml
         target: ${{ env.TARGET_DIRECTORY }}
-        rm: true
+        rm: true # remove target folder before uploading data
     - name: SSH | Start container
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
         port: ${{ secrets.SSH_PORT }}
         username: ${{ secrets.SSH_USERNAME }}
+        #password: ${{ secrets.SSH_PASSWORD }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
           cd ${{ env.TARGET_DIRECTORY }}
+          
+          echo 'PGID=${{ env.PGID }}' >> .env
+          echo 'PUID=${{ env.PUID }}' >> .env
+          echo 'TZ=${{ env.TZ }}' >> .env
+          echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
+          echo 'DOMAIN_NAME=${{ env.DOMAIN_NAME }}' >> .env
+          
           echo 'DOCKER_IMAGE=${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}' >> .env
           echo 'DOCKER_TAG=${{ env.DOCKER_TAG }}' >> .env
           docker-compose -f docker-compose.yml up -d
