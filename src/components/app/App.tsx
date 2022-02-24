@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import NavigationBar from '../navigation-bar/NavigationBar'
 import { StyledWrapper } from './App.styles'
 import Home from '../home/Home'
@@ -10,22 +10,20 @@ import Footer from '../footer/Footer'
 
 const App = (): JSX.Element => {
   return (
-    <BrowserRouter>
-      <StyledWrapper>
-        <NavigationBar />
+    <StyledWrapper>
+      <NavigationBar/>
 
-        <main role="main">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
+      <main role="main">
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/about" element={<About/>}/>
+          <Route path="/projects" element={<Projects/>}/>
+          <Route path="/contact" element={<Contact/>}/>
+        </Routes>
+      </main>
 
-        <Footer />
-      </StyledWrapper>
-    </BrowserRouter>
+      <Footer/>
+    </StyledWrapper>
   )
 }
 
