@@ -8,7 +8,7 @@ env:
   DOCKER_USERNAME: davydehaas98
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IMAGE: davydehaas98/davydehaasnl
-  DOCKER_TAG: develop-${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+  DOCKER_TAG: develop-${{ github.run_number }}-${{ github.run_attempt }}
 
 jobs:
   build:
