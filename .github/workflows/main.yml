@@ -75,7 +75,9 @@ jobs:
       - name: Publish Docker image
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ env.DOCKER_USERNAME }} --password-stdin
-          docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
+          docker build \
+            -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} \
+            -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest
   deploy:
