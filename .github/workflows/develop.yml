@@ -4,6 +4,10 @@ on:
     branches:
       - develop
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: false
+
 env:
   DOCKER_USERNAME: davydehaas98
   DOCKER_REGISTRY: ghcr.io
