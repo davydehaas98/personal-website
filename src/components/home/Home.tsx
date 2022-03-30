@@ -7,7 +7,7 @@ const Home = (): JSX.Element => {
     <StyledContainer>
       <StyledText>
         <h1>Davy de Haas</h1>
-        <p>Java Software Developer at ISAAC (becoming iO)</p>
+        <p>Java Software Developer at iO Campus Eindhoven</p>
       </StyledText>
       <StyledImage src="./assets/images/me.jpg"/>
       <StyledDivision>

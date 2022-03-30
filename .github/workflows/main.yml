@@ -13,7 +13,7 @@ env:
   TARGET_DIRECTORY: /opt/compose/davydehaasnl/
   PGID: 1000
   PUID: 1000
-  TZ: Europe/Amsterdam
+  TZ: Etc/UTC
   USER_DIR: /opt/appdata/davydehaasnl/
   DOMAIN_NAME: davydehaas.nl
   DOCKER_USERNAME: davydehaas98
