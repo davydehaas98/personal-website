@@ -1,4 +1,4 @@
-name: Personal Website
+name: davydehaas.nl develop
 on:
   push:
     branches:
