@@ -23,7 +23,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     container:
       image: node:16.14
     steps:
@@ -55,7 +55,7 @@ jobs:
           path: ./nginx.conf 
   deliver:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Download release artifact
         uses: actions/download-artifact@v3
@@ -82,7 +82,7 @@ jobs:
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest
   deploy:
     needs: deliver
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
       - name: SSH SCP | Copy docker-compose.yml
