@@ -1,4 +1,4 @@
-name: Personal Website
+name: davydehaas.nl develop
 on:
   push:
     branches:
@@ -16,21 +16,23 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: node:16.14
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.14'
       - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build --if-present
-        env:
-          CI: false
+        run: npm install --legacy-peer-dependencies
       - name: Test
         run: npm test
+        env:
+          CI: false
+      - name: Build
+        run: npm run build --if-present
         env:
           CI: false
       - name: Upload release artifact
@@ -50,7 +52,7 @@ jobs:
           path: ./nginx.conf 
   deliver:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Download release artifact
         uses: actions/download-artifact@v3
