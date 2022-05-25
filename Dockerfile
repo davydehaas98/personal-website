@@ -1,5 +1,5 @@
 # Get latest nginx image 
-FROM nginx:1.21.6
+FROM nginx:1.22.0
 
 # Copy build into nginx image
 COPY ./build /var/www
