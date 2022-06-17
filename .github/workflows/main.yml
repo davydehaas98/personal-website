@@ -25,7 +25,7 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3.0.0
+      - uses: actions/checkout@v3.0.2
         with:
           fetch-depth: 0
       - name: Setup node
@@ -88,7 +88,7 @@ jobs:
     needs: deliver
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3.0.0
+      - uses: actions/checkout@v3.0.2
       - name: SSH SCP | Copy docker-compose.yml
         uses: appleboy/scp-action@v0.1.2
         with:
