@@ -43,17 +43,17 @@ jobs:
         env:
           CI: false
       - name: Upload release artifact
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: release-artifact
           path: ./build
       - name: Upload Dockerfile artifact
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: dockerfile-artifact
           path: ./Dockerfile
       - name: Upload NGINX artifact
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: nginx-artifact
           path: ./nginx.conf 
