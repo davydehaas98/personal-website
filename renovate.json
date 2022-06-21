@@ -4,7 +4,7 @@
     ":rebaseStalePrs"
   ],
   "baseBranches": [
-    "main"
+    "develop"
   ],
   "separateMinorPatch": true,
   "separateMajorMinor": true,
