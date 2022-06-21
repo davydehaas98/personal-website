@@ -1,14 +1,12 @@
 {
   "extends": [
-    "config:base"
+    "config:base",
+    ":rebaseStalePrs"
   ],
   "baseBranches": [
-    "develop"
+    "main"
   ],
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
-    }
-  ]
+  "separateMinorPatch": true,
+  "separateMajorMinor": true,
+  "separateMultipleMajor": true
 }
