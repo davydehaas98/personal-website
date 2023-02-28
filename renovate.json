@@ -1,6 +1,6 @@
 {
   "baseBranches": [
-    "develop"
+    "develop",
   ],
   "extends": [
     "config:base",
