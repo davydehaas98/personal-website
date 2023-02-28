@@ -1,16 +1,14 @@
 {
-  "baseBranches": [
-    "develop",
-  ],
   "extends": [
     "config:base",
+  ],
+  "baseBranches": [
+    "develop",
   ],
   "packageRules": [
     {
       "matchUpdateTypes": [ 
-        "patch", 
-        "pin", 
-        "digest",
+        "patch", "pin", "digest",
       ],
       "automerge": true,
       "automergeSchedule": "0 6 * * *",
