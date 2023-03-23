@@ -23,7 +23,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3.0.2
         with:
@@ -59,7 +59,7 @@ jobs:
           path: ./nginx.conf 
   deliver:
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Download release artifact
         uses: actions/download-artifact@v3.0.0
@@ -86,7 +86,7 @@ jobs:
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest
   deploy:
     needs: deliver
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3.0.2
       - name: SSH SCP | Copy docker-compose.yml
@@ -100,7 +100,8 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           source: docker-compose.yml
           target: ${{ env.TARGET_DIRECTORY }}
-          rm: true # remove target folder before uploading data
+          # remove target folder before uploading data
+          rm: true
       - name: SSH | Start container
         uses: appleboy/ssh-action@v0.1.5
         with:
