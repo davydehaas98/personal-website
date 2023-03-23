@@ -29,7 +29,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup node
-        uses: actions/setup-node@v3.0.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version: '16.14'
       - name: Clean install dependencies
@@ -43,17 +43,17 @@ jobs:
         env:
           CI: false
       - name: Upload release artifact
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: release-artifact
           path: ./build
       - name: Upload Dockerfile artifact
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: dockerfile-artifact
           path: ./Dockerfile
       - name: Upload NGINX artifact
-        uses: actions/upload-artifact@v3.0.0
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: nginx-artifact
           path: ./nginx.conf 
@@ -102,7 +102,7 @@ jobs:
           target: ${{ env.TARGET_DIRECTORY }}
           rm: true # remove target folder before uploading data
       - name: SSH | Start container
-        uses: appleboy/ssh-action@v0.1.4
+        uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
