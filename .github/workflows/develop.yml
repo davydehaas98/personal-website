@@ -56,17 +56,17 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Download release artifact
-        uses: actions/download-artifact@v3.0.0
+        uses: actions/download-artifact@v3.0.2
         with:
           name: release-artifact
           path: ./build
       - name: Download Dockerfile artifact
-        uses: actions/download-artifact@v3.0.0
+        uses: actions/download-artifact@v3.0.2
         with:
           name: dockerfile-artifact
           path: .
       - name: Download NGINX artifact
-        uses: actions/download-artifact@v3.0.0
+        uses: actions/download-artifact@v3.0.2
         with:
           name: nginx-artifact
           path: .
