@@ -25,11 +25,11 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0
       - name: Setup node
-        uses: actions/setup-node@v3.4.1
+        uses: actions/setup-node@v3.6.0
         with:
           node-version: '16.14'
       - name: Clean install dependencies
@@ -43,17 +43,17 @@ jobs:
         env:
           CI: false
       - name: Upload release artifact
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: release-artifact
           path: ./build
       - name: Upload Dockerfile artifact
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: dockerfile-artifact
           path: ./Dockerfile
       - name: Upload NGINX artifact
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: nginx-artifact
           path: ./nginx.conf 
@@ -62,17 +62,17 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Download release artifact
-        uses: actions/download-artifact@v3.0.0
+        uses: actions/download-artifact@v3.0.2
         with:
           name: release-artifact
           path: ./build
       - name: Download Dockerfile artifact
-        uses: actions/download-artifact@v3.0.0
+        uses: actions/download-artifact@v3.0.2
         with:
           name: dockerfile-artifact
           path: .
       - name: Download NGINX artifact
-        uses: actions/download-artifact@v3.0.0
+        uses: actions/download-artifact@v3.0.2
         with:
           name: nginx-artifact
           path: .
@@ -88,7 +88,7 @@ jobs:
     needs: deliver
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.5.0
       - name: SSH SCP | Copy docker-compose.yml
         uses: appleboy/scp-action@v0.1.3
         with:
@@ -103,7 +103,7 @@ jobs:
           # remove target folder before uploading data
           rm: true
       - name: SSH | Start container
-        uses: appleboy/ssh-action@v0.1.5
+        uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
