@@ -4,7 +4,7 @@ import { StyledFooter } from './Footer.styles'
 const Footer = (): JSX.Element => {
   return (
     <StyledFooter>
-      <p>© 2021 Davy de Haas</p>
+      <p>© 2023 Davy de Haas</p>
     </StyledFooter>
   )
 }

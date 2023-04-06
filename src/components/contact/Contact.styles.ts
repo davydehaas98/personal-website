@@ -13,9 +13,11 @@ border-radius: 50%;
 `
 
 export const StyledImage = styled.img.attrs(props => ({
-  src: props.src ?? './assets/images/placeholder.svg'
+  src: props.src ?? './assets/images/placeholder.svg',
+  alt: props.alt ?? ''
 }))`
 width: 50px;
+height: 50px;
 border-radius: 50%;
 &:hover {
   filter: opacity(0.5);

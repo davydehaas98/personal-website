@@ -14,9 +14,12 @@ width: 100%;
 `
 
 export const StyledImage = styled.img.attrs(props => ({
-  src: props.src ?? './assets/images/placeholder.svg'
+  src: props.src ?? './assets/images/placeholder.svg',
+  alt: props.alt ?? ''
 }))`
 margin: 50px auto;
+width: 720px;
+height: 720px;
 max-width: 500px;
 max-height: 500px;
 border-radius: 50%;
