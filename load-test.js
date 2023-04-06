@@ -2,9 +2,6 @@ import http from "k6/http";
 import { check, sleep } from "k6";
 
 export const options = {
-  hosts: { 
-    "https://davydehaas.nl": "1.1.1.1"
-  },
   duration: "1m",
   vus: 50,
   thresholds: {
