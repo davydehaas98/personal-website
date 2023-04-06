@@ -105,7 +105,7 @@ jobs:
         uses: foo-software/lighthouse-check-action@master
         id: lighthouseCheck
         with:
-          outputDirectory: /tmp/lighthouse-report
+          outputDirectory: ${{ github.workspace }}/tmp/lighthouse-report
           urls: ${{ env.WEBSITE_URL }}
       - name: Upload Lighthouse check results
         uses: actions/upload-artifact@master
