@@ -1,10 +1,9 @@
-name: davydehaas.nl main
+name: main
 on:
   push:
     branches:
       - main
 
-# Ensures that only one deploy task per branch/environment will run at a time.
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: false
@@ -20,62 +19,34 @@ env:
   DOCKER_REGISTRY: ghcr.io
   DOCKER_IMAGE: davydehaas98/davydehaasnl
   DOCKER_TAG: main-${{ github.run_number }}-${{ github.run_attempt }}
+  WEBSITE_URL: https://davydehaas.nl
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3.5.0
+      - uses: actions/setup-node@v3.6.0
         with:
-          fetch-depth: 0
-      - name: Setup node
-        uses: actions/setup-node@v3.6.0
-        with:
-          node-version: '16.14'
-      - name: Clean install dependencies
-        run: npm ci
-      - name: Test
-        run: npm test
-        env:
-          CI: false
-      - name: Build
-        run: npm run build --if-present
-        env:
-          CI: false
-      - name: Upload release artifact
+          node-version: 18
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
+      - name: Upload build artifact
         uses: actions/upload-artifact@v3.1.2
         with:
-          name: release-artifact
+          name: build-artifact
           path: ./build
-      - name: Upload Dockerfile artifact
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: dockerfile-artifact
-          path: ./Dockerfile
-      - name: Upload NGINX artifact
-        uses: actions/upload-artifact@v3.1.2
-        with:
-          name: nginx-artifact
-          path: ./nginx.conf 
   deliver:
     needs: build
     runs-on: ubuntu-22.04
     steps:
-      - name: Download release artifact
+      - uses: actions/checkout@v3.5.0
+      - name: Download build artifact
         uses: actions/download-artifact@v3.0.2
         with:
-          name: release-artifact
+          name: build-artifact
           path: ./build
-      - name: Download Dockerfile artifact
-        uses: actions/download-artifact@v3.0.2
-        with:
-          name: dockerfile-artifact
-          path: .
-      - name: Download NGINX artifact
-        uses: actions/download-artifact@v3.0.2
-        with:
-          name: nginx-artifact
-          path: .
       - name: Publish Docker image
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ env.DOCKER_USERNAME }} --password-stdin
@@ -103,7 +74,7 @@ jobs:
           # remove target folder before uploading data
           rm: true
       - name: SSH | Start container
-        uses: appleboy/ssh-action@v0.1.8
+        uses: appleboy/ssh-action@v0.1.9
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
@@ -124,3 +95,56 @@ jobs:
             echo 'DOCKER_TAG=${{ env.DOCKER_TAG }}' >> .env
 
             docker compose -f docker-compose.yml up -d
+  lighthouse-check:
+    needs: deploy
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.5.0
+      - run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
+      - name: Lighthouse check
+        uses: foo-software/lighthouse-check-action@9.1.1
+        id: lighthouseCheck
+        with:
+          outputDirectory: /tmp/lighthouse-report
+          urls: ${{ env.WEBSITE_URL }}
+      - name: Upload Lighthouse check results
+        uses: actions/upload-artifact@master
+        with:
+          name: lighthouse-report-artifact
+          path: ${{ github.workspace }}/tmp/lighthouse-report
+      - name: Verify Lighthouse check results
+        uses: foo-software/lighthouse-check-status-action@2.0.0
+        with:
+          lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
+          minAccessibilityScore: "90"
+          minBestPracticesScore: "50"
+          minPerformanceScore: "50"
+          minProgressiveWebAppScore: "50"
+          minSeoScore: "50"
+  zap-scan:
+    needs: deploy
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.5.0
+      - name: ZAP scan
+        uses: zaproxy/action-baseline@v0.7.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target: ${{ env.WEBSITE_URL }}
+          rules_file_name: .zap/rules.tsv
+          cmd_options: -a
+  k6-load-test:
+    needs: [lighthouse-check, zap-scan]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.5.0
+      - name: K6 load test
+        uses: grafana/k6-action@v0.2.0
+        with:
+          filename: load-test.js          
+          flags: --out json=results.json
+      - name: Upload k6 load test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: k6-report
+          path: results.json
