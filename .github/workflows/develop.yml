@@ -1,4 +1,4 @@
-name: davydehaas.nl develop
+name: develop
 on:
   push:
     branches:

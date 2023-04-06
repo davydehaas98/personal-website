@@ -1,4 +1,4 @@
-name: davydehaas.nl main
+name: main
 on:
   push:
     branches:
