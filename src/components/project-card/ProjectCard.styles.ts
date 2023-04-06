@@ -15,8 +15,8 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 padding: 25px;
-min-width: 400px;
-min-height: 300px;
+width: 400px;
+height: 300px;
 border-radius: 25px;
 border-style: solid;
 border-color: #000044;
@@ -25,7 +25,9 @@ color: #000044;
 `
 
 export const StyledImage = styled.img.attrs(props => ({
-  src: props.src ?? './assets/images/placeholder.svg'
+  src: props.src ?? './assets/images/placeholder.svg',
+  alt: props.alt ?? ''
 }))`
 max-width: 200px;
+max-height: 200px;
 `

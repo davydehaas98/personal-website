@@ -6,6 +6,6 @@ flex-wrap: wrap;
 flex-direction: row;
 justify-content: center;
 margin: 50px;
-width: 75vw;
+width: 100vw;
 background-color: #ffffff;
 `
