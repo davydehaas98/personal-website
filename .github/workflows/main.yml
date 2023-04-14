@@ -74,7 +74,7 @@ jobs:
           # remove target folder before uploading data
           rm: true
       - name: SSH | Start container
-        uses: appleboy/ssh-action@v0.1.9
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
