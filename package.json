@@ -1,6 +1,6 @@
 {
   "name": "davydehaas.nl",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "5.16.5",
@@ -8,8 +8,8 @@
     "@testing-library/user-event": "14.4.3",
     "@types/jest": "29.5.1",
     "@types/node": "18.15.13",
-    "@types/react": "18.0.38",
-    "@types/react-dom": "18.0.11",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.1",
     "nth-check": "2.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
