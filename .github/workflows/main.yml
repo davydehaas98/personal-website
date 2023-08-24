@@ -25,7 +25,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - uses: actions/setup-node@v3.6.0
         with:
           node-version: 18
@@ -41,7 +41,7 @@ jobs:
     needs: build
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - name: Download build artifact
         uses: actions/download-artifact@v3.0.2
         with:
@@ -59,7 +59,7 @@ jobs:
     needs: deliver
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - name: SSH SCP | Copy docker-compose.yml
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -99,7 +99,7 @@ jobs:
     needs: deploy
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
       - name: Lighthouse check
         uses: foo-software/lighthouse-check-action@master
@@ -125,7 +125,7 @@ jobs:
     needs: deploy
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - name: ZAP scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
@@ -137,7 +137,7 @@ jobs:
     needs: [lighthouse-check, zap-scan]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - name: K6 load test
         uses: grafana/k6-action@v0.2.0
         with:

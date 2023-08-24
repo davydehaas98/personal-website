@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - uses: actions/setup-node@v3.6.0
         with:
           node-version: 18
@@ -34,7 +34,7 @@ jobs:
     needs: build
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - name: Download build artifact
         uses: actions/download-artifact@v3.0.2
         with:
