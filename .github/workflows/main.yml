@@ -139,7 +139,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.0
       - name: K6 load test
-        uses: grafana/k6-action@v0.2.0
+        uses: grafana/k6-action@v0.3.0
         with:
           filename: load-test.js          
           flags: --out json=results.json
