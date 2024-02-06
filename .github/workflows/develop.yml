@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.0
       - name: Download build artifact
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@v4.1.2
         with:
           name: build
           path: ./build
