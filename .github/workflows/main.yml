@@ -61,7 +61,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.0
       - name: SSH SCP | Copy docker-compose.yml
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
