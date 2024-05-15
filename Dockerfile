@@ -1,5 +1,5 @@
 # Get latest nginx image 
-FROM nginx:1.26.0@sha256:3f28ecedbd787b3ff0a6d56cd4a1b13901acda532c717e3b7351fcc786973d79
+FROM nginx:1.26.0@sha256:192e88a0053c178683ca139b9d9a2afb0ad986d171fae491949fe10970dd9da9
 
 # Copy build into nginx image
 COPY ./build /var/www
