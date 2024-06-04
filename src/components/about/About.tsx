@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledContainer, StyledText } from '../app/App.styles'
+import { StyledContainer, StyledText } from '../../App.styles'
 import { StyledImage } from './About.styles'
 
 const About = (): JSX.Element => {

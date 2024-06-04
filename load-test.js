@@ -14,7 +14,7 @@ export const options = {
 
 export default function test() {
   const response = http.get("https://davydehaas.nl")
-  
+
   check(response, {
     "http2 is used": (r) => r.proto === "HTTP/2.0",
     "status was 200": (r) => r.status === 200,
