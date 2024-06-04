@@ -23,27 +23,27 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v3.5.0
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
-          node-version: 18
+          node-version: 20
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: build
           path: ./build
   deliver:
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Download build artifact
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427 # v4.1.4
         with:
           name: build
           path: ./build
@@ -52,16 +52,16 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ env.DOCKER_USERNAME }} --password-stdin
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
-          
+
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest
   deploy:
     needs: deliver
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: SSH SCP | Copy docker-compose.yml
-        uses: appleboy/scp-action@v0.1.3
+        uses: appleboy/scp-action@917f8b81dfc1ccd331fef9e2d61bdc6c8be94634 # v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
@@ -74,7 +74,7 @@ jobs:
           # remove target folder before uploading data
           rm: true
       - name: SSH | Start container
-        uses: appleboy/ssh-action@v0.1.9
+        uses: appleboy/ssh-action@029f5b4aeeeb58fdfe1410a5d17f967dacf36262 # v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
@@ -84,20 +84,22 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd ${{ env.TARGET_DIRECTORY }}
-            
+
             echo 'PGID=${{ env.PGID }}' >> .env
             echo 'PUID=${{ env.PUID }}' >> .env
             echo 'TZ=${{ env.TZ }}' >> .env
             echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
             echo 'DOMAIN_NAME=${{ env.DOMAIN_NAME }}' >> .env
-            
+
             echo 'DOCKER_IMAGE=${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}' >> .env
             echo 'DOCKER_TAG=${{ env.DOCKER_TAG }}' >> .env
+
+            docker compose -f docker-compose.yml up -d
   lighthouse-check:
     needs: deploy
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
       - name: Lighthouse check
         uses: foo-software/lighthouse-check-action@master
@@ -106,7 +108,7 @@ jobs:
           outputDirectory: ${{ github.workspace }}/tmp/lighthouse-report
           urls: ${{ env.WEBSITE_URL }}
       - name: Upload Lighthouse check results
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: lighthouse-report
           path: ${{ github.workspace }}/tmp/lighthouse-report
@@ -121,11 +123,11 @@ jobs:
           minSeoScore: "50"
   zap-scan:
     needs: deploy
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: ZAP scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@c5fd818161fb145060f307b6954434561c2c71f0 # v0.11.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: ${{ env.WEBSITE_URL }}
@@ -133,16 +135,16 @@ jobs:
           cmd_options: -a
   k6-load-test:
     needs: [lighthouse-check, zap-scan]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: K6 load test
-        uses: grafana/k6-action@v0.2.0
+        uses: grafana/k6-action@e4714b734f2b0afaabeb7b4a69142745548ab9ec # v0.3.1
         with:
-          filename: load-test.js          
+          filename: load-test.js
           flags: --out json=results.json
       - name: Upload k6 load test results
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         with:
           name: k6-report
           path: results.json
