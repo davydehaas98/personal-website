@@ -23,12 +23,12 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
-          node-version: 18
+          node-version: 20
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
@@ -39,7 +39,7 @@ jobs:
           path: ./build
   deliver:
     needs: build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Download build artifact
@@ -52,12 +52,12 @@ jobs:
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.DOCKER_REGISTRY }} -u ${{ env.DOCKER_USERNAME }} --password-stdin
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }} .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
-          
+
           docker build -t ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest .
           docker push ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:latest
   deploy:
     needs: deliver
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: SSH SCP | Copy docker-compose.yml
@@ -84,20 +84,20 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd ${{ env.TARGET_DIRECTORY }}
-            
+
             echo 'PGID=${{ env.PGID }}' >> .env
             echo 'PUID=${{ env.PUID }}' >> .env
             echo 'TZ=${{ env.TZ }}' >> .env
             echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
             echo 'DOMAIN_NAME=${{ env.DOMAIN_NAME }}' >> .env
-            
+
             echo 'DOCKER_IMAGE=${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}' >> .env
             echo 'DOCKER_TAG=${{ env.DOCKER_TAG }}' >> .env
 
             docker compose -f docker-compose.yml up -d
   lighthouse-check:
     needs: deploy
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
@@ -123,7 +123,7 @@ jobs:
           minSeoScore: "50"
   zap-scan:
     needs: deploy
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: ZAP scan
@@ -135,13 +135,13 @@ jobs:
           cmd_options: -a
   k6-load-test:
     needs: [lighthouse-check, zap-scan]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: K6 load test
         uses: grafana/k6-action@e4714b734f2b0afaabeb7b4a69142745548ab9ec # v0.3.1
         with:
-          filename: load-test.js          
+          filename: load-test.js
           flags: --out json=results.json
       - name: Upload k6 load test results
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
