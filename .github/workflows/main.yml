@@ -127,7 +127,7 @@ jobs:
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: ZAP scan
-        uses: zaproxy/action-baseline@c5fd818161fb145060f307b6954434561c2c71f0 # v0.11.0
+        uses: zaproxy/action-baseline@66042c8e7e24680119199a017e5b0e8603bf4dae # v0.12.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: ${{ env.WEBSITE_URL }}
