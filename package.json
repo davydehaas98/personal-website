@@ -1,6 +1,6 @@
 {
   "name": "davydehaas.nl",
-  "version": "0.1.43",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "6.4.2",
