@@ -1,35 +1,51 @@
 {
   "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "esnext",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "trailing-comma": [true, {
-    "singleline": "always",
-    "multiline": {
-      "objects": "always",
-      "arrays": "always",
-      "functions": "never",
-      "typeLiterals": "ignore"
+  "plugins": [
+    {
+      "name": "next"
     }
-  }],
-  "semicolon": [true, "never"],
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build"]
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "./dist/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"],
+  "strictNullChecks": true,
+  "trailing-comma": [
+    true,
+    {
+      "singleline": "always",
+      "multiline": {
+        "objects": "always",
+        "arrays": "always",
+        "functions": "never",
+        "typeLiterals": "ignore"
+      }
+    }
+  ],
+  "semicolon": [true, "never"]
 }

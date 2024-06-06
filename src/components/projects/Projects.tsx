@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyledContainer, StyledText } from '../app/App.styles'
+import { StyledContainer, StyledText } from '../../App.styles'
 import ProjectCard from '../project-card/ProjectCard'
 import { StyledProjectCardContainer } from './Projects.styles'
 import projects from './projects.json'
