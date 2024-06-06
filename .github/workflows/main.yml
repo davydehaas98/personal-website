@@ -102,7 +102,7 @@ jobs:
       - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
       - run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
       - name: Lighthouse check
-        uses: foo-software/lighthouse-check-action@v11.0.0
+        uses: foo-software/lighthouse-check-action@563d8e4273b76e019aa31114d59b43d100bd00a3 # v11.0.0
         id: lighthouseCheck
         with:
           outputDirectory: ${{ github.workspace }}/tmp/lighthouse-report
