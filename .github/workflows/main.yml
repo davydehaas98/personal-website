@@ -113,7 +113,7 @@ jobs:
           name: lighthouse-report
           path: ${{ github.workspace }}/tmp/lighthouse-report
       - name: Verify Lighthouse check results
-        uses: foo-software/lighthouse-check-status-action@v1.0.1
+        uses: foo-software/lighthouse-check-status-action@f22f8cdcaf593a986749d39fe21382526de3f501 # v2.0.1
         with:
           lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
           minAccessibilityScore: "90"
