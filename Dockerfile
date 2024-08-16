@@ -1,5 +1,5 @@
 # Get latest nginx image 
-FROM nginx:1.27.0@sha256:98f8ec75657d21b924fe4f69b6b9bff2f6550ea48838af479d8894a852000e40
+FROM nginx:1.27.1@sha256:1540e37eebb9abc5afa4256de1bade6542d50bf69b61b1dd855cb7804aaaf444
 
 RUN rm -rf /usr/share/nginx/html/*
 
