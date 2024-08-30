@@ -15,7 +15,7 @@ env:
   TZ: Etc/UTC
   USER_DIR: /opt/appdata/davydehaasnl/
   DOMAIN_NAME: davydehaas.nl
-  DOCKER_REGISTRY: ghcr.io
+  REGISTRY: ghcr.io
   WEBSITE_URL: https://davydehaas.nl
 
 jobs:
