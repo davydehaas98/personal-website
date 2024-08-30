@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
           node-version: 20
-      - name: Install NPM dependencies
+      - name: Install npm dependencies
         run: npm ci
       - name: Test
         run: npm test --if-present
