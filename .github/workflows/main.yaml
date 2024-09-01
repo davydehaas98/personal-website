@@ -16,6 +16,7 @@ env:
   USER_DIR: /opt/appdata/davydehaasnl/
   DOMAIN_NAME: davydehaas.nl
   REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
   WEBSITE_URL: https://davydehaas.nl
 
 jobs:
