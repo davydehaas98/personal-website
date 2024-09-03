@@ -1,1 +1,4 @@
-ignorePatterns: ["/*", "!/src"]
+ignorePatterns: [
+  "/*",
+  "!/src"
+]
