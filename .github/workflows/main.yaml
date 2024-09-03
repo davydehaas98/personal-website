@@ -70,10 +70,14 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main-${{ github.run_number }}-${{ github.run_attempt }}
   deploy:
+    name: Deploy
     needs: deliver
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
       - name: SSH SCP | Copy docker-compose.yml
         uses: appleboy/scp-action@917f8b81dfc1ccd331fef9e2d61bdc6c8be94634 # v0.1.7
         with:
@@ -110,11 +114,16 @@ jobs:
 
             docker compose -f docker-compose.yml up -d
   lighthouse-check:
+    name: Lighthouse check
     needs: deploy
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      - run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+      - name: Make directory lighthouse-report
+        run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
       - name: Lighthouse check
         uses: foo-software/lighthouse-check-action@a80267da2e0244b8a2e457a8575fc47590615852 # v12.0.1
         id: lighthouseCheck
@@ -136,10 +145,14 @@ jobs:
           minProgressiveWebAppScore: "50"
           minSeoScore: "50"
   zap-scan:
+    name: ZAP scan
     needs: deploy
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
       - name: ZAP scan
         uses: zaproxy/action-baseline@66042c8e7e24680119199a017e5b0e8603bf4dae # v0.12.0
         with:
@@ -148,11 +161,15 @@ jobs:
           rules_file_name: .zap/rules.tsv
           cmd_options: -a
   k6-load-test:
+    name: k6 load test
     needs: [lighthouse-check, zap-scan]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      - name: K6 load test
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+      - name: k6 load test
         uses: grafana/k6-action@e4714b734f2b0afaabeb7b4a69142745548ab9ec # v0.3.1
         with:
           filename: load-test.js
@@ -160,5 +177,5 @@ jobs:
       - name: Upload k6 load test results
         uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
         with:
-          name: k6-report
+          name: k6-results
           path: results.json
