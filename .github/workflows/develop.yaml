@@ -43,10 +43,10 @@ jobs:
           cache: npm
       - name: Install npm dependencies
         run: npm ci
-      - name: Test
-        run: npm lint --if-present
-      - name: Test
-        run: npm lint:fix --if-present
+      - name: Lint
+        run: npm run lint --if-present
+      - name: Lint fix
+        run: npm run lint:fix --if-present
   deliver:
     name: Deliver
     needs: build
