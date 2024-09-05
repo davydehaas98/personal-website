@@ -2,7 +2,7 @@ name: Develop
 on:
   workflow_run:
     workflows: [Build]
-    types: [cmompleted]
+    types: [completed]
     branches: [develop]
 
 env:
