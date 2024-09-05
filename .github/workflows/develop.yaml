@@ -26,6 +26,8 @@ jobs:
       - name: Test
         run: npm test --if-present
   deliver:
+    permissions:
+      packages: write
     name: Deliver
     needs: build
     runs-on: ubuntu-22.04
