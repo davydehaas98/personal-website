@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - renovate/**
+      - develop
 
 jobs:
   build:
