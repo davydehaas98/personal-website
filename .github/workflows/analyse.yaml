@@ -1,12 +1,11 @@
-name: Renovate
+name: Analyse
 on:
-  push:
-    branches:
-      - renovate/**
-
+  push: 
+    branches: 
+      - develop
 jobs:
-  build:
-    name: Build
+  analyse:
+    name: Analyse
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -17,7 +16,10 @@ jobs:
         uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
           node-version-file: .nvmrc
+          cache: npm
       - name: Install npm dependencies
         run: npm ci
-      - name: Test
-        run: npm test --if-present
+      - name: Lint
+        run: npm run lint --if-present
+      - name: Lint fix
+        run: npm run lint:fix --if-present

@@ -1,4 +1,4 @@
-name: main
+name: Main
 on:
   push:
     branches:
@@ -9,14 +9,15 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  
   TARGET_DIRECTORY: /opt/compose/davydehaasnl/
   PGID: 1000
   PUID: 1000
   TZ: Etc/UTC
   USER_DIR: /opt/appdata/davydehaasnl/
   DOMAIN_NAME: davydehaas.nl
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
   WEBSITE_URL: https://davydehaas.nl
 
 jobs:
@@ -28,7 +29,8 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+      - name: Set up Node
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -36,6 +38,7 @@ jobs:
         run: npm ci
       - name: Test
         run: npm test --if-present
+
   deliver:
     name: Deliver
     needs: build
@@ -47,12 +50,8 @@ jobs:
           fetch-depth: 0
       - name: Set up QEMU
         uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf # v3.2.0
-        with:
-          platforms: linux/amd64,linux/arm64
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
-        with:
-          platforms: linux/amd64,linux/arm64
       - name: Login to registry
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
         with:
@@ -122,7 +121,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0
-      - name: Make directory lighthouse-report
+      - name: Create directory lighthouse-report
         run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
       - name: Lighthouse check
         uses: foo-software/lighthouse-check-action@a80267da2e0244b8a2e457a8575fc47590615852 # v12.0.1
