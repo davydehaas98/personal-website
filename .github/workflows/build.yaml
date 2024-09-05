@@ -1,7 +1,9 @@
-name: Renovate
+name: Build
 on:
   push:
     branches:
+      - main
+      - develop
       - renovate/**
 
 jobs:
