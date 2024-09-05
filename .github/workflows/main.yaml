@@ -12,11 +12,11 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   
-  TARGET_DIRECTORY: /opt/compose/davydehaasnl/
+  TARGET_DIRECTORY: /opt/compose/personal-website/
   PGID: 1000
   PUID: 1000
   TZ: Etc/UTC
-  USER_DIR: /opt/appdata/davydehaasnl/
+  USER_DIR: /opt/appdata/personal-website/
   DOMAIN_NAME: davydehaas.nl
   WEBSITE_URL: https://davydehaas.nl
 
@@ -105,13 +105,14 @@ jobs:
             echo 'PGID=${{ env.PGID }}' >> .env
             echo 'PUID=${{ env.PUID }}' >> .env
             echo 'TZ=${{ env.TZ }}' >> .env
+
             echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
             echo 'DOMAIN_NAME=${{ env.DOMAIN_NAME }}' >> .env
 
             echo 'DOCKER_IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}' >> .env
             echo 'DOCKER_TAG=main-${{ github.run_number }}-${{ github.run_attempt }}' >> .env
 
-            docker compose -f docker-compose.yml up -d
+            docker compose -f docker-compose.yaml up -d
   lighthouse-check:
     name: Lighthouse check
     needs: deploy
