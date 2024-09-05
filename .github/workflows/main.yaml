@@ -9,14 +9,15 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  
   TARGET_DIRECTORY: /opt/compose/davydehaasnl/
   PGID: 1000
   PUID: 1000
   TZ: Etc/UTC
   USER_DIR: /opt/appdata/davydehaasnl/
   DOMAIN_NAME: davydehaas.nl
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
   WEBSITE_URL: https://davydehaas.nl
 
 jobs:
@@ -37,6 +38,7 @@ jobs:
         run: npm ci
       - name: Test
         run: npm test --if-present
+
   deliver:
     name: Deliver
     needs: build
@@ -119,7 +121,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           fetch-depth: 0
-      - name: Make directory lighthouse-report
+      - name: Create directory lighthouse-report
         run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
       - name: Lighthouse check
         uses: foo-software/lighthouse-check-action@a80267da2e0244b8a2e457a8575fc47590615852 # v12.0.1
