@@ -86,7 +86,7 @@ jobs:
           #password: ${{ secrets.SSH_PASSWORD }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          source: docker-compose.yml
+          source: docker-compose.yaml
           target: ${{ env.TARGET_DIRECTORY }}
           # remove target folder before uploading data
           rm: true
