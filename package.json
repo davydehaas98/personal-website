@@ -1,9 +1,9 @@
 {
   "name": "personal-website",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "private": true,
   "dependencies": {
-    "@types/node": "22.5.4",
+    "@types/node": "22.5.5",
     "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0",
     "next": "14.2.11",
