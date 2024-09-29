@@ -154,7 +154,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: ZAP scan
-        uses: zaproxy/action-baseline@66042c8e7e24680119199a017e5b0e8603bf4dae # v0.12.0
+        uses: zaproxy/action-baseline@0619037bb784a56e2e06b104f0ebe157e076f075 # v0.13.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: ${{ env.WEBSITE_URL }}
