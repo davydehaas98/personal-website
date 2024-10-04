@@ -3,20 +3,17 @@ on:
   push:
     branches:
       - main
-
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: false
-
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  
-  TARGET_DIRECTORY: /opt/compose/personal-website/
-  PGID: 1000
-  PUID: 1000
+  TARGET_DIR: /home/homelab/compose/personal-website
+  USER_DIR: /home/homelab/personal-website
+  UID: 1400
+  GID: 1400
   TZ: Etc/UTC
-  USER_DIR: /opt/appdata/personal-website/
   DOMAIN_NAME: davydehaas.nl
   WEBSITE_URL: https://davydehaas.nl
 
@@ -77,33 +74,22 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           fetch-depth: 0
-      - name: SSH SCP | Copy docker-compose.yaml
-        uses: appleboy/scp-action@917f8b81dfc1ccd331fef9e2d61bdc6c8be94634 # v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          #password: ${{ secrets.SSH_PASSWORD }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          source: docker-compose.yaml
-          target: ${{ env.TARGET_DIRECTORY }}
-          # remove target folder before uploading data
-          rm: true
-      - name: SSH | Start container
-        uses: appleboy/ssh-action@029f5b4aeeeb58fdfe1410a5d17f967dacf36262 # v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          #password: ${{ secrets.SSH_PASSWORD }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          script: |
-            cd ${{ env.TARGET_DIRECTORY }}
+      - name: Setup SSH
+        run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      - name: SCP | Copy docker-compose.yaml
+        run: |
+          scp ./docker-compose.yaml homelab@${{ secrets.SSH_HOST }}:${{ env.TARGET_DIR }}
+      - name: SSH | Start containers
+        run: |
+          ssh homelab@${{ secrets.SSH_HOST }} /bin/bash <<EOF
+            cd ${{ env.TARGET_DIR }}
 
-            echo 'PGID=${{ env.PGID }}' >> .env
-            echo 'PUID=${{ env.PUID }}' >> .env
+            echo 'PGID=${{ env.GID }}' >> .env
+            echo 'PUID=${{ env.UID }}' >> .env
             echo 'TZ=${{ env.TZ }}' >> .env
 
             echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
@@ -112,7 +98,7 @@ jobs:
             echo 'DOCKER_IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}' >> .env
             echo 'DOCKER_TAG=main-${{ github.run_number }}-${{ github.run_attempt }}' >> .env
 
-            docker compose -f docker-compose.yaml up -d
+            docker compose up -d
   lighthouse-check:
     name: Lighthouse check
     needs: deploy
