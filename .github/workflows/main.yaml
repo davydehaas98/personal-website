@@ -10,11 +10,11 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   
-  TARGET_DIR: /home/homelab/personal-website/
+  TARGET_DIR: /home/homelab/personal-website
   PGID: 1000
   PUID: 1000
   TZ: Etc/UTC
-  USER_DIR: /home/homelab/personal-website/
+  USER_DIR: /home/homelab/personal-website
   DOMAIN_NAME: davydehaas.nl
   WEBSITE_URL: https://davydehaas.nl
 
