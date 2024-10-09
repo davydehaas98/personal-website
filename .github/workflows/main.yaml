@@ -9,11 +9,11 @@ concurrency:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  TARGET_DIR: /home/homelab/compose/personal-website
-  USER_DIR: /home/homelab/personal-website
   UID: 1400
   GID: 1400
   TZ: Etc/UTC
+  TARGET_DIR: /home/homelab/compose/personal-website
+  USER_DIR: /home/homelab/personal-website
   DOMAIN_NAME: davydehaas.nl
   WEBSITE_URL: https://davydehaas.nl
 
@@ -24,8 +24,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
-        with:
-          fetch-depth: 0
       - name: Set up Node
         uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4.0.4
         with:
@@ -42,9 +40,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@eef61447b9ff4
       - name: Set up QEMU
         uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf # v3.2.0
       - name: Set up Docker Buildx
@@ -72,8 +68,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4.2.1
-        with:
-          fetch-depth: 0
       - name: Setup SSH
         run: |
             mkdir -p ~/.ssh
@@ -88,10 +82,6 @@ jobs:
           ssh homelab@${{ secrets.SSH_HOST }} /bin/bash <<EOF
             cd ${{ env.TARGET_DIR }}
 
-            echo 'PGID=${{ env.GID }}' >> .env
-            echo 'PUID=${{ env.UID }}' >> .env
-            echo 'TZ=${{ env.TZ }}' >> .env
-
             echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
             echo 'DOMAIN_NAME=${{ env.DOMAIN_NAME }}' >> .env
 
@@ -99,6 +89,7 @@ jobs:
             echo 'DOCKER_TAG=main-${{ github.run_number }}-${{ github.run_attempt }}' >> .env
 
             docker compose up -d
+          EOF
   lighthouse-check:
     name: Lighthouse check
     needs: deploy
