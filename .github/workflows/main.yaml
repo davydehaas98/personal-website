@@ -7,7 +7,6 @@ concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: false
 env:
-  REGISTRY: ghcr.io
   IMAGE_NAME: ghcr.io/${{ github.repository }}
   UID: 1400
   GID: 1400
@@ -58,9 +57,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main-${{ github.run_number }}-${{ github.run_attempt }}
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+            ${{ env.IMAGE_NAME }}:main-${{ github.run_number }}-${{ github.run_attempt }}
   deploy:
     name: Deploy
     needs: deliver
@@ -85,7 +84,7 @@ jobs:
             echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
             echo 'DOMAIN_NAME=${{ env.DOMAIN_NAME }}' >> .env
 
-            echo 'DOCKER_IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}' >> .env
+            echo 'DOCKER_IMAGE=$${{ env.IMAGE_NAME }}' >> .env
             echo 'DOCKER_TAG=main-${{ github.run_number }}-${{ github.run_attempt }}' >> .env
 
             docker compose up -d
