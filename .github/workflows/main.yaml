@@ -82,8 +82,6 @@ jobs:
           ssh homelab@${{ secrets.SSH_HOST }} /bin/bash <<EOF
             cd ${{ env.TARGET_DIR }}
 
-            echo 'TZ=${{ env.TZ }}' >> .env
-
             echo 'USER_DIR=${{ env.USER_DIR }}' >> .env
             echo 'DOMAIN_NAME=${{ env.DOMAIN_NAME }}' >> .env
 
