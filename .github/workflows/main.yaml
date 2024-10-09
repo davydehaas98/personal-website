@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: false
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ghcr.io/${{ github.repository }}
   UID: 1400
   GID: 1400
   TZ: Etc/UTC
