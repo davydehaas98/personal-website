@@ -10,7 +10,6 @@ env:
   DOMAIN_NAME: davydehaas.nl
   IMAGE_NAME: ghcr.io/${{ github.repository }}
   TARGET_DIR: /home/homelab/compose/personal-website
-  USER_DIR: /home/homelab/personal-website
   UID: 1400
   GID: 1400
 
@@ -71,18 +70,17 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-      - name: SCP | Copy docker-compose.yaml
+      - name: SCP | Copy 'compose.yaml'
         run: |
-          scp ./docker-compose.yaml homelab@${{ secrets.SSH_HOST }}:${{ env.TARGET_DIR }}
-      - name: SSH | Start containers
+          scp ./compose.yaml homelab@${{ secrets.SSH_HOST }}:${{ env.TARGET_DIR }}
+      - name: SSH | Start container
         run: |
           ssh homelab@${{ secrets.SSH_HOST }} /bin/bash << ENDSSH
           cd ${{ env.TARGET_DIR }}
 
           cat << EOF > .env
-          USER_DIR=${{ env.USER_DIR }}
           DOMAIN_NAME=${{ env.DOMAIN_NAME }}
-          IMAGE_NAME=$${{ env.IMAGE_NAME }}
+          IMAGE_NAME=${{ env.IMAGE_NAME }}
           IMAGE_TAG=main-${{ github.run_number }}-${{ github.run_attempt }}
           EOF
 
