@@ -101,7 +101,7 @@ jobs:
         id: lighthouseCheck
         with:
           outputDirectory: ${{ github.workspace }}/tmp/lighthouse-report
-          urls: ${{ env.DOMAIN_NAME }}
+          urls: https://${{ env.DOMAIN_NAME }}
       - name: Upload Lighthouse check results
         uses: actions/upload-artifact@84480863f228bb9747b473957fcc9e309aa96097 # v4.4.2
         with:
@@ -127,7 +127,7 @@ jobs:
         uses: zaproxy/action-baseline@0619037bb784a56e2e06b104f0ebe157e076f075 # v0.13.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          target: ${{ env.DOMAIN_NAME }}
+          target: https://${{ env.DOMAIN_NAME }}
           rules_file_name: .zap/rules.tsv
           cmd_options: -a
   k6-load-test:
