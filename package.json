@@ -1,6 +1,6 @@
 {
   "name": "personal-website",
-  "version": "2.0.17",
+  "version": "2.0.18",
   "private": true,
   "dependencies": {
     "@types/node": "22.7.8",
@@ -13,7 +13,7 @@
     "styled-components": "6.1.13",
     "ts-node": "10.9.2",
     "typescript": "5.6.3",
-    "web-vitals": "4.2.3"
+    "web-vitals": "4.2.4"
   },
   "scripts": {
     "dev": "next dev",
