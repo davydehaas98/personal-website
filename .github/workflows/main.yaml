@@ -70,10 +70,10 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-      - name: SCP | Copy 'compose.yaml'
+      - name: Copy 'compose.yaml'
         run: |
-          scp ./compose.yaml homelab@${{ secrets.SSH_HOST }}:${{ env.TARGET_DIR }}
-      - name: SSH | Start container
+          rsync ./compose.yaml homelab@${{ secrets.SSH_HOST }}:${{ env.TARGET_DIR }}
+      - name: Start container
         run: |
           ssh homelab@${{ secrets.SSH_HOST }} /bin/bash << ENDSSH
           cd ${{ env.TARGET_DIR }}
