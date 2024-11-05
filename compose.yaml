@@ -8,6 +8,7 @@ services:
     labels:
       - diun.watch=true
       - traefik.enable=true
+      - traefik.http.routers.personal-website.tls=true
       - traefik.http.routers.personal-website.entrypoints=websecure
       - traefik.http.routers.personal-website.rule=Host(`${DOMAIN_NAME}`) || Host(`www.${DOMAIN_NAME}`)
       - traefik.http.routers.personal-website.middlewares=chain-no-auth@file
