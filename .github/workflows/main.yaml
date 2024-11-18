@@ -55,8 +55,7 @@ jobs:
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:latest
-            ${{ env.IMAGE_NAME }}:${{ github.ref_name }}
-            ${{ env.IMAGE_NAME }}:main-${{ github.run_number }}-${{ github.run_attempt }}
+            ${{ env.IMAGE_NAME }}:${{ github.run_number }}-${{ github.run_attempt }}
   deploy:
     name: Deploy
     needs: deliver
