@@ -1,6 +1,7 @@
 name: Analyse
 on:
   push:
+    branches:
 
 jobs:
   analyse:
