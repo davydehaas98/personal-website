@@ -24,7 +24,7 @@ jobs:
         
       - name: Login to registry
         run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
       
       - name: Build and push to registry
         uses: docker/build-push-action@ca877d9245402d1537745e0e356eab47c3520991 # v6.13.0
