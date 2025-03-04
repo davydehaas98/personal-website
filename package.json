@@ -6,7 +6,7 @@
     "@types/node": "22.13.1",
     "@types/react": "18.3.18",
     "@types/react-dom": "18.3.5",
-    "next": "15.1.6",
+    "next": "15.2.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-router-dom": "7.2.0",
