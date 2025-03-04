@@ -20,7 +20,7 @@ jobs:
           outputDirectory: ${{ github.workspace }}/tmp/lighthouse-report
           urls: https://${{ env.DOMAIN_NAME }}
       - name: Upload Lighthouse check results
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         with:
           name: lighthouse-report
           path: ${{ github.workspace }}/tmp/lighthouse-report
@@ -59,7 +59,7 @@ jobs:
           filename: load-test.js
           flags: --out json=results.json
       - name: Upload k6 load test results
-        uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         with:
           name: k6-results
           path: results.json
