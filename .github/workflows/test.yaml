@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Create directory lighthouse-report
         run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
       - name: Lighthouse check
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: ZAP scan
         uses: zaproxy/action-baseline@7c4deb10e6261301961c86d65d54a516394f9aed # v0.14.0
         with:
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: k6 load test
         uses: grafana/k6-action@e4714b734f2b0afaabeb7b4a69142745548ab9ec # v0.3.1
         with:
