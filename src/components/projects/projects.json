@@ -1,46 +1,38 @@
 [
   {
+    "name": "Homelab",
+    "repository": "davydehaas98/homelab",
+    "description": "Homelab Kubernetes cluster using Talos OS and ArgoCD.",
+    "language": "HCL"
+  },
+  {
+    "name": "Home server",
+    "repository": "davydehaas98/home-server",
+    "description": "My home server configuration using Compose files.",
+    "language": "HCL"
+  },
+  {
+    "name": "Advent of Code",
+    "repository": "davydehaas98/advent-of-code",
+    "description": "My solutions to the Advent of Code puzzles.",
+    "language": "Java"
+  },
+  {
     "name": "Project Euler",
-    "link": "https://github.com/davydehaas98/project-euler",
-    "src": "./assets/images/projects/project-euler.png",
-    "alt": "Project Euler"
-  },
-  {
-    "name": "NGINX Reverse Proxy",
-    "link": "https://github.com/davydehaas98/reverse-proxy",
-    "src": "./assets/images/projects/nginx.png",
-    "alt": "NGINX Reverse Proxy"
-  },
-  {
-    "name": "Media Server",
-    "link": "https://github.com/davydehaas98/media-server",
-    "src": "./assets/images/projects/plex.svg",
-    "alt": "Plex"
+    "repository": "davydehaas98/project-euler",
+    "description": "My solutions to the Project Euler problems.",
+    "language": "Java"
   },
   {
     "name": "Screeps",
-    "link": "https://github.com/davydehaas98/screeps-script",
-    "src": "./assets/images/projects/screeps.svg",
-    "alt": "Screeps"
+    "repository": "davydehaas98/screeps-script",
+    "description": "My script for Screeps, an MMO strategy sandbox for programmers.",
+    "language": "JavaScript"
   },
   {
-    "name": "Unity",
-    "link": "https://github.com/davydehaas98/unity-scripts",
-    "src": "./assets/images/projects/unity.svg"
-  },
-  {
-    "name": "The Valley",
-    "link": "https://www.thevalley.nl",
-    "alt": "The Valley"
-  },
-  {
-    "name": "Info Support",
-    "link": "https://www.infosupport.com",
-    "alt": "Info Support"
-  },
-  {
-    "name": "iO Digital",
-    "link": "https://www.iodigital.com",
-    "alt": "iO Digital"
+    "name": "Unity scripts",
+    "repository": "davydehaas98/unity-scripts",
+    "description": "All kinds of useful scripts for Unity.",
+    "language": "C#"
   }
 ]

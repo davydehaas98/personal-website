@@ -1,21 +1,30 @@
-.imagesContainer {
+.links {
   display: flex;
-  flex-direction: row;
-  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-.anchor {
-  margin: 10px;
-  height: 50px;
-  border-radius: 50%;
+.link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  border: 2px solid var(--color-primary);
+  border-radius: 999px;
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+.link:hover {
+  background-color: #eeeef6;
 }
 
-.image:hover {
-  filter: opacity(0.5);
+.icon {
+  width: 28px;
+  height: 28px;
 }

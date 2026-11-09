@@ -1,28 +1,30 @@
 import React from 'react'
 import appStyles from '../../App.module.css'
-import ProjectCard from '../project-card/ProjectCard'
 import styles from './Projects.module.css'
 import projects from './projects.json'
 
 const Projects = (): React.JSX.Element => {
-  const content = (
-    projects.map((project, index) => (
-      <ProjectCard key={index} link={project.link} name={project.name} src={project.src} />
-    ))
-  )
-
   return (
-    <div>
-      <div className={appStyles.container}>
-        <div className={appStyles.text}>
-          <h1>Projects</h1>
-          <p>Some of the projects I worked on.</p>
-        </div>
-        <div className={styles.projectCardContainer}>
-          {content}
-        </div>
-      </div>
-    </div>
+    <section id="projects" className={appStyles.section} aria-labelledby="projects-title">
+      <h2 id="projects-title">Projects</h2>
+      <p>Some of the projects I work on, all on GitHub.</p>
+      <ul className={styles.grid}>
+        {projects.map((project) => (
+          <li key={project.repository}>
+            <a
+              className={styles.card}
+              href={`https://github.com/${project.repository}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <h3 className={styles.name}>{project.name}</h3>
+              <p className={styles.description}>{project.description}</p>
+              <span className={styles.language}>{project.language}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }
 

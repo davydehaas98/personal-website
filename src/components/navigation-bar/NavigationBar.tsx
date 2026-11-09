@@ -1,15 +1,17 @@
 import React from 'react'
-import { NavLink } from 'react-router'
 import styles from './NavigationBar.module.css'
 
-const NavigationBar = (props: React.ComponentProps<'nav'>): React.JSX.Element => {
+const NavigationBar = (): React.JSX.Element => {
   return (
-    <nav {...props} className={styles.nav}>
-      <NavLink className={styles.navLink} to="/">Davy de Haas</NavLink>
-      <NavLink className={styles.navLink} to="/about">About</NavLink>
-      <NavLink className={styles.navLink} to="/projects">Projects</NavLink>
-      <NavLink className={styles.navLink} to="/contact">Contact</NavLink>
-    </nav>
+    <header className={styles.header}>
+      <nav className={styles.nav} aria-label="Main">
+        <a className={styles.brand} href="#home">Davy de Haas</a>
+        <ul className={styles.links}>
+          <li><a className={styles.link} href="#projects">Projects</a></li>
+          <li><a className={styles.link} href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
   )
 }
 

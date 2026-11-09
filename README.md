@@ -1,7 +1,13 @@
 # personal-website
 
-Source of [davydehaas.nl](https://davydehaas.nl): a React single-page app built with [Vite](https://vite.dev),
-routed in the browser with [React Router](https://reactrouter.com) and styled with CSS Modules.
+Source of [davydehaas.nl](https://davydehaas.nl): a single scrolling page with a short intro, a few GitHub projects
+and contact links. Built with React and [Vite](https://vite.dev), styled with CSS Modules.
+
+To change the content:
+
+- intro text and photo: [`src/components/home/Home.tsx`](src/components/home/Home.tsx)
+- projects: [`src/components/projects/projects.json`](src/components/projects/projects.json) (name, `owner/repo`, description, language)
+- contact links: [`src/components/contact/Contact.tsx`](src/components/contact/Contact.tsx)
 
 ## Requirements
 
@@ -31,7 +37,9 @@ The [`Dockerfile`](Dockerfile) builds the site on Node (alpine) and serves `buil
 
 - listens on **8080** and runs as a non-root user (uid 101);
 - works with a read-only root filesystem: nginx's pid and temp paths are under `/tmp`, so only `/tmp` must be writable;
-- falls back to `index.html` for unknown paths, so deep links like `/projects` work;
+- redirects the old page URLs (`/about`, `/projects`, `/contact`) to the matching section (`/#projects`, …),
+  and answers unknown paths with the home page and a 404 status;
+- caches Vite's fingerprinted output in `/static/` for a year and revalidates everything else (`index.html`, images in `public/`);
 - sends a strict Content-Security-Policy (`default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'`).
   The build contains no inline scripts or styles, so keep it that way: CSS-in-JS libraries that inject `<style>` tags at runtime break under this policy.
 

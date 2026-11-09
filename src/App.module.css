@@ -1,23 +1,13 @@
-.wrapper {
-  max-width: 100%;
-}
-
-.container {
+.main {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  overflow: hidden;
   align-items: center;
-  margin: 50px auto;
-  min-height: 100vh;
-  width: 100%;
-  background-color: #ffffff;
-  color: #000044;
 }
 
-.text {
-  justify-content: center;
+/* Shared layout for every page section. */
+.section {
+  width: 100%;
+  max-width: 1000px;
+  padding: 48px 16px;
   text-align: center;
-  margin: 50px;
-  color: #000044;
 }
