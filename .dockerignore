@@ -2,13 +2,9 @@
 .github
 .idea
 .vscode
-.zap
 build
 coverage
-log
-tmp
 node_modules
-*Dockerfile*
-*docker-compose*
-README.md
+Dockerfile
+*.md
 load-test.js

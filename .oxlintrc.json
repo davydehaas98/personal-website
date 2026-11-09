@@ -13,12 +13,12 @@
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/control-has-associated-label": ["error", { "depth": 3 }],
     "import/no-named-as-default": "off",
-    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css", "@testing-library/jest-dom/vitest"] }]
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }]
   },
   "ignorePatterns": ["build/**", "coverage/**"],
   "overrides": [
     {
-      "files": ["**/*.test.{ts,tsx}", "src/setupTests.ts"],
+      "files": ["**/*.test.{ts,tsx}"],
       "env": { "vitest": true }
     }
   ]
