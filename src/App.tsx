@@ -1,18 +1,17 @@
 import React from 'react'
-import { Route, RouterProvider, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router'
 import NavigationBar from './components/navigation-bar/NavigationBar'
-import { StyledWrapper } from './App.styles'
+import styles from './App.module.css'
 import Home from './components/home/Home'
 import About from './components/about/About'
 import Projects from './components/projects/Projects'
 import Contact from './components/contact/Contact'
 import Footer from './components/footer/Footer'
-import { BrowserRouter } from 'react-router-dom'
 
-const App = (): JSX.Element => {
+const App = (): React.JSX.Element => {
   return (
     <BrowserRouter>
-      <StyledWrapper>
+      <div className={styles.wrapper}>
         <NavigationBar />
         <main role="main">
           <Routes>
@@ -23,7 +22,7 @@ const App = (): JSX.Element => {
           </Routes>
         </main>
         <Footer />
-      </StyledWrapper>
+      </div>
     </BrowserRouter>
   )
 }

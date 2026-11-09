@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+# personal-website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Source of [davydehaas.nl](https://davydehaas.nl): a React single-page app built with [Vite](https://vite.dev),
+routed in the browser with [React Router](https://reactrouter.com) and styled with CSS Modules.
 
-## Available Scripts
+## Requirements
 
-In the project directory, you can run:
+- Node.js, version in [`.nvmrc`](.nvmrc) (current LTS); `nvm use` picks it up.
+- Docker or Podman, only for building the container image.
 
-### `npm start`
+## Scripts
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+| Command             | What it does                                                         |
+| ------------------- | -------------------------------------------------------------------- |
+| `npm install`       | Install dependencies.                                                |
+| `npm run dev`       | Start the Vite dev server with hot reload on http://localhost:5173. |
+| `npm run build`     | Type-check, then build the static site into `build/`.               |
+| `npm run preview`   | Serve the production build from `build/` locally.                  |
+| `npm test`          | Run the tests once with Vitest (jsdom).                              |
+| `npm run test:watch`| Run Vitest in watch mode.                                            |
+| `npm run typecheck` | Type-check only (`tsc --noEmit`).                                    |
+| `npm run lint`      | Lint with [oxlint](https://oxc.rs/docs/guide/usage/linter) (`.oxlintrc.json`). |
+| `npm run lint:fix`  | Lint and apply safe fixes.                                           |
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Static files that are copied as-is (images, `manifest.json`, `robots.txt`, `.well-known/`) live in `public/`.
 
-### `npm test`
+## Container image
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The [`Dockerfile`](Dockerfile) builds the site on Node (alpine) and serves `build/` with
+[`nginxinc/nginx-unprivileged`](https://hub.docker.com/r/nginxinc/nginx-unprivileged) (alpine):
 
-### `npm run build`
+- listens on **8080** and runs as a non-root user (uid 101);
+- works with a read-only root filesystem: nginx's pid and temp paths are under `/tmp`, so only `/tmp` must be writable;
+- falls back to `index.html` for unknown paths, so deep links like `/projects` work;
+- sends a strict Content-Security-Policy (`default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'`).
+  The build contains no inline scripts or styles, so keep it that way: CSS-in-JS libraries that inject `<style>` tags at runtime break under this policy.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Build and run it locally the way the cluster runs it:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+docker build -t personal-website .
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+docker run --rm -p 8080:8080 --read-only --tmpfs /tmp --cap-drop ALL --user 101:101 personal-website
+```
 
-### `npm run eject`
+Then open http://localhost:8080.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## CI/CD
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Build** (`build.yaml`) and **Analyse** (`analyse.yaml`) run build, tests and lint on every push and pull request.
+- **Release** (`release.yaml`) runs on a version tag (`x.y.z`) and pushes a multi-arch image (`linux/amd64`, `linux/arm64`)
+  to `ghcr.io/davydehaas98/personal-website`, tagged with the version and `latest`.
+- **Daily test** (`test.yaml`) runs Lighthouse, a ZAP baseline scan and a k6 load test against the live site.

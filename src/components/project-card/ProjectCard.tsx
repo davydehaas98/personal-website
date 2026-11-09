@@ -1,14 +1,20 @@
 import React from 'react'
-import { StyledImage, StyledAnchor, StyledProjectCard } from './ProjectCard.styles'
+import styles from './ProjectCard.module.css'
 
-const ProjectCard = (props: any): JSX.Element => {
+type ProjectCardProps = {
+  link: string
+  name: string
+  src?: string
+}
+
+const ProjectCard = (props: ProjectCardProps): React.JSX.Element => {
   return (
-    <StyledAnchor href={props.link} target="_blank" rel="noopener noreferrer">
-      <StyledProjectCard>
-        <StyledImage src={props.src}/>
+    <a className={styles.anchor} href={props.link} target="_blank" rel="noopener noreferrer">
+      <div className={styles.projectCard}>
+        <img className={styles.image} src={props.src ?? './assets/images/placeholder.svg'} alt="" />
         <h1>{props.name}</h1>
-      </StyledProjectCard>
-    </StyledAnchor>
+      </div>
+    </a>
   )
 }
 

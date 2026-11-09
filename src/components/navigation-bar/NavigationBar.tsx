@@ -1,19 +1,15 @@
 import React from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { StyledNav, StyledNavLink } from './NavigationBar.styles'
+import { NavLink } from 'react-router'
+import styles from './NavigationBar.module.css'
 
-const NavigationBar = (props: any): JSX.Element => {
-  const location = useLocation()
-  const navigate = useNavigate()
-  const params = useParams()
-
+const NavigationBar = (props: React.ComponentProps<'nav'>): React.JSX.Element => {
   return (
-    <StyledNav {...props} router={{ location, navigate, params }}>
-      <StyledNavLink to="/">Davy de Haas</StyledNavLink>
-      <StyledNavLink to="/about">About</StyledNavLink>
-      <StyledNavLink to="/projects">Projects</StyledNavLink>
-      <StyledNavLink to="/contact">Contact</StyledNavLink>
-    </StyledNav>
+    <nav {...props} className={styles.nav}>
+      <NavLink className={styles.navLink} to="/">Davy de Haas</NavLink>
+      <NavLink className={styles.navLink} to="/about">About</NavLink>
+      <NavLink className={styles.navLink} to="/projects">Projects</NavLink>
+      <NavLink className={styles.navLink} to="/contact">Contact</NavLink>
+    </nav>
   )
 }
 

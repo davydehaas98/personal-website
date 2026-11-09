@@ -1,11 +1,11 @@
 import React from 'react'
-import { StyledFooter } from './Footer.styles'
+import styles from './Footer.module.css'
 
-const Footer = (): JSX.Element => {
+const Footer = (): React.JSX.Element => {
   return (
-    <StyledFooter>
+    <div className={styles.footer}>
       <p>© 2023 Davy de Haas</p>
-    </StyledFooter>
+    </div>
   )
 }
 

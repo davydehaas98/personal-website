@@ -1,20 +1,20 @@
 import React from 'react'
-import { StyledImage, StyledDivision } from './Home.styles'
-import { StyledContainer, StyledText } from '../../App.styles'
+import appStyles from '../../App.module.css'
+import styles from './Home.module.css'
 
-const Home = (): JSX.Element => {
+const Home = (): React.JSX.Element => {
   return (
-    <StyledContainer>
-      <StyledText>
+    <div className={appStyles.container}>
+      <div className={appStyles.text}>
         <h1>Davy de Haas</h1>
         <p>Java Software Engineer at iO, Campus Eindhoven.</p>
-      </StyledText>
-      <StyledImage src="./assets/images/me.jpg" alt="me" />
-      <StyledDivision>
+      </div>
+      <img className={styles.image} src="./assets/images/me.jpg" alt="me" />
+      <div className={styles.division}>
         <h1>Welcome!</h1>
         <p>This website is still under construction.</p>
-      </StyledDivision>
-    </StyledContainer>
+      </div>
+    </div>
   )
 }
 

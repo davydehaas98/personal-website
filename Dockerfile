@@ -1,17 +1,21 @@
-FROM node:24.13.1-alpine@sha256:4f696fbf39f383c1e486030ba6b289a5d9af541642fc78ab197e584a113b9c03 AS build
+FROM node:26.13.0-alpine@sha256:b2646ba6d774dc22c24d89fc37103fcf4c4467e870c78b9519aa403300b2835a AS build
 
 WORKDIR /app
 
-COPY package*.json .
+COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
 RUN npm run build
 
-FROM nginx:1.29.5@sha256:341bf0f3ce6c5277d6002cf6e1fb0319fa4252add24ab6a0e262e0056d313208 AS runtime
+FROM nginxinc/nginx-unprivileged:1.31.7-alpine@sha256:c3bcf3d1a53a027bfa515b9fe4fbbe7bf6b791476a5af853de439ad494b145bd AS runtime
 
-COPY --from=build /app/build /usr/share/nginx/html
-COPY --from=build /app/nginx.conf /etc/nginx/conf.d/default.conf
+# Replace the main config entirely; drop the stock server block that listens on 8080 as well.
+COPY --chown=root:root nginx.conf /etc/nginx/nginx.conf
+COPY --chown=root:root --from=build /app/build /usr/share/nginx/html
 
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+USER root
+RUN rm -f /etc/nginx/conf.d/default.conf
+USER 101
+
+EXPOSE 8080

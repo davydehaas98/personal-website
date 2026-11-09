@@ -1,51 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
     "strict": false,
-    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
     "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "baseUrl": ".",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vite/client", "vitest/globals", "node"]
   },
-  "plugins": [
-    {
-      "name": "next"
-    }
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "./dist/types/**/*.ts"
-  ],
-  "exclude": ["node_modules"],
-  "strictNullChecks": true,
-  "trailing-comma": [
-    true,
-    {
-      "singleline": "always",
-      "multiline": {
-        "objects": "always",
-        "arrays": "always",
-        "functions": "never",
-        "typeLiterals": "ignore"
-      }
-    }
-  ],
-  "semicolon": [true, "never"]
+  "include": ["src", "vite.config.ts"]
 }
