@@ -2,37 +2,37 @@
   {
     "name": "Homelab",
     "repository": "davydehaas98/homelab",
-    "description": "Homelab Kubernetes cluster using Talos OS and ArgoCD.",
-    "language": "HCL"
+    "description": "My Kubernetes cluster at home, on Talos Linux and deployed with Argo CD. This website runs on it.",
+    "logos": ["kubernetes", "talos", "argo", "helm", "cilium", "prometheus", "grafana", "postgresql", "zfs", "raspberrypi"]
   },
   {
     "name": "Home server",
     "repository": "davydehaas98/home-server",
     "description": "My home server configuration using Compose files.",
-    "language": "HCL"
+    "logos": ["docker", "terraform"]
   },
   {
     "name": "Advent of Code",
     "repository": "davydehaas98/advent-of-code",
     "description": "My solutions to the Advent of Code puzzles.",
-    "language": "Java"
+    "logos": ["openjdk", "maven"]
   },
   {
     "name": "Project Euler",
     "repository": "davydehaas98/project-euler",
     "description": "My solutions to the Project Euler problems.",
-    "language": "Java"
+    "logos": ["openjdk", "python"]
   },
   {
     "name": "Screeps",
     "repository": "davydehaas98/screeps-script",
     "description": "My script for Screeps, an MMO strategy sandbox for programmers.",
-    "language": "JavaScript"
+    "logos": ["javascript"]
   },
   {
     "name": "Unity scripts",
     "repository": "davydehaas98/unity-scripts",
     "description": "All kinds of useful scripts for Unity.",
-    "language": "C#"
+    "logos": ["unity", "dotnet"]
   }
 ]

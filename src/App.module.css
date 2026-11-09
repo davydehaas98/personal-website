@@ -1,13 +1,17 @@
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 /* Shared layout for every page section. */
 .section {
   width: 100%;
-  max-width: 1000px;
-  padding: 48px 16px;
-  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 20px;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 1.75rem;
+}
+
+.lead {
+  margin: 0;
+  color: var(--color-muted);
 }

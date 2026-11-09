@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import styles from './App.module.css'
 import NavigationBar from './components/navigation-bar/NavigationBar'
 import Home from './components/home/Home'
 import Projects from './components/projects/Projects'
@@ -18,7 +17,7 @@ const App = (): React.JSX.Element => {
   return (
     <>
       <NavigationBar />
-      <main className={styles.main}>
+      <main>
         <Home />
         <Projects />
         <Contact />

@@ -1,26 +1,33 @@
+/* Colours as light-dark(light, dark). The page follows the system setting until the toggle sets
+   data-theme on <html> (see src/theme.ts), which pins color-scheme and with it every colour below. */
 :root {
-  --color-primary: #000044;
-  --color-background: #ffffff;
-  --color-muted: #55557a;
-  --header-height: 64px;
+  color-scheme: light dark;
 
-  color-scheme: light;
+  /* Light green: --color-accent for decoration, --color-brand is a darker shade that stays readable as text. */
+  --color-brand: light-dark(#23733a, #8fdca0);
+  --color-accent: light-dark(#8fd09e, #4f9e63);
+  --color-bg: light-dark(#dfeee3, #0d1510);
+  --color-surface: light-dark(#ffffff, #131f17);
+  --color-text: light-dark(#14231a, #e3efe6);
+  --color-muted: light-dark(#56695c, #9db3a4);
+  --color-border: light-dark(#c3dacb, #23362a);
+  --header-height: 60px;
+
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1.5;
-  color: var(--color-primary);
-  background-color: var(--color-background);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-html {
   scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 *,
@@ -31,10 +38,10 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--color-background);
 }
 
-img {
+img,
+svg {
   max-width: 100%;
   height: auto;
 }
@@ -49,7 +56,23 @@ h3 {
   line-height: 1.2;
 }
 
+a {
+  color: var(--color-brand);
+}
+
 a:focus-visible {
-  outline: 3px solid var(--color-primary);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
 }
