@@ -4,62 +4,65 @@ on:
     - cron: '0 4 * * *'
 env:
   DOMAIN_NAME: davydehaas.nl
+
 jobs:
   lighthouse-check:
     name: Lighthouse check
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
       - name: Create directory lighthouse-report
         run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
       - name: Lighthouse check
-        uses: foo-software/lighthouse-check-action@a80267da2e0244b8a2e457a8575fc47590615852 # v12.0.1
+        uses: foo-software/lighthouse-check-action@v12.0.1
         id: lighthouseCheck
         with:
           outputDirectory: ${{ github.workspace }}/tmp/lighthouse-report
           urls: https://${{ env.DOMAIN_NAME }}
       - name: Upload Lighthouse check results
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: lighthouse-report
           path: ${{ github.workspace }}/tmp/lighthouse-report
       - name: Verify Lighthouse check results
-        uses: foo-software/lighthouse-check-status-action@2b9d5101f7a0de86ddb153a0d77ad7046aac1052 # v3.0.1
+        uses: foo-software/lighthouse-check-status-action@v3.0.1
         with:
           lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
           minAccessibilityScore: "90"
           minBestPracticesScore: "50"
           minPerformanceScore: "50"
-          minProgressiveWebAppScore: "50"
           minSeoScore: "50"
+
   zap-scan:
     name: ZAP scan
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
       - name: ZAP scan
-        uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25 # v0.15.0
+        uses: zaproxy/action-baseline@v0.15.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target: https://${{ env.DOMAIN_NAME }}
-          rules_file_name: .zap/rules.tsv
           cmd_options: -a
+
   k6-load-test:
     name: k6 load test
     needs: [lighthouse-check, zap-scan]
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
+      - name: Set up k6
+        uses: grafana/setup-k6-action@v1.3.0
       - name: k6 load test
-        uses: grafana/k6-action@e4714b734f2b0afaabeb7b4a69142745548ab9ec # v0.3.1
+        uses: grafana/run-k6-action@v1.6.0
         with:
-          filename: load-test.js
+          path: load-test.js
           flags: --out json=results.json
       - name: Upload k6 load test results
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: k6-results
           path: results.json

@@ -1,8 +1,20 @@
 name: Release
+# Every push to main releases a new version; Actions > Release > Run workflow does the same by hand.
 on:
   push:
-    tags:
-      - '*.*.*'
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'renovate.json'
+      - '.github/workflows/build.yaml'
+      - '.github/workflows/test.yaml'
+  workflow_dispatch:
+
+# One release at a time, so two runs never pick the same version.
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 env:
   REGISTRY: ghcr.io
@@ -11,24 +23,53 @@ env:
 jobs:
   release:
     name: Release
+    # The button lets you pick a branch; only main is released.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     permissions:
       contents: write
       packages: write
     steps:
       - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6.1.1
+
+      - name: Set up Node
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Test and lint
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm test
+          pnpm lint
+
+      # Calendar version YYYY.M.N: year, month without a leading zero (keeps it valid semver), Nth release that month.
+      - name: Pick version
+        id: version
+        run: |
+          month="$(date -u +%Y).$(date -u +%-m)"
+          last="$(git tag --list "${month}.*" | sed "s/^${month}\.//" | grep -E '^[0-9]+$' | sort -n | tail -n 1)"
+          version="${month}.$(( ${last:--1} + 1 ))"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "Releasing ${version}" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
+        uses: docker/setup-qemu-action@v4.4.0
         with:
           platforms: linux/arm64
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+        uses: docker/setup-buildx-action@v4.4.1
 
       - name: Login to registry
-        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
+        uses: docker/login-action@v4.8.0
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
@@ -36,15 +77,16 @@ jobs:
 
       - name: Extract image metadata
         id: meta
-        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        uses: docker/metadata-action@v6.2.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          # Only the exact version: tags never move, so Git (and Renovate) always says which image runs.
+          flavor: latest=false
           tags: |
-            type=semver,pattern={{version}}
-            type=raw,value=latest
+            type=raw,value=${{ steps.version.outputs.version }}
 
       - name: Build and push to registry
-        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        uses: docker/build-push-action@v7.4.0
         with:
           context: .
           platforms: linux/amd64,linux/arm64
@@ -54,12 +96,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Configure Git for Helm chart release
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
-      - name: Release Helm chart
-        uses: helm/chart-releaser-action@92c6b97fa9f664492a2592e0d1d80bc6bf378957 # v1.9.0
+      # Pushed with GITHUB_TOKEN, so the tag does not start another workflow run.
+      - name: Tag the release in git
         env:
-          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$VERSION" -m "Release $VERSION"
+          git push origin "refs/tags/$VERSION"
