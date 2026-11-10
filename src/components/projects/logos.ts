@@ -7,12 +7,13 @@ import {
   siHelm,
   siJavascript,
   siKubernetes,
+  siLinux,
   siOpenjdk,
   siOpenzfs,
+  siPlex,
   siPostgresql,
   siPrometheus,
   siPython,
-  siRaspberrypi,
   siTalos,
   siTerraform,
 } from 'simple-icons'
@@ -26,12 +27,13 @@ export const logos = {
   helm: siHelm,
   javascript: siJavascript,
   kubernetes: siKubernetes,
+  linux: siLinux,
   maven: siApachemaven,
   openjdk: siOpenjdk,
+  plex: siPlex,
   postgresql: siPostgresql,
   prometheus: siPrometheus,
   python: siPython,
-  raspberrypi: siRaspberrypi,
   talos: siTalos,
   terraform: siTerraform,
   zfs: siOpenzfs,
@@ -47,6 +49,7 @@ const luminance = (hex: string): number => {
   })
   return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
+
 const contrast = (a: string, b: string): number => {
   const [light, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x)
   return (light + 0.05) / (dark + 0.05)
@@ -58,7 +61,7 @@ export const invisibleOn = (hex: string): 'light' | 'dark' | undefined => {
   if (contrast(hex, 'ffffff') < 1.3) {
     return 'light'
   }
-  if (contrast(hex, '131f17') < 1.3) {
+  if (contrast(hex, '141416') < 1.5) {
     return 'dark'
   }
   return undefined

@@ -1,0 +1,101 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+/* A group header (Education, Certifications) gets space above it to separate it from the group before. */
+.group {
+  margin-top: 56px;
+}
+
+/* The circle on a green line that fades out towards both ends: across the page for a section, shorter for a group. */
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.group .rule {
+  max-width: 420px;
+}
+
+.rule::before,
+.rule::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+}
+
+.rule::before {
+  background: linear-gradient(to right, transparent, var(--color-accent));
+}
+
+.rule::after {
+  background: linear-gradient(to left, transparent, var(--color-accent));
+}
+
+.icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--color-accent) 18%, var(--color-bg));
+  color: var(--color-brand);
+}
+
+.section .icon {
+  width: 56px;
+  height: 56px;
+}
+
+.icon svg {
+  width: 24px;
+}
+
+.title {
+  margin: 0;
+}
+
+.section .title {
+  font-size: 1.75rem;
+}
+
+.group .title {
+  font-size: 1.125rem;
+}
+
+.lead {
+  margin: 4px 0 0;
+  color: var(--color-muted);
+}
+
+/* Phones: circle and title side by side on the left, in line with the timeline, without the line. */
+@media (max-width: 640px) {
+  .header {
+    flex-direction: row;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .rule {
+    width: auto;
+  }
+
+  .rule::before,
+  .rule::after {
+    display: none;
+  }
+
+  .section .icon {
+    width: 48px;
+    height: 48px;
+  }
+}

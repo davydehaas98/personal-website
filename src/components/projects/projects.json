@@ -2,37 +2,43 @@
   {
     "name": "Homelab",
     "repository": "davydehaas98/homelab",
-    "description": "My Kubernetes cluster at home, on Talos Linux and deployed with Argo CD. This website runs on it.",
-    "logos": ["kubernetes", "talos", "argo", "helm", "cilium", "prometheus", "grafana", "postgresql", "zfs", "raspberrypi"]
+    "description": "Kubernetes at home on Talos Linux and Argo CD. This website runs on it.",
+    "languages": ["HCL", "Shell", "Go Template"],
+    "logos": ["kubernetes", "talos", "argo", "helm", "cilium", "prometheus", "grafana", "postgresql", "zfs"]
   },
   {
     "name": "Home server",
     "repository": "davydehaas98/home-server",
-    "description": "My home server configuration using Compose files.",
-    "logos": ["docker", "terraform"]
+    "description": "My home server configuration with Docker Compose and a Plex media stack.",
+    "languages": ["HCL", "Shell"],
+    "logos": ["docker", "terraform", "linux", "plex"]
   },
   {
     "name": "Advent of Code",
     "repository": "davydehaas98/advent-of-code",
     "description": "My solutions to the Advent of Code puzzles.",
+    "languages": ["Java"],
     "logos": ["openjdk", "maven"]
   },
   {
     "name": "Project Euler",
     "repository": "davydehaas98/project-euler",
     "description": "My solutions to the Project Euler problems.",
+    "languages": ["Java", "Python"],
     "logos": ["openjdk", "python"]
   },
   {
     "name": "Screeps",
     "repository": "davydehaas98/screeps-script",
-    "description": "My script for Screeps, an MMO strategy sandbox for programmers.",
+    "description": "My script for Screeps, an MMO strategy game for programmers.",
+    "languages": ["JavaScript"],
     "logos": ["javascript"]
   },
   {
     "name": "VTK visualization",
     "repository": "davydehaas98/vcs7-visualization",
-    "description": "Visualization assignment for the Fontys VR minor, using the Visualization Toolkit (VTK).",
+    "description": "Visualization assignment for the Fontys VR minor, built with VTK.",
+    "languages": ["Python"],
     "logos": ["python"]
   }
 ]

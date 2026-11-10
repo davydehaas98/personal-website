@@ -5,6 +5,7 @@
   border-top: 1px solid var(--color-border);
   color: var(--color-muted);
   font-size: 0.875rem;
+  text-align: center;
 }
 
 .footer p {

@@ -1,5 +1,8 @@
 import React, { useSyncExternalStore } from 'react'
+import { siCredly } from 'simple-icons'
 import appStyles from '../../App.module.css'
+import { ArrowUpRightIcon, AwardIcon, BrandIcon, BriefcaseIcon, GraduationCapIcon } from '../icons/Icons'
+import SectionHeader from '../section-header/SectionHeader'
 import { formatPeriod, parseYearMonth } from './dates'
 import styles from './Experience.module.css'
 import experience from './experience.json'
@@ -31,7 +34,7 @@ const Experience = (): React.JSX.Element => {
 
   return (
     <section id="experience" className={appStyles.section} aria-labelledby="experience-title">
-      <h2 id="experience-title" className={appStyles.title}>Experience</h2>
+      <SectionHeader id="experience-title" icon={<BriefcaseIcon />} title="Experience" />
       <ol className={styles.list}>
         {experience.work.map((job) => {
           const { range, duration } = formatPeriod(job.start, job.end, now)
@@ -53,7 +56,7 @@ const Experience = (): React.JSX.Element => {
         })}
       </ol>
 
-      <h3 className={styles.subtitle}>Education</h3>
+      <SectionHeader level={3} icon={<GraduationCapIcon />} title="Education" />
       <ol className={styles.list}>
         {experience.education.map((study) => (
           <li key={study.degree} className={styles.item}>
@@ -70,7 +73,7 @@ const Experience = (): React.JSX.Element => {
         ))}
       </ol>
 
-      <h3 className={styles.subtitle}>Certifications</h3>
+      <SectionHeader level={3} icon={<AwardIcon />} title="Certifications" />
       {badgeGroups.map(({ issuer, items }) => (
         <div key={issuer} className={styles.badgeGroup}>
           <h4 className={styles.issuer}>{issuer}</h4>
@@ -78,7 +81,9 @@ const Experience = (): React.JSX.Element => {
             {items.map((badge) => (
               <li key={badge.link}>
                 <a className={styles.badge} href={badge.link} target="_blank" rel="noopener noreferrer">
-                  <img src={badge.image} alt="" width={64} height={64} loading="lazy" />
+                  <span className={styles.badgeBubble}>
+                    <img src={badge.image} alt="" width={72} height={72} loading="lazy" />
+                  </span>
                   <strong className={styles.badgeName}>{badge.name}</strong>
                 </a>
               </li>
@@ -87,7 +92,11 @@ const Experience = (): React.JSX.Element => {
         </div>
       ))}
       <p className={styles.more}>
-        <a href="https://www.credly.com/users/davy-de-haas" target="_blank" rel="noopener noreferrer">All badges on Credly</a>
+        <a className={styles.credly} href="https://www.credly.com/users/davy-de-haas" target="_blank" rel="noopener noreferrer">
+          <BrandIcon icon={siCredly} fill={`#${siCredly.hex}`} className={styles.credlyLogo} />
+          All badges on Credly
+          <ArrowUpRightIcon className={styles.credlyArrow} />
+        </a>
       </p>
     </section>
   )

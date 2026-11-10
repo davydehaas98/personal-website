@@ -67,17 +67,17 @@
 
 @media (max-width: 640px) {
   .list::before {
-    left: 5px;
+    left: 23px;
     transform: none;
   }
 
   .item {
     grid-template-columns: 1fr;
-    padding-left: 28px;
+    padding-left: 60px;
   }
 
   .item::before {
-    left: 0;
+    left: 18px;
     transform: none;
   }
 
@@ -112,6 +112,7 @@
 
 .organisation a {
   color: inherit;
+  text-decoration: none;
 }
 
 .organisation a:hover {
@@ -123,62 +124,126 @@
   font-size: 0.875rem;
 }
 
-/* Certification badges from Credly (images are copies in public/, as the CSP only allows same-origin images). */
+/* Certification badges from Credly, shown as the badge images themselves with the name under them, centered and
+   grouped by issuer. (The images are copies in public/, as the CSP only allows images from the site itself.) */
 .badgeGroup {
-  margin-top: 20px;
+  margin-top: 28px;
+  text-align: center;
 }
 
 .issuer {
   margin: 0;
   color: var(--color-muted);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .badges {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-  gap: 12px;
-  margin: 8px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 32px;
+  margin: 14px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .badge {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
-  height: 100%;
-  padding: 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background-color: var(--color-surface);
+  gap: 10px;
+  width: 150px;
   color: inherit;
   text-decoration: none;
-  transition: border-color 0.15s;
 }
 
-.badge:hover {
+/* Each badge in a round bubble, like the logos on the project cards. */
+.badgeBubble {
+  display: grid;
+  place-items: center;
+  width: 108px;
+  height: 108px;
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.badgeBubble img {
+  width: 72px;
+  height: 72px;
+}
+
+.badge:hover .badgeBubble,
+.badge:focus-visible .badgeBubble {
   border-color: var(--color-brand);
-}
-
-.badge img {
-  flex: none;
-  width: 64px;
-  height: 64px;
+  transform: scale(1.06);
 }
 
 .badgeName {
-  font-size: 0.9375rem;
-  line-height: 1.3;
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.badge:hover .badgeName {
+  color: var(--color-brand);
 }
 
 .more {
-  margin: 12px 0 0;
-  font-size: 0.875rem;
+  margin: 32px 0 0;
+  text-align: center;
 }
 
-.subtitle {
-  margin: 40px 0 0;
-  font-size: 1.25rem;
+/* A pill like the contact links: a green border and it grows a little on hover. */
+.credly {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 12px;
+  border: 2px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.credly:hover,
+.credly:focus-visible {
+  border-color: var(--color-brand);
+  transform: scale(1.08);
+}
+
+.credlyLogo {
+  width: 30px;
+}
+
+.credlyArrow {
+  width: 14px;
+  color: var(--color-muted);
+}
+
+.credly:hover .credlyArrow,
+.credly:focus-visible .credlyArrow {
+  color: var(--color-brand);
+}
+
+@media (max-width: 640px) {
+  .badgeGroup,
+  .more {
+    text-align: left;
+  }
+
+  .badges {
+    justify-content: flex-start;
+    gap: 16px 20px;
+  }
+
+  .badge {
+    width: 130px;
+  }
 }

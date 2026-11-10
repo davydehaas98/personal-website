@@ -9,15 +9,15 @@ describe('App', () => {
     delete document.documentElement.dataset.theme
   })
 
-  it('switches between light and dark mode and remembers the choice', async () => {
+  it('starts dark, switches between light and dark mode and remembers the choice', async () => {
     const user = userEvent.setup()
     render(<App />)
-    await user.click(screen.getByRole('button', { name: 'Switch to dark mode' }))
-    expect(document.documentElement.dataset.theme).toBe('dark')
-    expect(window.localStorage.getItem('theme')).toBe('dark')
     await user.click(screen.getByRole('button', { name: 'Switch to light mode' }))
     expect(document.documentElement.dataset.theme).toBe('light')
     expect(window.localStorage.getItem('theme')).toBe('light')
+    await user.click(screen.getByRole('button', { name: 'Switch to dark mode' }))
+    expect(document.documentElement.dataset.theme).toBe('dark')
+    expect(window.localStorage.getItem('theme')).toBe('dark')
   })
 
   it('renders the intro, experience, projects and contact sections on one page', () => {
@@ -60,6 +60,14 @@ describe('App', () => {
       }
     })
     expect(within(lists[0]).getByText('Kubernetes')).toBeInTheDocument()
+  })
+
+  it('shows the languages of every project', () => {
+    render(<App />)
+    const lists = screen.getAllByRole('list', { name: 'Languages' })
+    expect(lists.map((list) => within(list).getAllByRole('listitem').map((item) => item.textContent))).toEqual(
+      projects.map((project) => project.languages),
+    )
   })
 
   it('shows the work, education and Credly badges with dates', () => {

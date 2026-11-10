@@ -1,16 +1,17 @@
-/* Colours as light-dark(light, dark). The page follows the system setting until the toggle sets
-   data-theme on <html> (see src/theme.ts), which pins color-scheme and with it every colour below. */
+/* Colours as light-dark(light, dark). Dark by default; the toggle sets data-theme='light' on <html>
+   (see src/theme.ts), which switches color-scheme and with it every colour below. */
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
 
-  /* Light green: --color-accent for decoration, --color-brand is a darker shade that stays readable as text. */
+  /* Light green: --color-accent for decoration, --color-brand is a darker shade that stays readable as text.
+     Dark mode is neutral near-black with grey text; green is only used for the accents. */
   --color-brand: light-dark(#20843c, #86f0a2);
   --color-accent: light-dark(#5ed47e, #44b866);
-  --color-bg: light-dark(#ffffff, #0d1510);
-  --color-surface: light-dark(#ffffff, #131f17);
-  --color-text: light-dark(#14231a, #e3efe6);
-  --color-muted: light-dark(#56695c, #9db3a4);
-  --color-border: light-dark(#c3dacb, #23362a);
+  --color-bg: light-dark(#ffffff, #0a0a0b);
+  --color-surface: light-dark(#ffffff, #141416);
+  --color-text: light-dark(#14231a, #ededed);
+  --color-muted: light-dark(#56695c, #a1a1aa);
+  --color-border: light-dark(#c3dacb, #2c2c31);
   --header-height: 60px;
 
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -24,10 +25,6 @@
 
 :root[data-theme='light'] {
   color-scheme: light;
-}
-
-:root[data-theme='dark'] {
-  color-scheme: dark;
 }
 
 *,
