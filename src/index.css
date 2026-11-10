@@ -4,9 +4,9 @@
   color-scheme: light dark;
 
   /* Light green: --color-accent for decoration, --color-brand is a darker shade that stays readable as text. */
-  --color-brand: light-dark(#23733a, #8fdca0);
-  --color-accent: light-dark(#8fd09e, #4f9e63);
-  --color-bg: light-dark(#dfeee3, #0d1510);
+  --color-brand: light-dark(#20843c, #86f0a2);
+  --color-accent: light-dark(#5ed47e, #44b866);
+  --color-bg: light-dark(#ffffff, #0d1510);
   --color-surface: light-dark(#ffffff, #131f17);
   --color-text: light-dark(#14231a, #e3efe6);
   --color-muted: light-dark(#56695c, #9db3a4);
