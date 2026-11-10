@@ -3,6 +3,7 @@
 .idea
 .vscode
 build
+build-ssr
 coverage
 node_modules
 Dockerfile

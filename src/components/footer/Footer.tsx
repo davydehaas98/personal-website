@@ -1,7 +1,9 @@
 import React from 'react'
 import styles from './Footer.module.css'
 
-const year = new Date().getFullYear()
+// Replaced with the build year by Vite (define in vite.config.ts), so pre-rendered HTML and the browser agree.
+declare const BUILD_YEAR: number
+const year = BUILD_YEAR
 
 const Footer = (): React.JSX.Element => {
   return (

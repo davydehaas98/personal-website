@@ -1,10 +1,10 @@
 import React from 'react'
-import { useTheme } from '../../theme'
+import { toggleTheme, useTheme } from '../../theme'
 import { MoonIcon, SunIcon } from '../icons/Icons'
 import styles from './NavigationBar.module.css'
 
 const NavigationBar = (): React.JSX.Element => {
-  const [theme, toggleTheme] = useTheme()
+  const theme = useTheme()
   const label = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
 
   return (

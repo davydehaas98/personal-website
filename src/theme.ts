@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
 
-// Light or dark: follows the system setting until the visitor picks one with the toggle,
-// then that choice is stored in this browser and set as data-theme on <html> (see index.css).
+// Light or dark: follows the system setting until the visitor picks one with the toggle. The choice is stored in
+// this browser and set as data-theme on <html> (index.css), also by public/theme.js before the page is first drawn.
 export type Theme = 'light' | 'dark'
 
 const storageKey = 'theme'
 const darkQuery = '(prefers-color-scheme: dark)'
+const listeners = new Set<() => void>()
 
-export const getStoredTheme = (): Theme | null => {
+const getStoredTheme = (): Theme | null => {
   try {
     const value = window.localStorage.getItem(storageKey)
     return value === 'light' || value === 'dark' ? value : null
@@ -17,43 +18,29 @@ export const getStoredTheme = (): Theme | null => {
   }
 }
 
-const getSystemTheme = (): Theme => (window.matchMedia?.(darkQuery).matches ? 'dark' : 'light')
+const getTheme = (): Theme => getStoredTheme() ?? (window.matchMedia?.(darkQuery).matches ? 'dark' : 'light')
 
-// Called before React renders, so a stored choice applies as early as the CSP allows (no inline script).
-export const applyStoredTheme = (): void => {
-  const theme = getStoredTheme()
-  if (theme) {
-    document.documentElement.dataset.theme = theme
+const subscribe = (onChange: () => void): (() => void) => {
+  listeners.add(onChange)
+  const query = window.matchMedia?.(darkQuery)
+  query?.addEventListener('change', onChange)
+  return () => {
+    listeners.delete(onChange)
+    query?.removeEventListener('change', onChange)
   }
 }
 
-export const useTheme = (): [Theme, () => void] => {
-  const [stored, setStored] = useState<Theme | null>(getStoredTheme)
-  const [system, setSystem] = useState<Theme>(getSystemTheme)
-
-  // Keep the button's icon right when the system setting changes while the page is open.
-  useEffect(() => {
-    const query = window.matchMedia?.(darkQuery)
-    if (!query) {
-      return undefined
-    }
-    const onChange = (event: MediaQueryListEvent): void => setSystem(event.matches ? 'dark' : 'light')
-    query.addEventListener('change', onChange)
-    return () => query.removeEventListener('change', onChange)
-  }, [])
-
-  const theme = stored ?? system
-
-  const toggle = (): void => {
-    const next: Theme = theme === 'dark' ? 'light' : 'dark'
-    document.documentElement.dataset.theme = next
-    try {
-      window.localStorage.setItem(storageKey, next)
-    } catch {
-      // Not stored: the choice still applies until the page is closed.
-    }
-    setStored(next)
+export const toggleTheme = (): void => {
+  const next: Theme = getTheme() === 'dark' ? 'light' : 'dark'
+  document.documentElement.dataset.theme = next
+  try {
+    window.localStorage.setItem(storageKey, next)
+  } catch {
+    // Not stored: the choice still applies until the page is closed.
   }
-
-  return [theme, toggle]
+  listeners.forEach((listener) => listener())
 }
+
+// The pre-rendered HTML is built with 'light'; React then switches to the real theme right after hydrating,
+// which only changes the toggle button (the colours themselves come from CSS and are right from the start).
+export const useTheme = (): Theme => useSyncExternalStore(subscribe, getTheme, () => 'light')

@@ -4,6 +4,9 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    BUILD_YEAR: JSON.stringify(new Date().getFullYear()),
+  },
   build: {
     outDir: 'build',
     // Fingerprinted JS/CSS go to /static/ (cached forever by nginx); public/assets/ keeps the unhashed images.

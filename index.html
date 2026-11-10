@@ -3,17 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#dfeee3" media="(prefers-color-scheme: light)" />
+    <title>Davy de Haas</title>
+    <meta name="description" content="Davy de Haas, Java software engineer at iO in Eindhoven: projects on GitHub, my homelab and how to get in touch." />
+    <link rel="canonical" href="https://davydehaas.nl/" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0d1510" media="(prefers-color-scheme: dark)" />
-    <meta name="description" content="Davy de Haas, software engineer: projects on GitHub and how to get in touch." />
+
+    <!-- Link previews (LinkedIn, Slack, WhatsApp, X, …) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://davydehaas.nl/" />
+    <meta property="og:site_name" content="Davy de Haas" />
+    <meta property="og:title" content="Davy de Haas" />
+    <meta property="og:description" content="Java software engineer at iO in Eindhoven: projects on GitHub, my homelab and how to get in touch." />
+    <meta property="og:image" content="https://davydehaas.nl/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Davy de Haas, Java Software Engineer at iO" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <title>Davy de Haas</title>
+
+    <!-- Applies a saved light/dark choice before the first paint. A file, not inline code, so the CSP allows it. -->
+    <script src="/theme.js"></script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root"><!--app--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
