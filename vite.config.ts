@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   define: {
     BUILD_YEAR: JSON.stringify(new Date().getFullYear()),
+    BUILD_MONTH: JSON.stringify(new Date().toISOString().slice(0, 7)),
   },
   build: {
     outDir: 'build',

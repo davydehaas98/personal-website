@@ -13,6 +13,7 @@ const NavigationBar = (): React.JSX.Element => {
         <a className={styles.brand} href="#home">Davy de Haas</a>
         <div className={styles.right}>
           <ul className={styles.links}>
+            <li><a className={styles.link} href="#experience">Experience</a></li>
             <li><a className={styles.link} href="#projects">Projects</a></li>
             <li><a className={styles.link} href="#contact">Contact</a></li>
           </ul>

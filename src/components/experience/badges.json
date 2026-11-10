@@ -1,0 +1,30 @@
+[
+  {
+    "name": "AWS Certified Developer – Associate",
+    "issuer": "Amazon Web Services",
+    "image": "/assets/images/badges/aws-developer-associate.png",
+    "link": "https://www.credly.com/badges/f961a76c-95a2-46da-a23a-690b160b099f",
+    "earned": "2026-07"
+  },
+  {
+    "name": "Okta dev{camps} CIAM Camper",
+    "issuer": "Okta",
+    "image": "/assets/images/badges/okta-ciam-camper.png",
+    "link": "https://www.credly.com/badges/769af9df-a436-421f-9da1-a406d8aef4c8",
+    "earned": "2024-10"
+  },
+  {
+    "name": "AWS Certified Developer – Associate",
+    "issuer": "Amazon Web Services",
+    "image": "/assets/images/badges/aws-developer-associate.png",
+    "link": "https://www.credly.com/badges/503b8b2f-2084-4c4a-adae-7fa828b2be9f",
+    "earned": "2022-08"
+  },
+  {
+    "name": "AWS Certified Cloud Practitioner",
+    "issuer": "Amazon Web Services",
+    "image": "/assets/images/badges/aws-cloud-practitioner.png",
+    "link": "https://www.credly.com/badges/22d29734-87a6-4e42-aed2-70c66ac34eb3",
+    "earned": "2022-05"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "work": [
+    {
+      "role": "Java Software Engineer",
+      "organisation": "iO",
+      "type": "Full-time",
+      "link": "https://www.iodigital.com",
+      "start": "2022-01",
+      "location": "Eindhoven"
+    },
+    {
+      "role": "Software Engineering Graduate Intern",
+      "organisation": "Info Support",
+      "type": "Internship",
+      "link": "https://www.infosupport.com",
+      "start": "2020-09",
+      "end": "2021-02",
+      "location": "Veenendaal"
+    },
+    {
+      "role": "Software Engineering Intern",
+      "organisation": "The Valley",
+      "type": "Internship",
+      "link": "https://www.thevalley.nl",
+      "start": "2019-02",
+      "end": "2019-07",
+      "location": "Amsterdam"
+    },
+    {
+      "role": "Public Relations Assistant",
+      "organisation": "Fontys University of Applied Sciences",
+      "type": "Freelance",
+      "link": "https://www.fontys.nl",
+      "start": "2017-09",
+      "end": "2020-03",
+      "location": "Eindhoven"
+    }
+  ],
+  "education": [
+    {
+      "degree": "MSc Computer Science and Engineering",
+      "school": "Eindhoven University of Technology",
+      "link": "https://www.tue.nl",
+      "start": "2021",
+      "end": "2022"
+    },
+    {
+      "degree": "BSc Computer Software Engineering",
+      "school": "Fontys University of Applied Sciences",
+      "link": "https://www.fontys.nl",
+      "start": "2016",
+      "end": "2021"
+    }
+  ]
+}

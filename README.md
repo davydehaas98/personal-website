@@ -1,11 +1,19 @@
 # personal-website
 
-Source of [davydehaas.nl](https://davydehaas.nl): a single scrolling page with a short intro, a few GitHub projects
-and contact links. Built with React and [Vite](https://vite.dev), styled with CSS Modules.
+Source of [davydehaas.nl](https://davydehaas.nl): a single scrolling page with a short intro, experience, a few
+GitHub projects and contact links. Built with React and [Vite](https://vite.dev), styled with CSS Modules, and
+pre-rendered to static HTML at build time ([`scripts/prerender.js`](scripts/prerender.js)), so the content is there
+without JavaScript.
 
 To change the content:
 
 - intro text and photo: [`src/components/home/Home.tsx`](src/components/home/Home.tsx)
+- experience and education: [`src/components/experience/experience.json`](src/components/experience/experience.json),
+  newest first, dates as `YYYY-MM` (leave `end` out for the current job; durations are worked out like LinkedIn's)
+- certifications: [`src/components/experience/badges.json`](src/components/experience/badges.json), with the badge
+  images in `public/assets/images/badges/` (copied from Credly, as the CSP only allows images from the site itself)
+- link previews (LinkedIn, Slack, …): the `og:` tags in [`index.html`](index.html) and the image
+  [`public/og-image.jpg`](public/og-image.jpg) (1200×630); update both when the role or photo changes
 - projects: [`src/components/projects/projects.json`](src/components/projects/projects.json) (name, `owner/repo`, description,
   logos); a logo name must exist in [`logos.ts`](src/components/projects/logos.ts), which imports it from
   [Simple Icons](https://simpleicons.org)
@@ -24,7 +32,7 @@ To change the content:
 | ----------------- | ------------------------------------------------------------------------------ |
 | `pnpm install`    | Install dependencies.                                                          |
 | `pnpm dev`        | Start the Vite dev server with hot reload on http://localhost:5173.            |
-| `pnpm build`      | Type-check, then build the static site into `build/`.                          |
+| `pnpm build`      | Type-check, build the static site into `build/` and pre-render its HTML.       |
 | `pnpm preview`    | Serve the production build from `build/` locally.                              |
 | `pnpm test`       | Run the tests once with Vitest (jsdom).                                        |
 | `pnpm test:watch` | Run Vitest in watch mode.                                                      |

@@ -20,9 +20,10 @@ describe('App', () => {
     expect(window.localStorage.getItem('theme')).toBe('light')
   })
 
-  it('renders the intro, projects and contact sections on one page', () => {
+  it('renders the intro, experience, projects and contact sections on one page', () => {
     render(<App />)
     expect(screen.getByRole('heading', { level: 1, name: 'Davy de Haas' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Experience' }).id).toBe('experience')
     expect(screen.getByRole('region', { name: 'Projects' }).id).toBe('projects')
     expect(screen.getByRole('region', { name: 'Contact' }).id).toBe('contact')
   })
@@ -30,6 +31,7 @@ describe('App', () => {
   it('links the navigation to the sections', () => {
     render(<App />)
     const nav = screen.getByRole('navigation', { name: 'Main' })
+    expect(within(nav).getByRole('link', { name: 'Experience' })).toHaveAttribute('href', '#experience')
     expect(within(nav).getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '#projects')
     expect(within(nav).getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '#contact')
   })
@@ -58,6 +60,27 @@ describe('App', () => {
       }
     })
     expect(within(lists[0]).getByText('Kubernetes')).toBeInTheDocument()
+  })
+
+  it('shows the work, education and Credly badges with dates', () => {
+    render(<App />)
+    const section = screen.getByRole('region', { name: 'Experience' })
+    expect(within(section).getByText('Jan 2022 – Present')).toBeInTheDocument()
+    const valley = within(section).getByRole('heading', { name: 'Software Engineering Intern' }).closest('li')!
+    expect(valley).toHaveTextContent('Amsterdam')
+    expect(valley).toHaveTextContent('Feb 2019 – Jul 2019')
+    expect(valley).toHaveTextContent('6 mos')
+    expect(within(section).getByRole('heading', { name: 'Certifications' })).toBeInTheDocument()
+    // Grouped by issuer (AWS first), a renewed badge only once, and no dates.
+    expect(within(section).getAllByRole('heading', { level: 4 }).map((h) => h.textContent)).toEqual(
+      expect.arrayContaining(['Amazon Web Services', 'Okta']),
+    )
+    const aws = within(section).getByRole('heading', { name: 'Amazon Web Services' }).parentElement!
+    expect(within(aws).getAllByRole('link').map((link) => link.textContent)).toEqual([
+      'AWS Certified Developer – Associate',
+      'AWS Certified Cloud Practitioner',
+    ])
+    expect(section.querySelector('ul')?.textContent).not.toMatch(/Earned|Expired|Valid until/)
   })
 
   it('links to GitHub and LinkedIn', () => {
