@@ -4,5 +4,7 @@
   ],
   "baseBranchPatterns": [
     "main"
-  ]
+  ],
+  "minimumReleaseAge": "1 day",
+  "internalChecksFilter": "strict"
 }
