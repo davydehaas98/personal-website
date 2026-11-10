@@ -1,7 +1,7 @@
 import React from 'react'
 import appStyles from '../../App.module.css'
 import { ArrowUpRightIcon, BrandIcon } from '../icons/Icons'
-import { logos, type LogoName } from './logos'
+import { invisibleOn, logos, type LogoName } from './logos'
 import styles from './Projects.module.css'
 import projects from './projects.json'
 
@@ -27,7 +27,12 @@ const Projects = (): React.JSX.Element => {
               <ul className={styles.logos} aria-label="Built with">
                 {(project.logos as LogoName[]).map((name) => (
                   <li key={name} title={logos[name].title}>
-                    <BrandIcon icon={logos[name]} className={styles.logo} />
+                    <BrandIcon
+                      icon={logos[name]}
+                      fill={`#${logos[name].hex}`}
+                      className={styles.logo}
+                      data-invisible-on={invisibleOn(logos[name].hex)}
+                    />
                     <span className={styles.label}>{logos[name].title}</span>
                   </li>
                 ))}

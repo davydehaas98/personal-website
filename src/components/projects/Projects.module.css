@@ -61,10 +61,28 @@
   list-style: none;
 }
 
+/* Logos keep their brand colour (fill attribute), except in the theme where it would vanish (see logos.ts). */
 .logo {
   display: block;
   width: 20px;
-  color: var(--color-brand);
+}
+
+/* Light theme: picked with the toggle, or the system's choice when nothing was picked. Same for dark. */
+:root[data-theme='light'] .logo[data-invisible-on='light'],
+:root[data-theme='dark'] .logo[data-invisible-on='dark'] {
+  fill: var(--color-text);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .logo[data-invisible-on='light'] {
+    fill: var(--color-text);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .logo[data-invisible-on='dark'] {
+    fill: var(--color-text);
+  }
 }
 
 .label {

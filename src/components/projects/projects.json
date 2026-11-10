@@ -30,9 +30,9 @@
     "logos": ["javascript"]
   },
   {
-    "name": "Unity scripts",
-    "repository": "davydehaas98/unity-scripts",
-    "description": "All kinds of useful scripts for Unity.",
-    "logos": ["unity", "dotnet"]
+    "name": "VTK visualization",
+    "repository": "davydehaas98/vcs7-visualization",
+    "description": "Visualization assignment for the Fontys VR minor, using the Visualization Toolkit (VTK).",
+    "logos": ["python"]
   }
 ]

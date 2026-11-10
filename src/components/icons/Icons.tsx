@@ -19,10 +19,11 @@ const stroke = {
   strokeLinejoin: 'round',
 } as const
 
-// A brand logo, usually from Simple Icons (https://simpleicons.org, CC0).
+// A brand logo, usually from Simple Icons (https://simpleicons.org, CC0). Drawn in the text colour unless a fill is
+// given; that is an SVG attribute, not an inline style, so the strict CSP allows it and CSS can still override it.
 export const BrandIcon = ({ icon, ...props }: IconProps & { icon: { path: string } }): React.JSX.Element => (
-  <svg {...base} {...props}>
-    <path fill="currentColor" d={icon.path} />
+  <svg {...base} fill="currentColor" {...props}>
+    <path d={icon.path} />
   </svg>
 )
 
