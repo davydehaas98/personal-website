@@ -74,6 +74,13 @@ export const MailIcon = (props: IconProps): React.JSX.Element => (
   </svg>
 )
 
+export const MapPinIcon = (props: IconProps): React.JSX.Element => (
+  <svg {...base} {...props}>
+    <path {...stroke} d="M20 10c0 5-8 12-8 12s-8-7-8-12a8 8 0 0 1 16 0Z" />
+    <circle {...stroke} cx="12" cy="10" r="3" />
+  </svg>
+)
+
 export const ArrowUpRightIcon = (props: IconProps): React.JSX.Element => (
   <svg {...base} {...props}>
     <path {...stroke} d="M7 17 17 7M8 7h9v9" />

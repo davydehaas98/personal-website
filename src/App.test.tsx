@@ -39,12 +39,19 @@ describe('App', () => {
 
     expect({
       name: screen.getByRole('heading', { level: 1 }).textContent,
+      intro: texts(within(document.getElementById('home')!).getAllByRole('paragraph')),
       sections: screen.getAllByRole('region').map((region) => region.id),
       navigation: within(nav)
         .getAllByRole('link')
         .map((link) => [link.textContent, link.getAttribute('href')]),
     }).toEqual({
       name: 'Davy de Haas',
+      intro: [
+        'Software Engineer at iO',
+        'Eindhoven, North Brabant, The Netherlands',
+        'I build backend systems and the infrastructure they run on. At iO I work on software for clients such as Brussels Airport, Signify, Basispoort, Nationale Apotheek and Favorite Gifts, mostly with Java (Spring) and TypeScript (NestJS). At home I run a Kubernetes cluster on Talos Linux, which also hosts this website.',
+        'Tech stack',
+      ],
       sections: ['experience', 'projects', 'contact'],
       navigation: [
         ['Davy de Haas', '#home'],
@@ -120,15 +127,15 @@ describe('App', () => {
       ),
     }).toEqual({
       current: {
-        details: ['iO · Full-time', 'Eindhoven'],
+        details: ['iO · Full-time', 'Eindhoven, North Brabant, The Netherlands'],
         when: ['Jan 2022 – Present', '4 yrs 11 mos'],
       },
       internship: {
-        details: ['The Valley · Internship', 'Amsterdam'],
+        details: ['The Valley · Internship', 'Amsterdam, North Holland, The Netherlands'],
         when: ['Feb 2019 – Jul 2019', '6 mos'],
       },
       study: {
-        details: ['Eindhoven University of Technology'],
+        details: ['Eindhoven University of Technology', 'Eindhoven, North Brabant, The Netherlands'],
         when: ['2021 – 2022'],
       },
       // A renewed badge only once, newest first, and no dates.

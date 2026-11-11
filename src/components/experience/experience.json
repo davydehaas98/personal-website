@@ -6,7 +6,7 @@
       "type": "Full-time",
       "link": "https://www.iodigital.com",
       "start": "2022-01",
-      "location": "Eindhoven"
+      "location": "Eindhoven, North Brabant, The Netherlands"
     },
     {
       "role": "Software Engineering Graduate Intern",
@@ -15,7 +15,7 @@
       "link": "https://www.infosupport.com",
       "start": "2020-09",
       "end": "2021-02",
-      "location": "Veenendaal"
+      "location": "Veenendaal, Utrecht, The Netherlands"
     },
     {
       "role": "Software Engineering Intern",
@@ -24,7 +24,7 @@
       "link": "https://www.thevalley.nl",
       "start": "2019-02",
       "end": "2019-07",
-      "location": "Amsterdam"
+      "location": "Amsterdam, North Holland, The Netherlands"
     },
     {
       "role": "Public Relations Assistant",
@@ -33,7 +33,7 @@
       "link": "https://www.fontys.nl",
       "start": "2017-09",
       "end": "2020-03",
-      "location": "Eindhoven"
+      "location": "Eindhoven, North Brabant, The Netherlands"
     }
   ],
   "education": [
@@ -42,14 +42,16 @@
       "school": "Eindhoven University of Technology",
       "link": "https://www.tue.nl",
       "start": "2021",
-      "end": "2022"
+      "end": "2022",
+      "location": "Eindhoven, North Brabant, The Netherlands"
     },
     {
       "degree": "BSc Computer Software Engineering",
       "school": "Fontys University of Applied Sciences",
       "link": "https://www.fontys.nl",
       "start": "2016",
-      "end": "2021"
+      "end": "2021",
+      "location": "Eindhoven, North Brabant, The Netherlands"
     }
   ]
 }

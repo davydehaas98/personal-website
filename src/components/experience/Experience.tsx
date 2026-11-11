@@ -50,6 +50,7 @@ export const Experience = (): React.JSX.Element => {
             title={study.degree}
             organisation={study.school}
             link={study.link}
+            location={study.location}
             when={[`${study.start} – ${study.end}`]}
           />
         ))}
