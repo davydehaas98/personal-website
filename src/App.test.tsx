@@ -62,7 +62,7 @@ describe('App', () => {
     })
   })
 
-  it('shows every project with its link, languages and logos', () => {
+  it('shows every project with its link and logos', () => {
     render(<App />)
     const section = screen.getByRole('region', { name: 'Projects' })
 
@@ -72,15 +72,11 @@ describe('App', () => {
           .getByRole('link', { name: project.name, description: project.description })
           .getAttribute('href'),
       ),
-      languages: screen
-        .getAllByRole('list', { name: 'Languages' })
-        .map((list) => texts(within(list).getAllByRole('listitem'))),
       logos: screen
         .getAllByRole('list', { name: 'Built with' })
         .map((list) => texts(within(list).getAllByRole('listitem'))),
     }).toEqual({
       links: projects.map((project) => `https://github.com/${project.repository}`),
-      languages: projects.map((project) => project.languages),
       logos: projects.map((project) => project.logos.map((name) => logos[logoName(name)].title)),
     })
   })

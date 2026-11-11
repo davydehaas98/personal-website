@@ -8,7 +8,11 @@ type SectionProps = {
 
 // scroll-mt keeps the section's top below the sticky navigation bar.
 export const Section = ({ id, labelledBy, children }: SectionProps): React.JSX.Element => (
-  <section id={id} className="mx-auto w-full max-w-page scroll-mt-15 px-5 py-12" aria-labelledby={labelledBy}>
+  <section
+    id={id}
+    className="mx-auto w-full max-w-page scroll-mt-15 px-5 sm:scroll-mt-16 py-12"
+    aria-labelledby={labelledBy}
+  >
     {children}
   </section>
 )

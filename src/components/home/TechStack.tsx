@@ -14,7 +14,7 @@ export const TechStack = (): React.JSX.Element => (
     <ul className="mt-3 flex flex-wrap justify-center gap-3" aria-labelledby="stack-title">
       {stack.map(({ logo, name }) => (
         <li key={logo} className="group/tooltip relative">
-          <Bubble className="size-11">
+          <Bubble className="relative size-11">
             <Logo name={logoName(logo)} className="w-5.5" />
           </Bubble>
           <Tooltip>{name}</Tooltip>

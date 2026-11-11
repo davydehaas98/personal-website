@@ -16,9 +16,8 @@ To change the content:
 - link previews (LinkedIn, Slack, …): the `og:` tags in [`index.html`](index.html) and the image
   [`public/og-image.jpg`](public/og-image.jpg) (1200×630); update both when the role or photo changes
 - projects: [`src/components/projects/projects.json`](src/components/projects/projects.json) (name, `owner/repo`, description,
-  languages, logos); a logo name must exist in [`logos.ts`](src/components/logos/logos.ts), which imports it from
-  [Simple Icons](https://simpleicons.org), and a new language needs its GitHub colour in
-  [`Projects.tsx`](src/components/projects/Projects.tsx)
+  logos); a logo name must exist in [`logos.ts`](src/components/logos/logos.ts), which imports it from
+  [Simple Icons](https://simpleicons.org)
 - colours (light and dark), font and breakpoints: the `@theme` in [`src/index.css`](src/index.css); shared pieces
   (section, pill link, bubble) are in [`src/components/ui/`](src/components/ui)
 - contact links: [`src/components/contact/Contact.tsx`](src/components/contact/Contact.tsx)

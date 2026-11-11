@@ -7,27 +7,6 @@ import { Bubble } from '../ui/Bubble'
 import { ExternalLink } from '../ui/ExternalLink'
 import { Tooltip } from '../ui/Tooltip'
 
-// GitHub's language colours.
-const languageColours: Record<string, string> = {
-  'Go Template': 'bg-[#00add8]',
-  HCL: 'bg-[#844fba]',
-  Java: 'bg-[#b07219]',
-  JavaScript: 'bg-[#f1e05a]',
-  Python: 'bg-[#3572a5]',
-  Shell: 'bg-[#89e051]',
-}
-
-const Languages = ({ languages }: { languages: string[] }): React.JSX.Element => (
-  <ul className="mb-3 flex flex-wrap justify-center gap-x-3 gap-y-1 text-[0.8125rem] text-muted" aria-label="Languages">
-    {languages.map((language) => (
-      <li key={language} className="inline-flex items-center gap-1.5">
-        <span className={`size-2.5 rounded-full ${languageColours[language] ?? 'bg-muted'}`} aria-hidden="true" />
-        {language}
-      </li>
-    ))}
-  </ul>
-)
-
 // Above the card's link overlay, so the tooltips still show on hover.
 const Stack = ({ names }: { names: LogoName[] }): React.JSX.Element => (
   <ul className="relative z-1 flex flex-wrap justify-center gap-2" aria-label="Built with">
@@ -44,7 +23,6 @@ type Project = {
   name: string
   repository: string
   description: string
-  languages: string[]
   logos: string[]
 }
 
@@ -71,7 +49,6 @@ export const ProjectCard = ({ project }: { project: Project }): React.JSX.Elemen
       <p id={`${id}-description`} className="mb-3.5 flex-1 text-muted">
         {project.description}
       </p>
-      <Languages languages={project.languages} />
       <Stack names={names} />
     </article>
   )

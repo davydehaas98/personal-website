@@ -1,6 +1,7 @@
 import {
   siApachemaven,
   siArgo,
+  siAuthentik,
   siCilium,
   siDocker,
   siGithub,
@@ -11,9 +12,7 @@ import {
   siLinux,
   siNestjs,
   siOpenjdk,
-  siOpenzfs,
   siPlex,
-  siPostgresql,
   siPrometheus,
   siPython,
   siSpring,
@@ -39,6 +38,7 @@ const linkedin = {
 // Only the icons imported here end up in the bundle, not all of Simple Icons.
 export const logos = {
   argo: siArgo,
+  authentik: siAuthentik,
   aws,
   cilium: siCilium,
   docker: siDocker,
@@ -53,14 +53,12 @@ export const logos = {
   nestjs: siNestjs,
   openjdk: siOpenjdk,
   plex: siPlex,
-  postgresql: siPostgresql,
   prometheus: siPrometheus,
   python: siPython,
   spring: siSpring,
   talos: siTalos,
   terraform: siTerraform,
   typescript: siTypescript,
-  zfs: siOpenzfs,
 }
 
 export type LogoName = keyof typeof logos
