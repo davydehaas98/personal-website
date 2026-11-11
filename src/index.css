@@ -73,6 +73,24 @@
     height: auto;
   }
 
+  /* Theme switch (ThemeToggle): the new theme grows as a circle from the button over the old one. It is a CSS
+     animation, so the circle is there from the first frame; ThemeToggle only sets where it starts and how far it goes.
+     Colour transitions are off meanwhile, or the new view would show the old colours until they had faded over. */
+  ::view-transition-old(root) {
+    animation: none;
+  }
+
+  ::view-transition-new(root) {
+    animation: theme-circle 0.5s ease-in-out;
+    mix-blend-mode: normal;
+  }
+
+  :root[data-theme-switching] *,
+  :root[data-theme-switching] *::before,
+  :root[data-theme-switching] *::after {
+    transition: none !important;
+  }
+
   a:focus-visible {
     outline: 2px solid var(--color-brand);
     outline-offset: 3px;
@@ -88,5 +106,14 @@
     *::after {
       transition: none !important;
     }
+  }
+}
+
+@keyframes theme-circle {
+  from {
+    clip-path: circle(0 at var(--theme-x) var(--theme-y));
+  }
+  to {
+    clip-path: circle(var(--theme-radius) at var(--theme-x) var(--theme-y));
   }
 }

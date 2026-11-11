@@ -19,7 +19,7 @@ export const NavigationBar = (): React.JSX.Element => (
           {sections.map(({ href, label }) => (
             <li key={href}>
               <a
-                className="text-[0.9rem] text-muted underline-offset-4 hover:text-brand hover:underline xs:text-base"
+                className="text-[0.9rem] text-ink/80 underline-offset-4 hover:text-brand hover:underline xs:text-base"
                 href={href}
               >
                 {label}
