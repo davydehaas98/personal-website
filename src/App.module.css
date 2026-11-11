@@ -1,7 +1,0 @@
-/* Shared layout for every page section. */
-.section {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 48px 20px;
-}

@@ -1,9 +1,9 @@
 import React from 'react'
 import { siGithub } from 'simple-icons'
-import appStyles from '../../App.module.css'
 import { BrandIcon, MailIcon } from '../icons/Icons'
 import SectionHeader from '../section-header/SectionHeader'
-import styles from './Contact.module.css'
+import Pill from '../ui/Pill'
+import Section from '../ui/Section'
 
 // Simple Icons dropped LinkedIn's logo at LinkedIn's request, so its path is kept here.
 const linkedIn = {
@@ -18,24 +18,24 @@ const links = [
 
 const Contact = (): React.JSX.Element => {
   return (
-    <section id="contact" className={appStyles.section} aria-labelledby="contact-title">
+    <Section id="contact" labelledBy="contact-title">
       <SectionHeader
         id="contact-title"
         icon={<MailIcon />}
         title="Contact"
         lead="You can find me on GitHub and LinkedIn."
       />
-      <ul className={styles.links}>
+      <ul className="mt-6 flex flex-wrap gap-3 md:justify-center">
         {links.map(({ href, icon }) => (
           <li key={icon.title}>
-            <a className={styles.link} href={href} target="_blank" rel="noopener noreferrer">
-              <BrandIcon icon={icon} className={styles.icon} />
+            <Pill href={href}>
+              <BrandIcon icon={icon} className="w-5.5" />
               {icon.title}
-            </a>
+            </Pill>
           </li>
         ))}
       </ul>
-    </section>
+    </Section>
   )
 }
 

@@ -1,9 +1,10 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   define: {
     BUILD_YEAR: JSON.stringify(new Date().getFullYear()),
     BUILD_MONTH: JSON.stringify(new Date().toISOString().slice(0, 7)),

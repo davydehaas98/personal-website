@@ -1,7 +1,7 @@
 # personal-website
 
 Source of [davydehaas.nl](https://davydehaas.nl): a single scrolling page with a short intro, experience, a few
-GitHub projects and contact links. Built with React and [Vite](https://vite.dev), styled with CSS Modules, and
+GitHub projects and contact links. Built with React and [Vite](https://vite.dev), styled with [Tailwind CSS](https://tailwindcss.com), and
 pre-rendered to static HTML at build time ([`scripts/prerender.js`](scripts/prerender.js)), so the content is there
 without JavaScript.
 
@@ -15,8 +15,11 @@ To change the content:
 - link previews (LinkedIn, Slack, …): the `og:` tags in [`index.html`](index.html) and the image
   [`public/og-image.jpg`](public/og-image.jpg) (1200×630); update both when the role or photo changes
 - projects: [`src/components/projects/projects.json`](src/components/projects/projects.json) (name, `owner/repo`, description,
-  logos); a logo name must exist in [`logos.ts`](src/components/projects/logos.ts), which imports it from
-  [Simple Icons](https://simpleicons.org)
+  languages, logos); a logo name must exist in [`logos.ts`](src/components/projects/logos.ts), which imports it from
+  [Simple Icons](https://simpleicons.org), and a new language needs its GitHub colour in
+  [`Projects.tsx`](src/components/projects/Projects.tsx)
+- colours (light and dark), font and breakpoints: the `@theme` in [`src/index.css`](src/index.css); shared pieces
+  (section, pill link, bubble) are in [`src/components/ui/`](src/components/ui)
 - contact links: [`src/components/contact/Contact.tsx`](src/components/contact/Contact.tsx)
 
 ## Requirements
@@ -55,8 +58,8 @@ The [`Dockerfile`](Dockerfile) builds the site on Node (alpine) and serves `buil
 
 Security headers are not set here: the cluster's gateway adds them, including a strict Content-Security-Policy
 (`default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'`).
-The build contains no inline scripts or styles, so keep it that way: CSS-in-JS libraries that inject `<style>` tags at
-runtime break under this policy.
+The build contains no inline scripts or styles, so keep it that way: Tailwind compiles to one static CSS file, but
+CSS-in-JS libraries that inject `<style>` tags at runtime, or `style` attributes, break under this policy.
 
 Build and run it locally the way the cluster runs it:
 

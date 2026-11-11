@@ -1,75 +1,92 @@
-/* Colours as light-dark(light, dark). Dark by default; the toggle sets data-theme='light' on <html>
-   (see src/theme.ts), which switches color-scheme and with it every colour below. */
-:root {
-  color-scheme: dark;
+@import 'tailwindcss';
 
-  /* Light green: --color-accent for decoration, --color-brand is a darker shade that stays readable as text.
-     Dark mode is neutral near-black with grey text; green is only used for the accents. */
+/* Dark by default; the toggle sets data-theme='light' on <html> (src/theme.ts, and public/theme.js on load). */
+@custom-variant light (&:where([data-theme='light'], [data-theme='light'] *));
+@custom-variant dark (&:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *));
+
+@theme {
+  /* Only these colours, as light-dark(light, dark), so classes like bg-surface follow the theme by themselves.
+     Light green: accent for decoration, brand is a darker shade that stays readable as text. Dark mode is
+     neutral near-black with grey text; green is only used for the accents. */
+  --color-*: initial;
   --color-brand: light-dark(#20843c, #86f0a2);
   --color-accent: light-dark(#5ed47e, #44b866);
-  --color-bg: light-dark(#ffffff, #0a0a0b);
+  --color-page: light-dark(#ffffff, #0a0a0b);
   --color-surface: light-dark(#ffffff, #141416);
-  --color-text: light-dark(#14231a, #ededed);
+  --color-ink: light-dark(#14231a, #ededed);
   --color-muted: light-dark(#56695c, #a1a1aa);
-  --color-border: light-dark(#c3dacb, #2c2c31);
-  --header-height: 60px;
+  --color-line: light-dark(#c3dacb, #2c2c31);
 
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1.6;
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Font sizes without their own line height, so text keeps the page's 1.6. */
+  --text-*: initial;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+
+  /* Mobile first: xs roomier navigation, sm two project cards per row, md the centered timeline and headers,
+     lg three project cards per row. */
+  --breakpoint-*: initial;
+  --breakpoint-xs: 26.25rem;
+  --breakpoint-sm: 34rem;
+  --breakpoint-md: 40rem;
+  --breakpoint-lg: 51.25rem;
+
+  --container-page: 56.25rem;
 }
 
-:root[data-theme='light'] {
-  color-scheme: light;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
-img,
-svg {
-  max-width: 100%;
-  height: auto;
-}
-
-section {
-  scroll-margin-top: var(--header-height);
-}
-
-h1,
-h2,
-h3 {
-  line-height: 1.2;
-}
-
-a {
-  color: var(--color-brand);
-}
-
-a:focus-visible {
-  outline: 2px solid var(--color-brand);
-  outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
+@layer base {
   :root {
-    scroll-behavior: auto;
+    color-scheme: dark;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  *,
-  *::before,
-  *::after {
-    transition: none !important;
+  :root[data-theme='light'] {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-page);
+    color: var(--color-ink);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 700;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1.2;
+  }
+
+  /* Icons are sized by width only; their height follows. */
+  svg {
+    height: auto;
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+    }
   }
 }
