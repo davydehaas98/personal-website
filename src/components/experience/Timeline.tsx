@@ -2,7 +2,6 @@ import React from 'react'
 
 import { ExternalLink } from '../ui/ExternalLink'
 
-// A timeline: a green line down the middle (on the left on phones), with a dot per entry.
 export const Timeline = ({ children }: { children: React.ReactNode }): React.JSX.Element => (
   <ol className="relative mt-6 before:absolute before:top-1.5 before:bottom-1.5 before:left-5.75 before:w-0.5 before:bg-accent md:before:left-1/2 md:before:-translate-x-1/2">
     {children}
@@ -17,11 +16,9 @@ type TimelineItemProps = {
   link: string
   extra?: string
   location?: string
-  // The date range, and how long that was.
-  when: string[]
+  when: [range: string, duration?: string]
 }
 
-// Details on the right of the line and dates on the left; on phones both under each other, right of the line.
 export const TimelineItem = ({
   heading: Heading,
   title,

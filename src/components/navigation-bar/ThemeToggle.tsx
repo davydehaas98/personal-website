@@ -3,7 +3,6 @@ import React from 'react'
 import { toggleTheme, useTheme } from '../../theme'
 import { MoonIcon, SunIcon } from '../icons/Icons'
 
-// Switches between dark (the default) and light, showing the icon of the mode it switches to.
 export const ThemeToggle = (): React.JSX.Element => {
   const theme = useTheme()
   const label = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'

@@ -8,7 +8,6 @@ const sections = [
   { href: '#contact', label: 'Contact' },
 ]
 
-// Name, the section links and the theme button on one line, also on a phone.
 export const NavigationBar = (): React.JSX.Element => (
   <header className="sticky top-0 z-10 border-b-2 border-accent bg-page">
     <nav className="mx-auto flex min-h-15 max-w-page items-center justify-between gap-2 px-4 xs:px-5" aria-label="Main">

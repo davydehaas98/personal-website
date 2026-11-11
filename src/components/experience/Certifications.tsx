@@ -24,8 +24,7 @@ const badgeGroups = (() => {
 
 type Badge = (typeof badges)[number]
 
-// The badge image in a bubble with its name under it, linking to the badge on Credly. (The images are copies in
-// public/, as the CSP only allows images from the site itself.)
+// The images are copies in public/, as the CSP only allows images from the site itself.
 const BadgeLink = ({ badge }: { badge: Badge }): React.JSX.Element => (
   <ExternalLink className="group flex w-32.5 flex-col items-center gap-2.5 text-center md:w-37.5" href={badge.link}>
     <Bubble className="size-27">
@@ -35,7 +34,6 @@ const BadgeLink = ({ badge }: { badge: Badge }): React.JSX.Element => (
   </ExternalLink>
 )
 
-// Credly badges grouped by issuer, and a link to all of them on Credly.
 export const Certifications = (): React.JSX.Element => (
   <>
     <SectionHeader level={3} icon={<AwardIcon />} title="Certifications" />

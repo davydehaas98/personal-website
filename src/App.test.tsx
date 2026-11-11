@@ -2,121 +2,154 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { App } from './App'
+import { logoName, logos } from './components/logos/logos'
 import projects from './components/projects/projects.json'
+
+const texts = (elements: HTMLElement[]): (string | null)[] => elements.map((element) => element.textContent)
 
 describe('App', () => {
   afterEach(() => {
     window.localStorage.clear()
     delete document.documentElement.dataset.theme
+    vi.useRealTimers()
   })
 
   it('starts dark, switches between light and dark mode and remembers the choice', async () => {
     const user = userEvent.setup()
+    const state = (): { theme?: string; stored: string | null } => ({
+      theme: document.documentElement.dataset.theme,
+      stored: window.localStorage.getItem('theme'),
+    })
     render(<App />)
+    const start = state()
     await user.click(screen.getByRole('button', { name: 'Switch to light mode' }))
-    expect(document.documentElement.dataset.theme).toBe('light')
-    expect(window.localStorage.getItem('theme')).toBe('light')
+    const light = state()
     await user.click(screen.getByRole('button', { name: 'Switch to dark mode' }))
-    expect(document.documentElement.dataset.theme).toBe('dark')
-    expect(window.localStorage.getItem('theme')).toBe('dark')
+
+    expect({ start, light, dark: state() }).toEqual({
+      start: { theme: undefined, stored: null },
+      light: { theme: 'light', stored: 'light' },
+      dark: { theme: 'dark', stored: 'dark' },
+    })
   })
 
-  it('renders the intro, experience, projects and contact sections on one page', () => {
-    render(<App />)
-    expect(screen.getByRole('heading', { level: 1, name: 'Davy de Haas' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Experience' }).id).toBe('experience')
-    expect(screen.getByRole('region', { name: 'Projects' }).id).toBe('projects')
-    expect(screen.getByRole('region', { name: 'Contact' }).id).toBe('contact')
-  })
-
-  it('links the navigation to the sections', () => {
+  it('renders the intro and the sections on one page, linked from the navigation', () => {
     render(<App />)
     const nav = screen.getByRole('navigation', { name: 'Main' })
-    expect(within(nav).getByRole('link', { name: 'Experience' })).toHaveAttribute('href', '#experience')
-    expect(within(nav).getByRole('link', { name: 'Projects' })).toHaveAttribute('href', '#projects')
-    expect(within(nav).getByRole('link', { name: 'Contact' })).toHaveAttribute('href', '#contact')
+
+    expect({
+      name: screen.getByRole('heading', { level: 1 }).textContent,
+      sections: screen.getAllByRole('region').map((region) => region.id),
+      navigation: within(nav)
+        .getAllByRole('link')
+        .map((link) => [link.textContent, link.getAttribute('href')]),
+    }).toEqual({
+      name: 'Davy de Haas',
+      sections: ['experience', 'projects', 'contact'],
+      navigation: [
+        ['Davy de Haas', '#home'],
+        ['Experience', '#experience'],
+        ['Projects', '#projects'],
+        ['Contact', '#contact'],
+      ],
+    })
   })
 
-  it('links every project to its GitHub repository', () => {
+  it('shows every project with its link, languages and logos', () => {
     render(<App />)
     const section = screen.getByRole('region', { name: 'Projects' })
-    for (const project of projects) {
-      expect(within(section).getByRole('link', { name: new RegExp(project.name) })).toHaveAttribute(
-        'href',
-        `https://github.com/${project.repository}`,
-      )
-    }
-  })
 
-  it('shows the logos of every project, named for screen readers', () => {
-    render(<App />)
-    const lists = screen.getAllByRole('list', { name: 'Built with' })
-    expect(lists).toHaveLength(projects.length)
-    projects.forEach((project, index) => {
-      const names = within(lists[index])
-        .getAllByRole('listitem')
-        .map((item) => item.textContent)
-      expect(names).toHaveLength(project.logos.length)
-      // A name that is missing from logos.ts would render nothing (or crash), so every name must resolve to a title.
-      for (const name of names) {
-        expect(name).toBeTruthy()
-      }
-    })
-    expect(within(lists[0]).getByText('Kubernetes')).toBeInTheDocument()
-  })
-
-  it('shows the languages of every project', () => {
-    render(<App />)
-    const lists = screen.getAllByRole('list', { name: 'Languages' })
-    expect(
-      lists.map((list) =>
-        within(list)
-          .getAllByRole('listitem')
-          .map((item) => item.textContent),
+    expect({
+      links: projects.map((project) =>
+        within(section)
+          .getByRole('link', { name: project.name, description: project.description })
+          .getAttribute('href'),
       ),
-    ).toEqual(projects.map((project) => project.languages))
+      languages: screen
+        .getAllByRole('list', { name: 'Languages' })
+        .map((list) => texts(within(list).getAllByRole('listitem'))),
+      logos: screen
+        .getAllByRole('list', { name: 'Built with' })
+        .map((list) => texts(within(list).getAllByRole('listitem'))),
+    }).toEqual({
+      links: projects.map((project) => `https://github.com/${project.repository}`),
+      languages: projects.map((project) => project.languages),
+      logos: projects.map((project) => project.logos.map((name) => logos[logoName(name)].title)),
+    })
   })
 
   it('shows the tech stack with a name for every logo', () => {
     render(<App />)
     const list = screen.getByRole('list', { name: 'Tech stack' })
-    expect(
-      within(list)
-        .getAllByRole('listitem')
-        .map((item) => item.textContent),
-    ).toEqual(['Java', 'Spring', 'TypeScript', 'NestJS', 'Python', 'Terraform', 'Kubernetes', 'AWS'])
+
+    expect(texts(within(list).getAllByRole('listitem'))).toEqual([
+      'Java',
+      'Spring',
+      'TypeScript',
+      'NestJS',
+      'Python',
+      'Terraform',
+      'Kubernetes',
+      'AWS',
+    ])
   })
 
-  it('shows the work, education and Credly badges with dates', () => {
+  it('shows the work and education with dates, and the Credly badges by issuer', () => {
+    // The current job's duration runs up to today.
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date('2026-11-15'))
     render(<App />)
     const section = screen.getByRole('region', { name: 'Experience' })
-    expect(within(section).getByText('Jan 2022 – Present')).toBeInTheDocument()
-    const valley = within(section).getByRole('heading', { name: 'Software Engineering Intern' }).closest('li')!
-    expect(valley).toHaveTextContent('Amsterdam')
-    expect(valley).toHaveTextContent('Feb 2019 – Jul 2019')
-    expect(valley).toHaveTextContent('6 mos')
-    expect(within(section).getByRole('heading', { name: 'Certifications' })).toBeInTheDocument()
-    // Grouped by issuer (AWS first), a renewed badge only once, and no dates.
-    expect(
-      within(section)
-        .getAllByRole('heading', { level: 4 })
-        .map((h) => h.textContent),
-    ).toEqual(expect.arrayContaining(['Amazon Web Services', 'Okta']))
-    const aws = within(section).getByRole('heading', { name: 'Amazon Web Services' }).parentElement!
-    expect(
-      within(aws)
-        .getAllByRole('link')
-        .map((link) => link.textContent),
-    ).toEqual(['AWS Certified Developer – Associate', 'AWS Certified Cloud Practitioner'])
-    expect(section.querySelector('ul')?.textContent).not.toMatch(/Earned|Expired|Valid until/)
+    const entry = (title: string): { details: (string | null)[]; when: (string | null)[] } => {
+      const [details, when] = [...within(section).getByRole('heading', { name: title }).closest('li')!.children]
+      return {
+        details: [...details.querySelectorAll('p')].map((p) => p.textContent),
+        when: [...when.children].map((span) => span.textContent),
+      }
+    }
+    const issuers = within(section)
+      .getAllByRole('heading', { level: 4 })
+      .filter((heading) => !heading.closest('li'))
+
+    expect({
+      current: entry('Software Engineer'),
+      internship: entry('Software Engineering Intern'),
+      study: entry('MSc Computer Science and Engineering'),
+      badges: Object.fromEntries(
+        issuers.map((issuer) => [issuer.textContent, texts(within(issuer.parentElement!).getAllByRole('link'))]),
+      ),
+    }).toEqual({
+      current: {
+        details: ['iO · Full-time', 'Eindhoven'],
+        when: ['Jan 2022 – Present', '4 yrs 11 mos'],
+      },
+      internship: {
+        details: ['The Valley · Internship', 'Amsterdam'],
+        when: ['Feb 2019 – Jul 2019', '6 mos'],
+      },
+      study: {
+        details: ['Eindhoven University of Technology'],
+        when: ['2021 – 2022'],
+      },
+      // A renewed badge only once, newest first, and no dates.
+      badges: {
+        'Amazon Web Services': ['AWS Certified Developer – Associate', 'AWS Certified Cloud Practitioner'],
+        Okta: ['Okta dev{camps} CIAM Camper'],
+      },
+    })
   })
 
   it('links to GitHub and LinkedIn', () => {
     render(<App />)
-    expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/davydehaas98')
-    expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
-      'href',
-      'https://www.linkedin.com/in/davydehaas98',
-    )
+    const section = screen.getByRole('region', { name: 'Contact' })
+
+    expect(
+      within(section)
+        .getAllByRole('link')
+        .map((link) => [link.textContent, link.getAttribute('href')]),
+    ).toEqual([
+      ['GitHub', 'https://github.com/davydehaas98'],
+      ['LinkedIn', 'https://www.linkedin.com/in/davydehaas98'],
+    ])
   })
 })

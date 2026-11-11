@@ -30,9 +30,9 @@ jobs:
         with:
           lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
           minAccessibilityScore: '90'
-          minBestPracticesScore: '50'
-          minPerformanceScore: '50'
-          minSeoScore: '50'
+          minBestPracticesScore: '90'
+          minPerformanceScore: '90'
+          minSeoScore: '90'
 
   zap-scan:
     name: ZAP scan

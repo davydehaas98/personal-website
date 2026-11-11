@@ -1,6 +1,5 @@
 import React from 'react'
 
-// Inline SVG icons: they inherit the text colour (currentColor), so they work in light and dark mode.
 type IconProps = React.SVGProps<SVGSVGElement>
 
 const base = {
@@ -19,8 +18,7 @@ const stroke = {
   strokeLinejoin: 'round',
 } as const
 
-// A brand logo, usually from Simple Icons (https://simpleicons.org, CC0). Drawn in the text colour unless a fill is
-// given; that is an SVG attribute, not an inline style, so the strict CSP allows it and CSS can still override it.
+// A fill is an SVG attribute, not an inline style, so the strict CSP allows it and CSS can still override it.
 export const BrandIcon = ({ icon, ...props }: IconProps & { icon: { path: string } }): React.JSX.Element => (
   <svg {...base} fill="currentColor" {...props}>
     <path d={icon.path} />

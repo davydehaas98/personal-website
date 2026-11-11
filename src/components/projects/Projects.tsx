@@ -6,7 +6,6 @@ import { Section } from '../ui/Section'
 import { ProjectCard } from './ProjectCard'
 import projects from './projects.json'
 
-// Cards in rows of 3 on desktop, 2 on tablets and 1 on phones, all the same height (auto-rows).
 export const Projects = (): React.JSX.Element => (
   <Section id="projects" labelledBy="projects-title">
     <SectionHeader

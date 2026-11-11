@@ -6,7 +6,6 @@ try {
     document.documentElement.dataset.theme = theme
   }
   if (theme === 'light') {
-    // The browser's toolbar colour on phones; dark (#0a0a0b) is the default in index.html.
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#ffffff')
   }
 } catch {

@@ -26,7 +26,6 @@ export const formatDuration = (start: YearMonth, end: YearMonth): string => {
   return parts.join(' ')
 }
 
-// { range: "Jan 2022 – Present", duration: "4 yrs 11 mos" }
 export const formatPeriod = (
   start: string,
   end: string | undefined,

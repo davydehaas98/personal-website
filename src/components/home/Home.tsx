@@ -2,7 +2,6 @@ import React from 'react'
 
 import { TechStack } from './TechStack'
 
-// Centered like the rest of the page: photo on top, then name, role, about text and the tech stack.
 export const Home = (): React.JSX.Element => {
   return (
     <section

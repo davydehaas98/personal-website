@@ -17,7 +17,6 @@ const subscribe = (): (() => void) => () => {}
 const currentMonth = (): string => new Date().toISOString().slice(0, 7)
 const buildMonth = (): string => BUILD_MONTH
 
-// Work and education as timelines, then the certifications.
 export const Experience = (): React.JSX.Element => {
   const now = parseYearMonth(useSyncExternalStore(subscribe, currentMonth, buildMonth))
 

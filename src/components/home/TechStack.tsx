@@ -6,7 +6,6 @@ import { Bubble } from '../ui/Bubble'
 import { Tooltip } from '../ui/Tooltip'
 import stack from './stack.json'
 
-// The languages and tools I work with (stack.json), as logos in bubbles with the name in a tooltip.
 export const TechStack = (): React.JSX.Element => (
   <div className="mt-6">
     <p id="stack-title" className="text-[0.8125rem] font-semibold tracking-[0.04em] text-muted uppercase">
