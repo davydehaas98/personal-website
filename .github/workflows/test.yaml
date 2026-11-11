@@ -8,7 +8,7 @@ env:
 jobs:
   lighthouse-check:
     name: Lighthouse check
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
@@ -36,7 +36,7 @@ jobs:
 
   zap-scan:
     name: ZAP scan
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
@@ -50,7 +50,7 @@ jobs:
   k6-load-test:
     name: k6 load test
     needs: [lighthouse-check, zap-scan]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1

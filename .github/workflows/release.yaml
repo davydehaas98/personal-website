@@ -25,7 +25,7 @@ jobs:
     name: Release
     # The button lets you pick a branch; only main is released.
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       packages: write
