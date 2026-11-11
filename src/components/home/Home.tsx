@@ -1,6 +1,8 @@
 import React from 'react'
 
-// Centered like the rest of the page: photo on top, name, role and about text under it.
+import { TechStack } from './TechStack'
+
+// Centered like the rest of the page: photo on top, then name, role, about text and the tech stack.
 export const Home = (): React.JSX.Element => {
   return (
     <section
@@ -21,6 +23,7 @@ export const Home = (): React.JSX.Element => {
           Enthusiastic software engineer with a great interest in DevOps, backend architectures and networking
           infrastructures.
         </p>
+        <TechStack />
       </div>
     </section>
   )

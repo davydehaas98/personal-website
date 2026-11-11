@@ -1,0 +1,10 @@
+[
+  { "logo": "openjdk", "name": "Java" },
+  { "logo": "spring", "name": "Spring" },
+  { "logo": "typescript", "name": "TypeScript" },
+  { "logo": "nestjs", "name": "NestJS" },
+  { "logo": "python", "name": "Python" },
+  { "logo": "terraform", "name": "Terraform" },
+  { "logo": "kubernetes", "name": "Kubernetes" },
+  { "logo": "aws", "name": "AWS" }
+]

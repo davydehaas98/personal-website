@@ -7,7 +7,8 @@ without JavaScript.
 
 To change the content:
 
-- intro text and photo: [`src/components/home/Home.tsx`](src/components/home/Home.tsx)
+- intro text and photo: [`src/components/home/Home.tsx`](src/components/home/Home.tsx), and the tech stack under it:
+  [`src/components/home/stack.json`](src/components/home/stack.json) (a logo from `logos.ts` and the name to show)
 - experience and education: [`src/components/experience/experience.json`](src/components/experience/experience.json),
   newest first, dates as `YYYY-MM` (leave `end` out for the current job; durations are worked out like LinkedIn's)
 - certifications: [`src/components/experience/badges.json`](src/components/experience/badges.json), with the badge

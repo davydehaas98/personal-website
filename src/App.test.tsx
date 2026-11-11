@@ -77,6 +77,16 @@ describe('App', () => {
     ).toEqual(projects.map((project) => project.languages))
   })
 
+  it('shows the tech stack with a name for every logo', () => {
+    render(<App />)
+    const list = screen.getByRole('list', { name: 'Tech stack' })
+    expect(
+      within(list)
+        .getAllByRole('listitem')
+        .map((item) => item.textContent),
+    ).toEqual(['Java', 'Spring', 'TypeScript', 'NestJS', 'Python', 'Terraform', 'Kubernetes', 'AWS'])
+  })
+
   it('shows the work, education and Credly badges with dates', () => {
     render(<App />)
     const section = screen.getByRole('region', { name: 'Experience' })
