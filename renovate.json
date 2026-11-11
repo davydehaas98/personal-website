@@ -1,10 +1,6 @@
 {
-  "extends": [
-    "github>davydehaas98/renovate-config"
-  ],
-  "baseBranchPatterns": [
-    "main"
-  ],
+  "extends": ["github>davydehaas98/renovate-config"],
+  "baseBranchPatterns": ["main"],
   "minimumReleaseAge": "1 day",
   "internalChecksFilter": "strict"
 }

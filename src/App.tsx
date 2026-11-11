@@ -1,12 +1,13 @@
 import React from 'react'
-import NavigationBar from './components/navigation-bar/NavigationBar'
-import Home from './components/home/Home'
-import Experience from './components/experience/Experience'
-import Projects from './components/projects/Projects'
-import Contact from './components/contact/Contact'
-import Footer from './components/footer/Footer'
 
-const App = (): React.JSX.Element => {
+import { Contact } from './components/contact/Contact'
+import { Experience } from './components/experience/Experience'
+import { Footer } from './components/footer/Footer'
+import { Home } from './components/home/Home'
+import { NavigationBar } from './components/navigation-bar/NavigationBar'
+import { Projects } from './components/projects/Projects'
+
+export const App = (): React.JSX.Element => {
   return (
     <>
       <NavigationBar />
@@ -20,5 +21,3 @@ const App = (): React.JSX.Element => {
     </>
   )
 }
-
-export default App

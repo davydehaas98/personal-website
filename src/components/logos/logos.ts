@@ -41,6 +41,17 @@ export const logos = {
 
 export type LogoName = keyof typeof logos
 
+// A logo name from projects.json, checked: a name missing above stops the build (pre-rendering) and the tests with
+// this error, instead of failing somewhere in the page.
+const isLogoName = (name: string): name is LogoName => Object.hasOwn(logos, name)
+
+export const logoName = (name: string): LogoName => {
+  if (isLogoName(name)) {
+    return name
+  }
+  throw new Error(`Unknown logo "${name}": add it to src/components/logos/logos.ts`)
+}
+
 // Contrast ratio between two hex colours (WCAG relative luminance).
 const luminance = (hex: string): number => {
   const [r, g, b] = [0, 2, 4].map((i) => {

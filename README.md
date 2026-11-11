@@ -15,7 +15,7 @@ To change the content:
 - link previews (LinkedIn, Slack, …): the `og:` tags in [`index.html`](index.html) and the image
   [`public/og-image.jpg`](public/og-image.jpg) (1200×630); update both when the role or photo changes
 - projects: [`src/components/projects/projects.json`](src/components/projects/projects.json) (name, `owner/repo`, description,
-  languages, logos); a logo name must exist in [`logos.ts`](src/components/projects/logos.ts), which imports it from
+  languages, logos); a logo name must exist in [`logos.ts`](src/components/logos/logos.ts), which imports it from
   [Simple Icons](https://simpleicons.org), and a new language needs its GitHub colour in
   [`Projects.tsx`](src/components/projects/Projects.tsx)
 - colours (light and dark), font and breakpoints: the `@theme` in [`src/index.css`](src/index.css); shared pieces
@@ -31,17 +31,23 @@ To change the content:
 
 ## Scripts
 
-| Command           | What it does                                                                   |
-| ----------------- | ------------------------------------------------------------------------------ |
-| `pnpm install`    | Install dependencies.                                                          |
-| `pnpm dev`        | Start the Vite dev server with hot reload on http://localhost:5173.            |
-| `pnpm build`      | Type-check, build the static site into `build/` and pre-render its HTML.       |
-| `pnpm preview`    | Serve the production build from `build/` locally.                              |
-| `pnpm test`       | Run the tests once with Vitest (jsdom).                                        |
-| `pnpm test:watch` | Run Vitest in watch mode.                                                      |
-| `pnpm typecheck`  | Type-check only (`tsc --noEmit`).                                              |
-| `pnpm lint`       | Lint with [oxlint](https://oxc.rs/docs/guide/usage/linter) (`.oxlintrc.json`). |
-| `pnpm lint:fix`   | Lint and apply safe fixes.                                                     |
+| Command             | What it does                                                                                                                  |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm install`      | Install dependencies.                                                                                                         |
+| `pnpm dev`          | Start the Vite dev server with hot reload on http://localhost:5173.                                                           |
+| `pnpm build`        | Type-check, build the static site into `build/` and pre-render its HTML.                                                      |
+| `pnpm preview`      | Serve the production build from `build/` locally.                                                                             |
+| `pnpm test`         | Run the tests once with Vitest (jsdom).                                                                                       |
+| `pnpm test:watch`   | Run Vitest in watch mode.                                                                                                     |
+| `pnpm typecheck`    | Type-check only (`tsc --noEmit`).                                                                                             |
+| `pnpm lint`         | Lint with [oxlint](https://oxc.rs/docs/guide/usage/linter) (`.oxlintrc.json`), including type-aware rules; warnings fail too. |
+| `pnpm lint:fix`     | Lint and apply safe fixes.                                                                                                    |
+| `pnpm format`       | Format and sort imports with [oxfmt](https://oxc.rs/docs/guide/usage/formatter) (`.oxfmtrc.json`).                            |
+| `pnpm format:check` | Check the formatting (CI does this).                                                                                          |
+
+Before each commit, a [Husky](https://typicode.github.io/husky) hook ([`.husky/pre-commit`](.husky/pre-commit)) runs
+`pnpm format:check`, `pnpm lint` and `pnpm typecheck` (about 1.5 s); `pnpm install` sets it up. Tests and the build
+run in CI.
 
 Static files that are copied as-is (images, `manifest.json`, `robots.txt`, `.well-known/`) live in `public/`.
 
@@ -75,7 +81,7 @@ Then open http://localhost:8080.
 
 ## CI/CD
 
-- **Build** (`build.yaml`) runs lint, tests and the build on every push and pull request.
+- **Build** (`build.yaml`) checks the formatting and runs lint, tests and the build on every push and pull request.
 - **Release** (`release.yaml`) runs on every push to `main` (except docs-only changes), or by hand with **Run workflow**
   under Actions > Release: it tests and lints, then pushes a multi-arch image (`linux/amd64`, `linux/arm64`) to
   `ghcr.io/davydehaas98/personal-website` and tags the commit in git.

@@ -2,7 +2,7 @@
 // browser always produce the same text.
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-export type YearMonth = { year: number, month: number } // month 1–12
+export type YearMonth = { year: number; month: number } // month 1–12
 
 export const parseYearMonth = (value: string): YearMonth => {
   const [year, month] = value.split('-').map(Number)
@@ -31,7 +31,7 @@ export const formatPeriod = (
   start: string,
   end: string | undefined,
   now: YearMonth,
-): { range: string, duration: string } => {
+): { range: string; duration: string } => {
   const from = parseYearMonth(start)
   const to = end ? parseYearMonth(end) : now
   return {

@@ -14,7 +14,7 @@ const line = 'h-0.5 flex-1 rounded-full from-transparent to-accent'
 
 // A header with the icon in a green circle on a line across the page, and the title under it.
 // On phones the circle and title sit side by side on the left, without the line.
-const SectionHeader = ({ icon, title, level = 2, id, lead }: SectionHeaderProps): React.JSX.Element => {
+export const SectionHeader = ({ icon, title, level = 2, id, lead }: SectionHeaderProps): React.JSX.Element => {
   const Heading = level === 2 ? 'h2' : 'h3'
   return (
     <div className={`flex items-center gap-3 md:flex-col md:gap-2.5 md:text-center ${level === 3 ? 'mt-14' : ''}`}>
@@ -28,11 +28,11 @@ const SectionHeader = ({ icon, title, level = 2, id, lead }: SectionHeaderProps)
         <span className={`hidden bg-linear-to-l md:block ${line}`} />
       </div>
       <div>
-        <Heading id={id} className={level === 2 ? 'text-[1.75rem]' : 'text-lg'}>{title}</Heading>
+        <Heading id={id} className={level === 2 ? 'text-[1.75rem]' : 'text-lg'}>
+          {title}
+        </Heading>
         {lead && <p className="mt-1 text-muted">{lead}</p>}
       </div>
     </div>
   )
 }
-
-export default SectionHeader

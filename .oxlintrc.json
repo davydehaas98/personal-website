@@ -11,15 +11,33 @@
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "jsx-a11y/control-has-associated-label": ["error", { "depth": 3 }],
-    "import/no-named-as-default": "off",
-    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }]
+    "jsx-a11y/control-has-associated-label": [
+      "error",
+      {
+        "depth": 3
+      }
+    ],
+    "import/no-unassigned-import": [
+      "warn",
+      {
+        "allow": ["**/*.css"]
+      }
+    ],
+    "import/no-default-export": "error"
   },
   "ignorePatterns": ["build/**", "coverage/**"],
   "overrides": [
     {
       "files": ["**/*.test.{ts,tsx}"],
-      "env": { "vitest": true }
+      "env": {
+        "vitest": true
+      }
+    },
+    {
+      "files": ["vite.config.ts", "load-test.js"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
     }
   ]
 }

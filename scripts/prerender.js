@@ -2,6 +2,7 @@
 // link-preview bots and search engines see it without running JavaScript, and the first paint is faster.
 import { readFile, rm, writeFile } from 'node:fs/promises'
 import { pathToFileURL } from 'node:url'
+
 import { build } from 'vite'
 
 const serverDir = 'build-ssr'

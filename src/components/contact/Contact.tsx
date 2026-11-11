@@ -1,9 +1,10 @@
 import React from 'react'
 import { siGithub } from 'simple-icons'
+
 import { BrandIcon, MailIcon } from '../icons/Icons'
-import SectionHeader from '../section-header/SectionHeader'
-import Pill from '../ui/Pill'
-import Section from '../ui/Section'
+import { SectionHeader } from '../section-header/SectionHeader'
+import { Pill } from '../ui/Pill'
+import { Section } from '../ui/Section'
 
 // Simple Icons dropped LinkedIn's logo at LinkedIn's request, so its path is kept here.
 const linkedIn = {
@@ -16,7 +17,7 @@ const links = [
   { href: 'https://www.linkedin.com/in/davydehaas98', icon: linkedIn },
 ]
 
-const Contact = (): React.JSX.Element => {
+export const Contact = (): React.JSX.Element => {
   return (
     <Section id="contact" labelledBy="contact-title">
       <SectionHeader
@@ -38,5 +39,3 @@ const Contact = (): React.JSX.Element => {
     </Section>
   )
 }
-
-export default Contact

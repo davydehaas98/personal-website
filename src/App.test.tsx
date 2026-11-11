@@ -1,6 +1,7 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import App from './App'
+
+import { App } from './App'
 import projects from './components/projects/projects.json'
 
 describe('App', () => {
@@ -52,7 +53,9 @@ describe('App', () => {
     const lists = screen.getAllByRole('list', { name: 'Built with' })
     expect(lists).toHaveLength(projects.length)
     projects.forEach((project, index) => {
-      const names = within(lists[index]).getAllByRole('listitem').map((item) => item.textContent)
+      const names = within(lists[index])
+        .getAllByRole('listitem')
+        .map((item) => item.textContent)
       expect(names).toHaveLength(project.logos.length)
       // A name that is missing from logos.ts would render nothing (or crash), so every name must resolve to a title.
       for (const name of names) {
@@ -65,9 +68,13 @@ describe('App', () => {
   it('shows the languages of every project', () => {
     render(<App />)
     const lists = screen.getAllByRole('list', { name: 'Languages' })
-    expect(lists.map((list) => within(list).getAllByRole('listitem').map((item) => item.textContent))).toEqual(
-      projects.map((project) => project.languages),
-    )
+    expect(
+      lists.map((list) =>
+        within(list)
+          .getAllByRole('listitem')
+          .map((item) => item.textContent),
+      ),
+    ).toEqual(projects.map((project) => project.languages))
   })
 
   it('shows the work, education and Credly badges with dates', () => {
@@ -80,20 +87,26 @@ describe('App', () => {
     expect(valley).toHaveTextContent('6 mos')
     expect(within(section).getByRole('heading', { name: 'Certifications' })).toBeInTheDocument()
     // Grouped by issuer (AWS first), a renewed badge only once, and no dates.
-    expect(within(section).getAllByRole('heading', { level: 4 }).map((h) => h.textContent)).toEqual(
-      expect.arrayContaining(['Amazon Web Services', 'Okta']),
-    )
+    expect(
+      within(section)
+        .getAllByRole('heading', { level: 4 })
+        .map((h) => h.textContent),
+    ).toEqual(expect.arrayContaining(['Amazon Web Services', 'Okta']))
     const aws = within(section).getByRole('heading', { name: 'Amazon Web Services' }).parentElement!
-    expect(within(aws).getAllByRole('link').map((link) => link.textContent)).toEqual([
-      'AWS Certified Developer – Associate',
-      'AWS Certified Cloud Practitioner',
-    ])
+    expect(
+      within(aws)
+        .getAllByRole('link')
+        .map((link) => link.textContent),
+    ).toEqual(['AWS Certified Developer – Associate', 'AWS Certified Cloud Practitioner'])
     expect(section.querySelector('ul')?.textContent).not.toMatch(/Earned|Expired|Valid until/)
   })
 
   it('links to GitHub and LinkedIn', () => {
     render(<App />)
     expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute('href', 'https://github.com/davydehaas98')
-    expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/davydehaas98')
+    expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
+      'href',
+      'https://www.linkedin.com/in/davydehaas98',
+    )
   })
 })

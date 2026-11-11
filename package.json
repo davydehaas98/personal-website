@@ -13,8 +13,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix"
+    "lint": "oxlint --type-aware --deny-warnings",
+    "lint:fix": "oxlint --type-aware --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "prepare": "husky"
   },
   "dependencies": {
     "react": "19.3.1",
@@ -30,8 +33,11 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.3.0",
+    "husky": "9.1.7",
     "jsdom": "31.0.0",
+    "oxfmt": "0.78.0",
     "oxlint": "1.93.0",
+    "oxlint-tsgolint": "7.0.2006",
     "tailwindcss": "4.3.5",
     "typescript": "7.0.2",
     "vite": "8.3.7",

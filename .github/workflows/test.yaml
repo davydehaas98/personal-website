@@ -29,10 +29,10 @@ jobs:
         uses: foo-software/lighthouse-check-status-action@v3.0.1
         with:
           lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "90"
-          minBestPracticesScore: "50"
-          minPerformanceScore: "50"
-          minSeoScore: "50"
+          minAccessibilityScore: '90'
+          minBestPracticesScore: '50'
+          minPerformanceScore: '50'
+          minSeoScore: '50'
 
   zap-scan:
     name: ZAP scan

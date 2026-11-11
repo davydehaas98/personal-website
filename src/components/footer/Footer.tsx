@@ -4,12 +4,10 @@ import React from 'react'
 declare const BUILD_YEAR: number
 const year = BUILD_YEAR
 
-const Footer = (): React.JSX.Element => {
+export const Footer = (): React.JSX.Element => {
   return (
     <footer className="mx-auto max-w-page border-t border-line px-5 pt-6 pb-10 text-center text-sm text-muted">
       <p>© {year} Davy de Haas</p>
     </footer>
   )
 }
-
-export default Footer
