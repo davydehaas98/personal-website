@@ -2,5 +2,12 @@
   "extends": ["github>davydehaas98/renovate-config"],
   "baseBranchPatterns": ["main"],
   "minimumReleaseAge": "1 day",
-  "internalChecksFilter": "strict"
+  "internalChecksFilter": "strict",
+  "packageRules": [
+    {
+      "description": "Node in package.json (devEngines) and the Docker build image, in one PR.",
+      "matchDepNames": ["node"],
+      "groupName": "node"
+    }
+  ]
 }

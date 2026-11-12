@@ -1,4 +1,6 @@
-FROM node:26.13.0-alpine AS build
+# The site is the same on every platform, so it's built once on the build machine; the arm64 image then only copies
+# files into nginx, nothing runs under emulation.
+FROM --platform=$BUILDPLATFORM node:26.13.0-alpine AS build
 WORKDIR /app
 # No git hooks to install in here (Husky runs on pnpm install).
 ENV HUSKY=0

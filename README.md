@@ -24,31 +24,30 @@ To change the content:
 
 ## Requirements
 
-- Node.js, version in [`.nvmrc`](.nvmrc) (current LTS); `nvm use` picks it up.
+- Node.js: pnpm downloads and uses the version in `devEngines` in [`package.json`](package.json) (current LTS) by
+  itself, so no `nvm` is needed. The Dockerfile's base image has the same version.
 - [pnpm](https://pnpm.io), version in `packageManager` in [`package.json`](package.json):
   `npm install --global pnpm@<that version>`. It refuses packages published less than a day ago (`minimumReleaseAge`).
 - Docker or Podman, only for building the container image.
 
 ## Scripts
 
-| Command             | What it does                                                                                                                  |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm install`      | Install dependencies.                                                                                                         |
-| `pnpm dev`          | Start the Vite dev server with hot reload on http://localhost:5173.                                                           |
-| `pnpm build`        | Type-check, build the static site into `build/` and pre-render its HTML.                                                      |
-| `pnpm preview`      | Serve the production build from `build/` locally.                                                                             |
-| `pnpm test`         | Run the tests once with Vitest (jsdom).                                                                                       |
-| `pnpm test:watch`   | Run Vitest in watch mode.                                                                                                     |
-| `pnpm typecheck`    | Type-check only (`tsc --noEmit`).                                                                                             |
-| `pnpm lint`         | Lint with [oxlint](https://oxc.rs/docs/guide/usage/linter) (`.oxlintrc.json`), including type-aware rules; warnings fail too. |
-| `pnpm lint:fix`     | Lint and apply safe fixes.                                                                                                    |
-| `pnpm format`       | Format and sort imports with [oxfmt](https://oxc.rs/docs/guide/usage/formatter) (`.oxfmtrc.json`).                            |
-| `pnpm format:check` | Check the formatting (CI does this).                                                                                          |
-| `pnpm lighthouse`   | Run Lighthouse CI 3 times against the live site (`.github/lighthouserc.json`); needs Chrome, or its path in `CHROME_PATH`.    |
+| Command           | What it does                                                                                                                  |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm install`    | Install dependencies.                                                                                                         |
+| `pnpm dev`        | Start the Vite dev server with hot reload on http://localhost:5173.                                                           |
+| `pnpm build`      | Build the static site into `build/` and pre-render its HTML (no type check: `pnpm check` does that).                          |
+| `pnpm preview`    | Serve the production build from `build/` locally.                                                                             |
+| `pnpm test`       | Run the tests once with Vitest (jsdom).                                                                                       |
+| `pnpm test:watch` | Run Vitest in watch mode.                                                                                                     |
+| `pnpm check`      | Check formatting, lint (type-aware; warnings fail too) and types. The pre-commit hook and CI run it.                          |
+| `pnpm lint`       | Lint with [oxlint](https://oxc.rs/docs/guide/usage/linter) (`.oxlintrc.json`), including type-aware rules; warnings fail too. |
+| `pnpm lint:fix`   | Lint and apply safe fixes.                                                                                                    |
+| `pnpm format`     | Format and sort imports with [oxfmt](https://oxc.rs/docs/guide/usage/formatter) (`.oxfmtrc.json`).                            |
+| `pnpm lighthouse` | Run Lighthouse CI 3 times against the live site (`.github/lighthouserc.json`); needs Chrome, or its path in `CHROME_PATH`.    |
 
 Before each commit, a [Husky](https://typicode.github.io/husky) hook ([`.husky/pre-commit`](.husky/pre-commit)) runs
-`pnpm format:check`, `pnpm lint` and `pnpm typecheck` (about 1.5 s); `pnpm install` sets it up. Tests and the build
-run in CI.
+`pnpm check` (about 1.5 s); `pnpm install` sets it up. Tests and the build run in CI.
 
 Static files that are copied as-is (images, `manifest.json`, `robots.txt`, `.well-known/`) live in `public/`.
 
@@ -82,10 +81,10 @@ Then open http://localhost:8080.
 
 ## CI/CD
 
-- **Build** (`build.yaml`) checks the formatting and runs lint, tests and the build on every push and pull request.
-- **Release** (`release.yaml`) runs on every push to `main` (except docs-only changes), or by hand with **Run workflow**
-  under Actions > Release: it tests and lints, then pushes a multi-arch image (`linux/amd64`, `linux/arm64`) to
-  `ghcr.io/davydehaas98/personal-website` and tags the commit in git.
+- **Build** (`build.yaml`) checks the formatting and runs lint, tests and the build on pull requests and pushes to `main`
+  (pushes that only change docs or `renovate.json` are skipped). On `main`, its **Release** job then pushes a
+  multi-arch image (`linux/amd64`, `linux/arm64`) to `ghcr.io/davydehaas98/personal-website` and tags the commit in
+  git, only once the checks have passed. **Run workflow** under Actions > Build does the same by hand.
   Versions are calendar versions `YYYY.M.N`: year, month (no leading zero) and the release number within that month,
   e.g. `2026.11.0`, `2026.11.1`, then `2026.12.0`. There is no `latest` or other moving tag: pin an exact version.
 - **Daily test** (`test.yaml`) runs `pnpm lighthouse` (every category must score at least 90), a ZAP baseline scan and a k6
