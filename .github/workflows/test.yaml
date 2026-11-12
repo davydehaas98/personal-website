@@ -2,6 +2,7 @@ name: Daily test
 on:
   schedule:
     - cron: '0 4 * * *'
+  workflow_dispatch:
 env:
   DOMAIN_NAME: davydehaas.nl
 
@@ -12,27 +13,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.1
-      - name: Create directory lighthouse-report
-        run: mkdir -p ${{ github.workspace }}/tmp/lighthouse-report
-      - name: Lighthouse check
-        uses: foo-software/lighthouse-check-action@v12.0.1
-        id: lighthouseCheck
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6.1.1
+
+      - name: Set up Node
+        uses: actions/setup-node@v7.1.0
         with:
-          outputDirectory: ${{ github.workspace }}/tmp/lighthouse-report
-          urls: https://${{ env.DOMAIN_NAME }}
-      - name: Upload Lighthouse check results
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      # Three runs against the live site, judged on the median one (.github/lighthouserc.json), so one slow runner
+      # doesn't fail the check. Uses the runner's Chrome.
+      - name: Lighthouse check
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm lighthouse
+
+      - name: Upload Lighthouse report
+        if: always()
         uses: actions/upload-artifact@v7.0.2
         with:
           name: lighthouse-report
-          path: ${{ github.workspace }}/tmp/lighthouse-report
-      - name: Verify Lighthouse check results
-        uses: foo-software/lighthouse-check-status-action@v3.0.1
-        with:
-          lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: '90'
-          minBestPracticesScore: '90'
-          minPerformanceScore: '90'
-          minSeoScore: '90'
+          path: lighthouse-report
 
   zap-scan:
     name: ZAP scan

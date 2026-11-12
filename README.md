@@ -44,6 +44,7 @@ To change the content:
 | `pnpm lint:fix`     | Lint and apply safe fixes.                                                                                                    |
 | `pnpm format`       | Format and sort imports with [oxfmt](https://oxc.rs/docs/guide/usage/formatter) (`.oxfmtrc.json`).                            |
 | `pnpm format:check` | Check the formatting (CI does this).                                                                                          |
+| `pnpm lighthouse`   | Run Lighthouse CI 3 times against the live site (`.github/lighthouserc.json`); needs Chrome, or its path in `CHROME_PATH`.    |
 
 Before each commit, a [Husky](https://typicode.github.io/husky) hook ([`.husky/pre-commit`](.husky/pre-commit)) runs
 `pnpm format:check`, `pnpm lint` and `pnpm typecheck` (about 1.5 s); `pnpm install` sets it up. Tests and the build
@@ -87,4 +88,5 @@ Then open http://localhost:8080.
   `ghcr.io/davydehaas98/personal-website` and tags the commit in git.
   Versions are calendar versions `YYYY.M.N`: year, month (no leading zero) and the release number within that month,
   e.g. `2026.11.0`, `2026.11.1`, then `2026.12.0`. There is no `latest` or other moving tag: pin an exact version.
-- **Daily test** (`test.yaml`) runs Lighthouse, a ZAP baseline scan and a k6 load test against the live site.
+- **Daily test** (`test.yaml`) runs `pnpm lighthouse` (every category must score at least 90), a ZAP baseline scan and a k6
+  load test against the live site. Actions > Daily test > Run workflow starts it by hand.

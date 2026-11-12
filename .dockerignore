@@ -9,3 +9,5 @@ node_modules
 Dockerfile
 *.md
 load-test.js
+.lighthouseci
+lighthouse-report

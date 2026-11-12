@@ -14,3 +14,7 @@ coverage/
 .DS_Store
 Thumbs.db
 build-ssr/
+
+# Lighthouse CI (pnpm lighthouse)
+.lighthouseci/
+lighthouse-report/
