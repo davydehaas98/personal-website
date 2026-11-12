@@ -24,11 +24,25 @@ const badgeGroups = (() => {
 
 type Badge = (typeof badges)[number]
 
-// The images are copies in public/, as the CSP only allows images from the site itself.
+// The badge images are copies (the CSP only allows images from the site itself), in src/assets/badges/ so they get
+// hashed names that can be cached for a year. badges.json names the file.
+const badgeImages = import.meta.glob<string>('../../assets/badges/*.webp', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+
 const BadgeLink = ({ badge }: { badge: Badge }): React.JSX.Element => (
   <ExternalLink className="group flex w-32.5 flex-col items-center gap-2.5 text-center md:w-37.5" href={badge.link}>
     <Bubble className="relative size-27">
-      <img className="size-18" src={badge.image} alt="" width={72} height={72} loading="lazy" />
+      <img
+        className="size-18"
+        src={badgeImages[`../../assets/badges/${badge.image}.webp`]}
+        alt=""
+        width={72}
+        height={72}
+        loading="lazy"
+      />
     </Bubble>
     <strong className="text-sm leading-[1.35] group-hover:text-brand">{badge.name}</strong>
   </ExternalLink>

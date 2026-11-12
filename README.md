@@ -7,12 +7,13 @@ without JavaScript.
 
 To change the content:
 
-- intro text and photo: [`src/components/home/Home.tsx`](src/components/home/Home.tsx), and the tech stack under it:
+- intro text: [`src/components/home/Home.tsx`](src/components/home/Home.tsx), with the photo in `src/assets/me.webp`, and the
+  tech stack under it:
   [`src/components/home/stack.json`](src/components/home/stack.json) (a logo from `logos.ts` and the name to show)
 - experience and education: [`src/components/experience/experience.json`](src/components/experience/experience.json),
   newest first, dates as `YYYY-MM` (leave `end` out for the current job; durations are worked out like LinkedIn's)
 - certifications: [`src/components/experience/badges.json`](src/components/experience/badges.json), with the badge
-  images in `public/assets/images/badges/` (copied from Credly, as the CSP only allows images from the site itself)
+  images in `src/assets/badges/` as WebP, named in `image` (copied from Credly, as the CSP only allows images from the site itself)
 - link previews (LinkedIn, Slack, …): the `og:` tags in [`index.html`](index.html) and the image
   [`public/og-image.jpg`](public/og-image.jpg) (1200×630); update both when the role or photo changes
 - projects: [`src/components/projects/projects.json`](src/components/projects/projects.json) (name, `owner/repo`, description,

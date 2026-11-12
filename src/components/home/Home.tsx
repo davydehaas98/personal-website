@@ -1,5 +1,6 @@
 import React from 'react'
 
+import photo from '../../assets/me.webp'
 import { MapPinIcon } from '../icons/Icons'
 import { TechStack } from './TechStack'
 
@@ -11,7 +12,7 @@ export const Home = (): React.JSX.Element => {
     >
       <img
         className="size-42 flex-none rounded-full border-4 border-accent object-cover"
-        src="/assets/images/me.jpg"
+        src={photo}
         alt="Davy de Haas"
         width={168}
         height={168}
