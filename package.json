@@ -2,7 +2,7 @@
   "name": "personal-website",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@12.18.0",
+  "packageManager": "pnpm@12.23.0",
   "devEngines": {
     "runtime": {
       "name": "node",
